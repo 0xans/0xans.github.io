@@ -1,0 +1,45 @@
+theme: jekyll-theme-hacker
+name: 0xAns
+description: Penetration Tester | Malware Developer | Bug Hunter | Rust & Python Developer
+avatar: ../images/logo.png
+footer-links:
+  dribbble:
+  email:
+  facebook:
+  flickr:
+  github: 0xans
+  instagram:
+  linkedin: 
+  pinterest:
+  rss: 
+  twitter: 0xans_
+  stackoverflow: 
+  youtube: 
+  googleplus:
+
+
+disqus:
+google_analytics:
+url:
+baseurl: "https://0xans.github.io"
+permalink: /:title/
+version: v1.2.0
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+sass:
+  style: :expanded 
+gems:
+  - jekyll-sitemap 
+  - jekyll-feed
+  - jekyll-admin
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - README.md
+  - CNAME
+
