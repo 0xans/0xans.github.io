@@ -3,13 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>0xAns | Red Teamer & Exploit Dev</title>
-    <meta name="description" content="Portfolio of 0xAns - Red Teamer, Exploit Developer, and Systems Programmer.">
-    
+    <title>0xAns | Red Teamer </title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -34,16 +31,16 @@
         body { background-color: #191724; color: #e0def4; }
     </style>
 </head>
-<body class="antialiased selection:bg-rosepine-love selection:text-rosepine-base">
+<body class="antialiased selection:bg-rosepine-love selection:text-rosepine-base flex flex-col min-h-screen">
 
-    <nav class="fixed w-full z-50 backdrop-blur-md bg-rosepine-base/80 border-b border-rosepine-highlight-low">
+    <nav class="fixed w-full z-50 backdrop-blur-md bg-rosepine-base/90 border-b border-rosepine-highlight-low">
         <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
             <a href="index.html" class="font-mono text-xl font-bold text-rosepine-rose hover:text-rosepine-love transition-colors">0xAns</a>
-            <div class="hidden md:flex space-x-8 font-mono text-sm text-rosepine-subtle">
-                <a href="index.html#about" class="hover:text-rosepine-foam">./about</a>
-                <a href="index.html#skills" class="hover:text-rosepine-gold">./skills</a>
-                <a href="index.html#projects" class="hover:text-rosepine-iris">./projects</a>
-                <a href="articles.html" class="hover:text-rosepine-love">./articles</a>
+            <div class="hidden md:flex space-x-8 font-mono text-sm text-rosepine-muted">
+                <a href="index.html#about" class="hover:text-rosepine-foam transition-colors">./about</a>
+                <a href="index.html#skills" class="hover:text-rosepine-gold transition-colors">./skills</a>
+                <a href="index.html#projects" class="hover:text-rosepine-iris transition-colors">./projects</a>
+                <a href="articles.html" class="hover:text-rosepine-love transition-colors">./articles</a>
             </div>
             <a id="nav-github" href="#" target="_blank" class="text-rosepine-text hover:text-rosepine-love transition-transform hover:scale-110">
                 <i class="ph ph-github-logo text-2xl"></i>
@@ -51,7 +48,7 @@
         </div>
     </nav>
 
-    <main class="relative z-10 max-w-4xl mx-auto px-6 pt-32 pb-20">
+    <main class="flex-grow relative z-10 max-w-4xl mx-auto px-6 pt-32 pb-20">
 
         <section class="flex flex-col md:flex-row items-center md:items-start gap-10 mb-32 opacity-0 animate-fade-in-up">
             <div class="relative group shrink-0">
@@ -64,7 +61,7 @@
                     Hi, I'm <span id="profile-name" class="text-transparent bg-clip-text bg-gradient-to-r from-rosepine-rose to-rosepine-love"></span>.
                 </h1>
                 <h2 id="profile-role" class="text-xl md:text-2xl font-mono text-rosepine-muted mb-6"></h2>
-                <p id="profile-bio" class="text-rosepine-subtle text-lg leading-relaxed max-w-2xl mb-8"></p>
+                <p id="profile-bio" class="text-rosepine-muted text-lg leading-relaxed max-w-2xl mb-8"></p>
                 
                 <div class="flex flex-wrap justify-center md:justify-start gap-4">
                     <a id="hero-github" href="#" target="_blank" class="flex items-center gap-2 px-6 py-3 bg-rosepine-surface border border-rosepine-highlight-med rounded-lg hover:border-rosepine-rose hover:text-rosepine-rose transition-all group">
@@ -80,7 +77,7 @@
                 <div class="h-px flex-grow bg-rosepine-highlight-med"></div>
             </div>
             <div class="bg-rosepine-surface/50 p-8 rounded-2xl border border-rosepine-highlight-low backdrop-blur-sm">
-                <p class="text-rosepine-subtle leading-relaxed">
+                <p class="text-rosepine-muted leading-relaxed">
                     I am a passionate security researcher and developer. As a <span class="text-rosepine-love font-semibold">Red Teamer</span> and <span class="text-rosepine-gold font-semibold">Exploit Developer</span>, I build tools to exploit vulnerabilities and systems to fix them. My expertise ranges from low-level <span class="text-rosepine-pine font-semibold">Malware Development</span> to high-level <span class="text-rosepine-iris font-semibold">Web Systems</span>.
                 </p>
             </div>
@@ -104,7 +101,6 @@
                     <div class="flex flex-wrap gap-2">
                         <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Red Teaming</span>
                         <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Web Pentesting</span>
-                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Network Security</span>
                         <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Active Directory</span>
                         <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">C2 Operations</span>
                     </div>
@@ -120,8 +116,7 @@
                         <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">C / C++</span>
                         <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Malware Dev</span>
                         <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">WinAPI</span>
-                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Assembly x86/64</span>
-                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Exploit Dev</span>
+                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">x86/64 ASM</span>
                     </div>
                 </div>
 
@@ -133,10 +128,8 @@
                     <div class="flex flex-wrap gap-2">
                         <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Python</span>
                         <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Flask</span>
-                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">System Dev</span>
-                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">SQL</span>
                         <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Linux / Arch</span>
-                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Bash Scripting</span>
+                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Bash</span>
                     </div>
                 </div>
 
@@ -164,51 +157,34 @@
             </div>
         </section>
 
-        <footer class="mt-32 pb-10 text-center">
-            <p class="font-mono text-sm text-rosepine-muted">Designed with <span class="text-rosepine-love">♥</span> by 0xAns</p>
-        </footer>
     </main>
 
-    <script>
-        const fallbackData = {
-          "profile": {
-            "name": "Anas",
-            "role": "Red Teamer | Exploit Dev | eCPPT",
-            "bio": "I specialize in Network/Web Pentesting, Malware Development, and System Internals. Building advanced tooling and breaking complex systems.",
-            "github": "https://github.com/0xans",
-            "avatar": "https://avatars.githubusercontent.com/u/151745138?v=4"
-          },
-          "projects": [
-            { "title": "Process Injector", "description": "A Rust-based tool designed for process injection using WinAPI and NativeAPI.", "tags": ["Rust", "WinAPI", "Malware"], "link": "https://github.com/0xans/process-injector" },
-            { "title": "DLL Injector", "description": "Advanced tool performing DLL injection, useful for testing application defenses and red teaming.", "tags": ["Rust", "Injection", "Security"], "link": "https://github.com/0xans/DLLinjection" },
-            { "title": "CORS Scanner", "description": "A Python tool that scans for Cross-Origin Resource Sharing (CORS) vulnerabilities.", "tags": ["Python", "Web Sec", "Automation"], "link": "https://github.com/0xans/cors" },
-            { "title": "BoF ToolKit", "description": "A toolkit assisting in identifying and exploiting buffer overflow vulnerabilities.", "tags": ["Python", "Exploitation", "Memory"], "link": "https://github.com/0xans/BufferOverflowToolkit" }
-          ],
-          "articles": [
-            { "id": "malware-dev-intro", "title": "Introduction to Malware Development: PE Parsing", "date": "2025-05-20", "tags": ["Malware Dev", "C++", "PE Header"], "summary": "Understanding the Portable Executable (PE) format is crucial for malware development. This article covers the basics of parsing PE headers to find exported functions manually.", "file": "posts/malware-dev-intro.md" },
-            { "id": "red-team-ad", "title": "Red Teaming Active Directory", "date": "2025-04-15", "tags": ["Red Team", "Network", "AD"], "summary": "Strategies for lateral movement, kerberoasting, and domain dominance in hardened Windows environments.", "file": "posts/placeholder.md" }
-          ]
-        };
+    <footer class="py-10 text-center border-t border-rosepine-highlight-low bg-rosepine-base">
+        <p class="font-mono text-sm text-rosepine-muted">Designed with <span class="text-rosepine-love">♥</span> by 0xAns</p>
+    </footer>
 
+    <script>
         async function loadData() {
             try {
                 const response = await fetch('data/content.json');
-                if (!response.ok) throw new Error('Network response was not ok');
+                if (!response.ok) throw new Error('Failed to load content');
                 return await response.json();
             } catch (error) {
-                console.warn('Fetch failed, using embedded fallback data:', error);
-                return fallbackData;
+                console.error(error);
+                return null;
             }
         }
 
         loadData().then(data => {
+            if (!data) return;
+
             if(data.profile) {
-                document.getElementById('profile-name').textContent = data.profile.name || 'User';
-                document.getElementById('profile-role').textContent = data.profile.role || 'Developer';
-                document.getElementById('profile-bio').textContent = data.profile.bio || '';
-                document.getElementById('profile-avatar').src = data.profile.avatar || '';
-                document.getElementById('nav-github').href = data.profile.github || '#';
-                document.getElementById('hero-github').href = data.profile.github || '#';
+                document.getElementById('profile-name').textContent = data.profile.name;
+                document.getElementById('profile-role').textContent = data.profile.role;
+                document.getElementById('profile-bio').textContent = data.profile.bio;
+                document.getElementById('profile-avatar').src = data.profile.avatar;
+                document.getElementById('nav-github').href = data.profile.github;
+                document.getElementById('hero-github').href = data.profile.github;
             }
 
             const projectsContainer = document.getElementById('projects-list');
