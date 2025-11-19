@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Articles | 0xAns</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -20,18 +25,23 @@
             }
         }
     </script>
-    <style>body { background-color: #191724; color: #e0def4; }</style>
+    <style>
+        /* Fix for layout shift */
+        html { overflow-y: scroll; }
+        body { background-color: #191724; color: #e0def4; }
+    </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen">
-
+    
     <nav class="fixed w-full z-50 backdrop-blur-md bg-rosepine-base/90 border-b border-rosepine-highlight-low">
         <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
             <a href="index.html" class="font-mono text-xl font-bold text-rosepine-rose hover:text-rosepine-love transition-colors">0xAns</a>
             <div class="hidden md:flex space-x-8 font-mono text-sm text-rosepine-muted">
+                <a href="index.html" class="hover:text-rosepine-text transition-colors">./home</a>
                 <a href="index.html#about" class="hover:text-rosepine-foam transition-colors">./about</a>
                 <a href="index.html#skills" class="hover:text-rosepine-gold transition-colors">./skills</a>
                 <a href="index.html#projects" class="hover:text-rosepine-iris transition-colors">./projects</a>
-                <a href="articles.html" class="hover:text-rosepine-love transition-colors">./articles</a>
+                <a href="articles.html" class="text-rosepine-love transition-colors">./articles</a>
             </div>
             <a id="nav-github" href="#" target="_blank" class="text-rosepine-text hover:text-rosepine-love transition-transform hover:scale-110">
                 <i class="ph ph-github-logo text-2xl"></i>
