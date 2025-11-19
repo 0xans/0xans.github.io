@@ -1,7 +1,7 @@
 {
   "profile": {
     "name": "Anas",
-    "role": "Red Teamer | Exploit Dev | eCPPT",
+    "role": "Red Teamer | Malware Dev | Rust | eCPPT",
     "bio": "I specialize in Network/Web Pentesting, Malware Development, and System Internals. Building advanced tooling and breaking complex systems.",
     "github": "https://github.com/0xans",
     "avatar": "https://avatars.githubusercontent.com/u/151745138?v=4"
@@ -34,11 +34,11 @@
   ],
   "articles": [
     {
-      "id": "still-not-created",
-      "title": "Still thinking about this",
+      "id": "red-team-ad",
+      "title": "Red Teaming Active Directory",
       "date": "2025-04-15",
-      "tags": ["Red Team?", "Network?", "AD?", "Malware?"],
-      "summary": "IDK actually.",
+      "tags": ["Red Team", "Network", "AD"],
+      "summary": "Strategies for lateral movement, kerberoasting, and domain dominance in hardened Windows environments.",
       "file": "posts/placeholder.md"
     }
   ]
