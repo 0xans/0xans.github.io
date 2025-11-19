@@ -14,120 +14,103 @@
             theme: {
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
-                    colors: { rosepine: { base: '#191724', surface: '#1f1d2e', overlay: '#26233a', text: '#e0def4', love: '#eb6f92', pine: '#31748f', foam: '#9ccfd8', gold: '#f6c177', muted: '#6e6a86', highlight: { low: '#21202e', med: '#403d52' } } },
-                    typography: (theme) => ({
-                        DEFAULT: {
-                            css: {
-                                color: theme('colors.rosepine.text'),
-                                h1: { color: theme('colors.rosepine.love'), fontFamily: theme('fontFamily.mono') },
-                                h2: { color: theme('colors.rosepine.foam'), marginTop: '2em' },
-                                h3: { color: theme('colors.rosepine.pine') },
-                                strong: { color: theme('colors.rosepine.love') },
-                                a: { color: theme('colors.rosepine.foam'), '&:hover': { color: theme('colors.rosepine.love') } },
-                                code: { color: theme('colors.rosepine.gold'), backgroundColor: theme('colors.rosepine.surface'), padding: '0.2em 0.4em', borderRadius: '0.25rem', fontWeight: '400' },
-                                'code::before': { content: '""' }, 'code::after': { content: '""' },
-                                pre: { backgroundColor: '#1f1d2e !important', color: '#e0def4', borderRadius: '0.5rem' },
-                                blockquote: { borderLeftColor: theme('colors.rosepine.love'), color: theme('colors.rosepine.muted') }
-                            }
-                        }
-                    })
+                    colors: {
+                        rosepine: { base: '#191724', surface: '#1f1d2e', overlay: '#26233a', muted: '#6e6a86', text: '#e0def4', love: '#eb6f92', gold: '#f6c177', rose: '#ebbcba', pine: '#31748f', foam: '#9ccfd8', iris: '#c4a7e7', highlight: { low: '#21202e', med: '#403d52' } }
+                    },
                 }
-            },
-            plugins: [
-                function({ addComponents, theme }) {
-                    addComponents({
-                        '.prose': { maxWidth: '65ch', marginLeft: 'auto', marginRight: 'auto' }
-                    })
-                }
-            ]
+            }
         }
     </script>
     <style>
         body { background-color: #191724; }
-        .article-content h1 { font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; color: #eb6f92; font-family: 'JetBrains Mono'; }
-        .article-content h2 { font-size: 1.5rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; color: #9ccfd8; }
+        .article-content h1 { font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; color: #eb6f92; font-family: 'JetBrains Mono'; margin-top: 2rem;}
+        .article-content h2 { font-size: 1.75rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; color: #9ccfd8; font-family: 'JetBrains Mono'; border-bottom: 1px solid #26233a; padding-bottom: 0.5rem; }
         .article-content h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 1rem; color: #31748f; }
-        .article-content p { margin-bottom: 1.25rem; line-height: 1.75; color: #908caa; }
+        .article-content p { margin-bottom: 1.25rem; line-height: 1.8; color: #e0def4; font-size: 1.05rem; }
         .article-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #908caa; }
         .article-content ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #908caa; }
-        .article-content pre { background: #1f1d2e; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin-bottom: 1.5rem; border: 1px solid #26233a; }
+        .article-content pre { background: #1f1d2e; padding: 1.5rem; border-radius: 0.5rem; overflow-x: auto; margin-top: 1.5rem; margin-bottom: 1.5rem; border: 1px solid #26233a; }
         .article-content code { font-family: 'JetBrains Mono'; font-size: 0.9em; color: #f6c177; }
+        .article-content blockquote { border-left: 4px solid #eb6f92; padding-left: 1rem; font-style: italic; color: #908caa; background: #1f1d2e; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 1.5rem; }
+        .article-content a { color: #ebbcba; text-decoration: underline; text-underline-offset: 4px; }
+        .article-content a:hover { color: #eb6f92; }
+        .article-content img { border-radius: 0.5rem; border: 1px solid #26233a; margin-top: 1.5rem; margin-bottom: 1.5rem; }
     </style>
 </head>
-<body class="antialiased text-rosepine-text">
+<body class="antialiased text-rosepine-text flex flex-col min-h-screen">
 
-    <nav class="fixed w-full z-50 backdrop-blur-md bg-rosepine-base/80 border-b border-rosepine-highlight-low">
-        <div class="max-w-3xl mx-auto px-6 h-16 flex items-center">
-            <a href="articles.html" class="flex items-center gap-2 text-rosepine-subtle hover:text-rosepine-love transition-colors font-mono text-sm">
-                <span>&larr; Back to Articles</span>
+    <nav class="fixed w-full z-50 backdrop-blur-md bg-rosepine-base/90 border-b border-rosepine-highlight-low">
+        <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="index.html" class="font-mono text-xl font-bold text-rosepine-rose hover:text-rosepine-love transition-colors">0xAns</a>
+            <div class="hidden md:flex space-x-8 font-mono text-sm text-rosepine-muted">
+                <a href="index.html#about" class="hover:text-rosepine-foam transition-colors">./about</a>
+                <a href="index.html#skills" class="hover:text-rosepine-gold transition-colors">./skills</a>
+                <a href="index.html#projects" class="hover:text-rosepine-iris transition-colors">./projects</a>
+                <a href="articles.html" class="text-rosepine-love transition-colors">./articles</a>
+            </div>
+            <a id="nav-github" href="#" target="_blank" class="text-rosepine-text hover:text-rosepine-love transition-transform hover:scale-110">
+                <i class="ph ph-github-logo text-2xl"></i>
             </a>
         </div>
     </nav>
 
-    <main class="max-w-3xl mx-auto px-6 pt-32 pb-20">
-        <div id="loading" class="text-center font-mono text-rosepine-muted animate-pulse">Initialising Reader...</div>
+    <main class="flex-grow max-w-3xl mx-auto px-6 pt-32 pb-20 w-full">
+        <a href="articles.html" class="inline-flex items-center gap-2 text-rosepine-muted hover:text-rosepine-love transition-colors mb-8 font-mono text-sm">
+            <i class="ph ph-arrow-left"></i> Back to Articles
+        </a>
+
+        <div id="loading" class="text-center font-mono text-rosepine-muted animate-pulse py-20">Initialising Reader...</div>
         
-        <article id="content-area" class="hidden">
+        <article id="content-area" class="hidden animate-fade-in">
             <header class="mb-10 pb-6 border-b border-rosepine-highlight-low">
                 <div class="flex gap-2 mb-4" id="tags-container"></div>
                 <h1 id="art-title" class="text-3xl md:text-4xl font-bold text-rosepine-text mb-4"></h1>
                 <div class="flex items-center gap-4 text-sm font-mono text-rosepine-muted">
+                    <i class="ph ph-calendar-blank text-rosepine-love"></i>
                     <span id="art-date"></span>
                     <span>•</span>
                     <span>By 0xAns</span>
                 </div>
             </header>
 
-            <div id="markdown-body" class="article-content font-sans text-lg"></div>
+            <div id="markdown-body" class="article-content"></div>
         </article>
     </main>
 
+    <footer class="py-10 text-center border-t border-rosepine-highlight-low bg-rosepine-base">
+        <p class="font-mono text-sm text-rosepine-muted">Designed with <span class="text-rosepine-love">♥</span> by 0xAns</p>
+    </footer>
+
     <script>
-        const fallbackData = {
-          "articles": [
-            { "id": "malware-dev-intro", "title": "Introduction to Malware Development: PE Parsing", "date": "2025-05-20", "tags": ["Malware Dev", "C++", "PE Header"], "summary": "...", "file": "posts/malware-dev-intro.md" },
-            { "id": "red-team-ad", "title": "Red Teaming Active Directory", "date": "2025-04-15", "tags": ["Red Team", "Network", "AD"], "summary": "...", "file": "posts/placeholder.md" }
-          ]
-        };
-
-        const fallbackMarkdown = {
-            "malware-dev-intro": "# Introduction to Malware Development: PE Parsing\n\nIn the world of **Malware Development**, understanding the **Portable Executable (PE)** format is non-negotiable.\n\n## Code Example (C++)\n\n```cpp\n#include <windows.h>\n// PEB Parsing logic here\n```\n\nThis is a preview mode fallback.",
-            "red-team-ad": "# Placeholder Article\n\nThis article is coming soon."
-        };
-
         const urlParams = new URLSearchParams(window.location.search);
         const articleId = urlParams.get('id');
 
         if (!articleId) {
             document.getElementById('loading').classList.remove('animate-pulse');
             document.getElementById('loading').innerHTML = `
-                <p class="text-rosepine-love mb-4 font-bold text-xl">No article specified</p>
-                <a href="articles.html" class="px-4 py-2 bg-rosepine-surface border border-rosepine-highlight-med rounded hover:border-rosepine-love text-rosepine-text transition-colors">Return to Articles</a>
+                <p class="text-rosepine-love mb-4 font-bold text-xl">No article ID specified</p>
             `;
         } else {
             fetch('data/content.json')
-                .then(r => { if(!r.ok) throw new Error('fail'); return r.json(); })
-                .catch(() => { console.warn('Using fallback JSON'); return fallbackData; })
+                .then(r => r.json())
                 .then(data => {
+                    if(data.profile) document.getElementById('nav-github').href = data.profile.github;
+
                     const article = data.articles.find(a => a.id === articleId);
                     if (!article) throw new Error('Article not found');
 
                     document.title = article.title + " | 0xAns";
                     document.getElementById('art-title').textContent = article.title;
                     document.getElementById('art-date').textContent = article.date;
+                    
                     const tagContainer = document.getElementById('tags-container');
-                    tagContainer.innerHTML = '';
                     article.tags.forEach(tag => {
-                        tagContainer.innerHTML += `<span class="px-2 py-1 text-xs font-mono bg-rosepine-highlight-low text-rosepine-foam rounded">${tag}</span>`;
+                        tagContainer.innerHTML += `<span class="px-2 py-1 text-xs font-mono bg-rosepine-highlight-low border border-rosepine-highlight-med text-rosepine-foam rounded">${tag}</span>`;
                     });
 
-                    return fetch(article.file)
-                        .then(r => { if(!r.ok) throw new Error('fail'); return r.text(); })
-                        .catch(() => { 
-                            console.warn('Using fallback Markdown'); 
-                            return fallbackMarkdown[articleId] || '# Error\nContent not found in fallback.'; 
-                        });
+                    return fetch(article.file);
                 })
+                .then(r => r.text())
                 .then(md => {
                     document.getElementById('markdown-body').innerHTML = marked.parse(md);
                     document.querySelectorAll('pre code').forEach((el) => hljs.highlightElement(el));
@@ -136,7 +119,7 @@
                 })
                 .catch(err => {
                     console.error(err);
-                    document.getElementById('loading').innerHTML = `<p class="text-rosepine-love">Error loading article.</p>`;
+                    document.getElementById('loading').innerHTML = `<p class="text-rosepine-love">Error: Could not load article.</p>`;
                 });
         }
     </script>
