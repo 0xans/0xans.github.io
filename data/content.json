@@ -34,11 +34,11 @@
   ],
   "articles": [
     {
-      "id": "red-team-ad",
-      "title": "Red Teaming Active Directory",
+      "id": "i-d-k",
+      "title": "IDK what should I talk about",
       "date": "2025-04-15",
-      "tags": ["Red Team", "Network", "AD"],
-      "summary": "Strategies for lateral movement, kerberoasting, and domain dominance in hardened Windows environments.",
+      "tags": ["Red Team?", "Malware?", "Network?", "AD?"],
+      "summary": "BlahBlahBlahBlahBlahBlahBlah",
       "file": "posts/placeholder.md"
     }
   ]
