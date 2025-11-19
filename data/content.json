@@ -34,19 +34,11 @@
   ],
   "articles": [
     {
-      "id": "malware-dev-intro",
-      "title": "Introduction to Malware Development: PE Parsing",
-      "date": "2025-05-20",
-      "tags": ["Malware Dev", "C++", "PE Header"],
-      "summary": "Understanding the Portable Executable (PE) format is crucial for malware development. This article covers the basics of parsing PE headers to find exported functions manually.",
-      "file": "posts/malware-dev-intro.md"
-    },
-    {
-      "id": "red-team-ad",
-      "title": "Red Teaming Active Directory",
+      "id": "still-not-created",
+      "title": "Still thinking about this",
       "date": "2025-04-15",
-      "tags": ["Red Team", "Network", "AD"],
-      "summary": "Strategies for lateral movement, kerberoasting, and domain dominance in hardened Windows environments.",
+      "tags": ["Red Team?", "Network?", "AD?", "Malware?"],
+      "summary": "IDK actually.",
       "file": "posts/placeholder.md"
     }
   ]
