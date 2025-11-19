@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading... | 0xAns</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+                    colors: { rosepine: { base: '#191724', surface: '#1f1d2e', overlay: '#26233a', text: '#e0def4', love: '#eb6f92', pine: '#31748f', foam: '#9ccfd8', gold: '#f6c177', muted: '#6e6a86', highlight: { low: '#21202e', med: '#403d52' } } },
+                    typography: (theme) => ({
+                        DEFAULT: {
+                            css: {
+                                color: theme('colors.rosepine.text'),
+                                h1: { color: theme('colors.rosepine.love'), fontFamily: theme('fontFamily.mono') },
+                                h2: { color: theme('colors.rosepine.foam'), marginTop: '2em' },
+                                h3: { color: theme('colors.rosepine.pine') },
+                                strong: { color: theme('colors.rosepine.love') },
+                                a: { color: theme('colors.rosepine.foam'), '&:hover': { color: theme('colors.rosepine.love') } },
+                                code: { color: theme('colors.rosepine.gold'), backgroundColor: theme('colors.rosepine.surface'), padding: '0.2em 0.4em', borderRadius: '0.25rem', fontWeight: '400' },
+                                'code::before': { content: '""' }, 'code::after': { content: '""' },
+                                pre: { backgroundColor: '#1f1d2e !important', color: '#e0def4', borderRadius: '0.5rem' },
+                                blockquote: { borderLeftColor: theme('colors.rosepine.love'), color: theme('colors.rosepine.muted') }
+                            }
+                        }
+                    })
+                }
+            },
+            plugins: [
+                function({ addComponents, theme }) {
+                    addComponents({
+                        '.prose': { maxWidth: '65ch', marginLeft: 'auto', marginRight: 'auto' }
+                    })
+                }
+            ]
+        }
+    </script>
+    <style>
+        body { background-color: #191724; }
+        .article-content h1 { font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; color: #eb6f92; font-family: 'JetBrains Mono'; }
+        .article-content h2 { font-size: 1.5rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; color: #9ccfd8; }
+        .article-content h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 1rem; color: #31748f; }
+        .article-content p { margin-bottom: 1.25rem; line-height: 1.75; color: #908caa; }
+        .article-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #908caa; }
+        .article-content ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #908caa; }
+        .article-content pre { background: #1f1d2e; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin-bottom: 1.5rem; border: 1px solid #26233a; }
+        .article-content code { font-family: 'JetBrains Mono'; font-size: 0.9em; color: #f6c177; }
+    </style>
+</head>
+<body class="antialiased text-rosepine-text">
+
+    <nav class="fixed w-full z-50 backdrop-blur-md bg-rosepine-base/80 border-b border-rosepine-highlight-low">
+        <div class="max-w-3xl mx-auto px-6 h-16 flex items-center">
+            <a href="articles.html" class="flex items-center gap-2 text-rosepine-subtle hover:text-rosepine-love transition-colors font-mono text-sm">
+                <span>&larr; Back to Articles</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="max-w-3xl mx-auto px-6 pt-32 pb-20">
+        <div id="loading" class="text-center font-mono text-rosepine-muted animate-pulse">Initialising Reader...</div>
+        
+        <article id="content-area" class="hidden">
+            <header class="mb-10 pb-6 border-b border-rosepine-highlight-low">
+                <div class="flex gap-2 mb-4" id="tags-container"></div>
+                <h1 id="art-title" class="text-3xl md:text-4xl font-bold text-rosepine-text mb-4"></h1>
+                <div class="flex items-center gap-4 text-sm font-mono text-rosepine-muted">
+                    <span id="art-date"></span>
+                    <span>•</span>
+                    <span>By 0xAns</span>
+                </div>
+            </header>
+
+            <div id="markdown-body" class="article-content font-sans text-lg"></div>
+        </article>
+    </main>
+
+    <script>
+        const fallbackData = {
+          "articles": [
+            { "id": "malware-dev-intro", "title": "Introduction to Malware Development: PE Parsing", "date": "2025-05-20", "tags": ["Malware Dev", "C++", "PE Header"], "summary": "...", "file": "posts/malware-dev-intro.md" },
+            { "id": "red-team-ad", "title": "Red Teaming Active Directory", "date": "2025-04-15", "tags": ["Red Team", "Network", "AD"], "summary": "...", "file": "posts/placeholder.md" }
+          ]
+        };
+
+        const fallbackMarkdown = {
+            "malware-dev-intro": "# Introduction to Malware Development: PE Parsing\n\nIn the world of **Malware Development**, understanding the **Portable Executable (PE)** format is non-negotiable.\n\n## Code Example (C++)\n\n```cpp\n#include <windows.h>\n// PEB Parsing logic here\n```\n\nThis is a preview mode fallback.",
+            "red-team-ad": "# Placeholder Article\n\nThis article is coming soon."
+        };
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const articleId = urlParams.get('id');
+
+        if (!articleId) {
+            document.getElementById('loading').classList.remove('animate-pulse');
+            document.getElementById('loading').innerHTML = `
+                <p class="text-rosepine-love mb-4 font-bold text-xl">No article specified</p>
+                <a href="articles.html" class="px-4 py-2 bg-rosepine-surface border border-rosepine-highlight-med rounded hover:border-rosepine-love text-rosepine-text transition-colors">Return to Articles</a>
+            `;
+        } else {
+            fetch('data/content.json')
+                .then(r => { if(!r.ok) throw new Error('fail'); return r.json(); })
+                .catch(() => { console.warn('Using fallback JSON'); return fallbackData; })
+                .then(data => {
+                    const article = data.articles.find(a => a.id === articleId);
+                    if (!article) throw new Error('Article not found');
+
+                    document.title = article.title + " | 0xAns";
+                    document.getElementById('art-title').textContent = article.title;
+                    document.getElementById('art-date').textContent = article.date;
+                    const tagContainer = document.getElementById('tags-container');
+                    tagContainer.innerHTML = '';
+                    article.tags.forEach(tag => {
+                        tagContainer.innerHTML += `<span class="px-2 py-1 text-xs font-mono bg-rosepine-highlight-low text-rosepine-foam rounded">${tag}</span>`;
+                    });
+
+                    return fetch(article.file)
+                        .then(r => { if(!r.ok) throw new Error('fail'); return r.text(); })
+                        .catch(() => { 
+                            console.warn('Using fallback Markdown'); 
+                            return fallbackMarkdown[articleId] || '# Error\nContent not found in fallback.'; 
+                        });
+                })
+                .then(md => {
+                    document.getElementById('markdown-body').innerHTML = marked.parse(md);
+                    document.querySelectorAll('pre code').forEach((el) => hljs.highlightElement(el));
+                    document.getElementById('loading').classList.add('hidden');
+                    document.getElementById('content-area').classList.remove('hidden');
+                })
+                .catch(err => {
+                    console.error(err);
+                    document.getElementById('loading').innerHTML = `<p class="text-rosepine-love">Error loading article.</p>`;
+                });
+        }
+    </script>
+</body>
+</html>
