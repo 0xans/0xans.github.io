@@ -1,4 +1,4 @@
-### [![Typing SVG](https://readme-typing-svg.demolab.com?font=Monaspace+Krypton&pause=1000&color=B5E845&vCenter=true&random=true&width=435&lines=hey%2C+it's+Anas!;Hex+dancing+in+dark+corners;Weaving+nightmares+in+assembly++;Summoning+shells+from+the+ether;Glib+jocks+quiz+nymph+to+vex+dwarf;Surfing+the+forbidden+waves)](https://git.io/typing-svg)
+### [![Typing SVG](https://readme-typing-svg.demolab.com?font=Monaspace+Krypton&pause=1000&color=eb6f92&vCenter=true&random=true&width=435&lines=hey%2C+it's+Anas!;Hex+dancing+in+dark+corners;Weaving+nightmares+in+assembly++;Summoning+shells+from+the+ether;Glib+jocks+quiz+nymph+to+vex+dwarf;Surfing+the+forbidden+waves)](https://git.io/typing-svg)
 ---
 `💡` **Whoami**: I am Anas, a cybersecurity student and offensive security enthusiast interested in web exploitation, offensive development, malware development, OS internals, and red teaming.
 
@@ -29,3 +29,4 @@
 
 `👨🏻‍💻` **Development**:<br>
 [![](https://skillicons.dev/icons?i=rust,python,bash,powershell,sqlite,notion,vim,visualstudio,vscode,arch,linux,windows,github,)](https://skillicons.dev)
+
