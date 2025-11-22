@@ -26,9 +26,10 @@
         }
     </script>
     <style>
-        /* Fix for layout shift */
         html { overflow-y: scroll; }
         body { background-color: #191724; color: #e0def4; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen">
@@ -50,10 +51,26 @@
     </nav>
 
     <main class="flex-grow max-w-3xl mx-auto px-6 pt-32 pb-20 w-full animate-fade-in">
-        <h1 class="text-4xl font-bold text-rosepine-text mb-2">Knowledge Base</h1>
-        <p class="text-rosepine-muted mb-12">Research, notes, and documentation.</p>
+        <div class="flex flex-col md:flex-row justify-between items-end md:items-center mb-8 gap-4">
+            <div>
+                <h1 class="text-4xl font-bold text-rosepine-text mb-2">Knowledge Base</h1>
+                <p class="text-rosepine-muted">Research, notes, and documentation.</p>
+            </div>
+        </div>
 
-        <div id="all-articles" class="grid gap-6">
+        <div class="sticky top-20 z-40 bg-rosepine-base/95 backdrop-blur py-4 mb-8 border-b border-rosepine-highlight-low">
+            <div class="relative mb-4">
+                <i class="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-rosepine-muted"></i>
+                <input type="text" id="search-bar" placeholder="Search articles..." 
+                    class="w-full bg-rosepine-surface border border-rosepine-highlight-med rounded-lg py-2 pl-10 pr-4 text-rosepine-text focus:outline-none focus:border-rosepine-love placeholder-rosepine-muted transition-colors">
+            </div>
+            
+            <div class="flex gap-2 overflow-x-auto scrollbar-hide pb-2" id="category-filters">
+                <button onclick="filterArticles('all')" class="cat-btn px-3 py-1 rounded-full text-sm font-mono border border-rosepine-love bg-rosepine-love/10 text-rosepine-love transition-colors" data-cat="all">All</button>
+            </div>
+        </div>
+
+        <div id="all-articles" class="grid gap-6 min-h-[200px]">
         </div>
     </main>
 
@@ -62,40 +79,100 @@
     </footer>
 
     <script>
+        let articlesData = [];
+        let currentCategory = 'all';
+
         async function loadData() {
             try {
                 const response = await fetch('data/content.json');
                 if (!response.ok) throw new Error('Failed');
-                return await response.json();
+                const data = await response.json();
+                
+                if(data && data.profile) {
+                    document.getElementById('nav-github').href = data.profile.github;
+                }
+                
+                if(data && data.articles) {
+                    articlesData = data.articles;
+                    setupCategories();
+                    renderArticles(articlesData);
+                }
             } catch (e) {
                 console.warn('Failed to load articles');
-                return null;
             }
         }
 
-        loadData().then(data => {
-            if(data && data.profile) {
-                document.getElementById('nav-github').href = data.profile.github;
-            }
+        function setupCategories() {
+            const categories = [...new Set(articlesData.map(a => a.category || 'Uncategorized'))];
+            const container = document.getElementById('category-filters');
             
-            const container = document.getElementById('all-articles');
-            if(data && data.articles) {
-                data.articles.forEach(art => {
-                    const card = `
-                    <a href="read.html?id=${art.id}" class="block p-6 bg-rosepine-surface rounded-xl border border-rosepine-highlight-low hover:border-rosepine-pine hover:translate-x-1 transition-all group">
-                        <div class="flex justify-between items-baseline mb-2">
-                            <h2 class="text-xl font-bold text-rosepine-text group-hover:text-rosepine-pine transition-colors">${art.title}</h2>
-                            <span class="font-mono text-xs text-rosepine-pine">${art.date}</span>
-                        </div>
-                        <p class="text-rosepine-muted text-sm mb-4">${art.summary}</p>
-                        <div class="flex gap-2">
-                            ${art.tags.map(t => `<span class="text-xs font-mono px-2 py-1 bg-rosepine-overlay rounded text-rosepine-text border border-rosepine-highlight-low">${t}</span>`).join('')}
-                        </div>
-                    </a>`;
-                    container.innerHTML += card;
-                });
-            }
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'cat-btn px-3 py-1 rounded-full text-sm font-mono border border-rosepine-highlight-med bg-rosepine-surface text-rosepine-muted hover:text-rosepine-text hover:border-rosepine-text transition-colors whitespace-nowrap';
+                btn.innerText = cat;
+                btn.onclick = () => filterArticles(cat);
+                btn.dataset.cat = cat;
+                container.appendChild(btn);
+            });
+        }
+
+        function filterArticles(category) {
+            currentCategory = category;
+            
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if(btn.dataset.cat === category) {
+                    btn.className = 'cat-btn px-3 py-1 rounded-full text-sm font-mono border border-rosepine-love bg-rosepine-love/10 text-rosepine-love transition-colors whitespace-nowrap';
+                } else {
+                    btn.className = 'cat-btn px-3 py-1 rounded-full text-sm font-mono border border-rosepine-highlight-med bg-rosepine-surface text-rosepine-muted hover:text-rosepine-text hover:border-rosepine-text transition-colors whitespace-nowrap';
+                }
+            });
+
+            const searchTerm = document.getElementById('search-bar').value.toLowerCase();
+            
+            const filtered = articlesData.filter(art => {
+                const matchesCat = category === 'all' || (art.category || 'Uncategorized') === category;
+                const matchesSearch = art.title.toLowerCase().includes(searchTerm) || 
+                                      art.summary.toLowerCase().includes(searchTerm) ||
+                                      art.tags.some(t => t.toLowerCase().includes(searchTerm));
+                return matchesCat && matchesSearch;
+            });
+
+            renderArticles(filtered);
+        }
+
+        document.getElementById('search-bar').addEventListener('input', () => {
+            filterArticles(currentCategory);
         });
+
+        function renderArticles(articles) {
+            const container = document.getElementById('all-articles');
+            container.innerHTML = '';
+            
+            if(articles.length === 0) {
+                container.innerHTML = `<div class="text-center py-10 text-rosepine-muted font-mono">No articles found.</div>`;
+                return;
+            }
+
+            articles.forEach(art => {
+                const card = `
+                <a href="read.html?id=${art.id}" class="block p-6 bg-rosepine-surface rounded-xl border border-rosepine-highlight-low hover:border-rosepine-pine hover:translate-x-1 transition-all group">
+                    <div class="flex justify-between items-baseline mb-2">
+                        <h2 class="text-xl font-bold text-rosepine-text group-hover:text-rosepine-pine transition-colors">${art.title}</h2>
+                        <span class="font-mono text-xs text-rosepine-pine whitespace-nowrap ml-4">${art.date}</span>
+                    </div>
+                    <div class="mb-3">
+                         <span class="text-xs font-mono text-rosepine-iris border border-rosepine-iris/30 px-2 py-0.5 rounded-md bg-rosepine-iris/5">${art.category || 'Uncategorized'}</span>
+                    </div>
+                    <p class="text-rosepine-muted text-sm mb-4">${art.summary}</p>
+                    <div class="flex gap-2 flex-wrap">
+                        ${art.tags.map(t => `<span class="text-xs font-mono px-2 py-1 bg-rosepine-overlay rounded text-rosepine-text border border-rosepine-highlight-low">${t}</span>`).join('')}
+                    </div>
+                </a>`;
+                container.innerHTML += card;
+            });
+        }
+
+        loadData();
     </script>
 </body>
 </html>
