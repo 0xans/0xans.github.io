@@ -41,6 +41,6 @@
       "summary": "Abusing Console APIs for indirect Memory Injection.",
       "tags": ["Rust", "Malware Dev", "Windows"],
       "file": "posts/MirrorGate.md"
-    },
+    }
   ]
 }
