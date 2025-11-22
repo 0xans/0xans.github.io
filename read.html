@@ -28,7 +28,6 @@
         }
     </script>
     <style>
-        /* Fix for layout shift */
         html { overflow-y: scroll; }
         body { background-color: #191724; }
         .article-content h1 { font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; color: #eb6f92; font-family: 'JetBrains Mono'; margin-top: 2rem;}
@@ -43,18 +42,25 @@
         .article-content a { color: #ebbcba; text-decoration: underline; text-underline-offset: 4px; }
         .article-content a:hover { color: #eb6f92; }
         .article-content img { border-radius: 0.5rem; border: 1px solid #26233a; margin-top: 1.5rem; margin-bottom: 1.5rem; }
+        
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #191724; }
+        ::-webkit-scrollbar-thumb { background: #26233a; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #403d52; }
     </style>
 </head>
-<body class="antialiased text-rosepine-text flex flex-col min-h-screen">
+<body class="antialiased text-rosepine-text flex flex-col h-screen overflow-hidden">
 
-    <nav class="fixed w-full z-50 backdrop-blur-md bg-rosepine-base/90 border-b border-rosepine-highlight-low">
-        <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-            <a href="index.html" class="font-mono text-xl font-bold text-rosepine-rose hover:text-rosepine-love transition-colors">0xAns</a>
+    <nav class="flex-none w-full z-50 backdrop-blur-md bg-rosepine-base/90 border-b border-rosepine-highlight-low">
+        <div class="w-full px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <button id="sidebar-toggle" class="lg:hidden text-rosepine-text hover:text-rosepine-love">
+                    <i class="ph ph-list text-2xl"></i>
+                </button>
+                <a href="index.html" class="font-mono text-xl font-bold text-rosepine-rose hover:text-rosepine-love transition-colors">0xAns</a>
+            </div>
             <div class="hidden md:flex space-x-8 font-mono text-sm text-rosepine-muted">
                 <a href="index.html" class="hover:text-rosepine-text transition-colors">./home</a>
-                <a href="index.html#about" class="hover:text-rosepine-foam transition-colors">./about</a>
-                <a href="index.html#skills" class="hover:text-rosepine-gold transition-colors">./skills</a>
-                <a href="index.html#projects" class="hover:text-rosepine-iris transition-colors">./projects</a>
                 <a href="articles.html" class="text-rosepine-love transition-colors">./articles</a>
             </div>
             <a id="nav-github" href="#" target="_blank" class="text-rosepine-text hover:text-rosepine-love transition-transform hover:scale-110">
@@ -63,74 +69,155 @@
         </div>
     </nav>
 
-    <main class="flex-grow max-w-3xl mx-auto px-6 pt-32 pb-20 w-full">
-        <a href="articles.html" class="inline-flex items-center gap-2 text-rosepine-muted hover:text-rosepine-love transition-colors mb-8 font-mono text-sm">
-            <i class="ph ph-arrow-left"></i> Back to Articles
-        </a>
-
-        <div id="loading" class="text-center font-mono text-rosepine-muted animate-pulse py-20">Initialising Reader...</div>
-        
-        <article id="content-area" class="hidden animate-fade-in">
-            <header class="mb-10 pb-6 border-b border-rosepine-highlight-low">
-                <div class="flex gap-2 mb-4" id="tags-container"></div>
-                <h1 id="art-title" class="text-3xl md:text-4xl font-bold text-rosepine-text mb-4"></h1>
-                <div class="flex items-center gap-4 text-sm font-mono text-rosepine-muted">
-                    <i class="ph ph-calendar-blank text-rosepine-love"></i>
-                    <span id="art-date"></span>
-                    <span>•</span>
-                    <span>By 0xAns</span>
+    <div class="flex flex-grow overflow-hidden relative">
+        <aside id="sidebar" class="absolute inset-y-0 left-0 transform -translate-x-full lg:relative lg:translate-x-0 lg:w-80 bg-rosepine-surface border-r border-rosepine-highlight-low z-40 transition-transform duration-300 flex flex-col">
+            <div class="p-4 border-b border-rosepine-highlight-low">
+                <div class="relative">
+                    <i class="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-rosepine-muted text-sm"></i>
+                    <input type="text" id="sidebar-search" placeholder="Filter articles..." 
+                        class="w-full bg-rosepine-base border border-rosepine-highlight-med rounded-md py-1.5 pl-9 pr-3 text-sm text-rosepine-text focus:outline-none focus:border-rosepine-love placeholder-rosepine-muted">
                 </div>
-            </header>
+            </div>
+            
+            <div class="flex-grow overflow-y-auto p-4" id="sidebar-list">
+            </div>
+        </aside>
 
-            <div id="markdown-body" class="article-content"></div>
-        </article>
-    </main>
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden lg:hidden"></div>
 
-    <footer class="py-10 text-center border-t border-rosepine-highlight-low bg-rosepine-base">
-        <p class="font-mono text-sm text-rosepine-muted">Designed with <span class="text-rosepine-love">♥</span> by 0xAns</p>
-    </footer>
+        <main class="flex-1 overflow-y-auto w-full" id="main-scroll">
+            <div class="max-w-3xl mx-auto px-6 py-12">
+                <div id="loading" class="text-center font-mono text-rosepine-muted animate-pulse py-20">Initialising Reader...</div>
+                
+                <article id="content-area" class="hidden">
+                    <header class="mb-10 pb-6 border-b border-rosepine-highlight-low">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex gap-2" id="tags-container"></div>
+                            <span id="art-category" class="text-xs font-mono text-rosepine-iris border border-rosepine-iris/30 px-2 py-0.5 rounded-md bg-rosepine-iris/5"></span>
+                        </div>
+                        <h1 id="art-title" class="text-3xl md:text-4xl font-bold text-rosepine-text mb-4"></h1>
+                        <div class="flex items-center gap-4 text-sm font-mono text-rosepine-muted">
+                            <i class="ph ph-calendar-blank text-rosepine-love"></i>
+                            <span id="art-date"></span>
+                            <span>•</span>
+                            <span>By 0xAns</span>
+                        </div>
+                    </header>
+
+                    <div id="markdown-body" class="article-content"></div>
+                </article>
+                
+                <footer class="mt-20 pt-10 border-t border-rosepine-highlight-low text-center">
+                    <p class="font-mono text-sm text-rosepine-muted">Designed with <span class="text-rosepine-love">♥</span> by 0xAns</p>
+                </footer>
+            </div>
+        </main>
+    </div>
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        const articleId = urlParams.get('id');
+        const currentArticleId = urlParams.get('id');
+        let allArticles = [];
 
-        if (!articleId) {
-            document.getElementById('loading').classList.remove('animate-pulse');
-            document.getElementById('loading').innerHTML = `
-                <p class="text-rosepine-love mb-4 font-bold text-xl">No article ID specified</p>
-            `;
-        } else {
-            fetch('data/content.json')
-                .then(r => r.json())
-                .then(data => {
-                    if(data.profile) document.getElementById('nav-github').href = data.profile.github;
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
 
-                    const article = data.articles.find(a => a.id === articleId);
-                    if (!article) throw new Error('Article not found');
-
-                    document.title = article.title + " | 0xAns";
-                    document.getElementById('art-title').textContent = article.title;
-                    document.getElementById('art-date').textContent = article.date;
-                    
-                    const tagContainer = document.getElementById('tags-container');
-                    article.tags.forEach(tag => {
-                        tagContainer.innerHTML += `<span class="px-2 py-1 text-xs font-mono bg-rosepine-highlight-low border border-rosepine-highlight-med text-rosepine-foam rounded">${tag}</span>`;
-                    });
-
-                    return fetch(article.file);
-                })
-                .then(r => r.text())
-                .then(md => {
-                    document.getElementById('markdown-body').innerHTML = marked.parse(md);
-                    document.querySelectorAll('pre code').forEach((el) => hljs.highlightElement(el));
-                    document.getElementById('loading').classList.add('hidden');
-                    document.getElementById('content-area').classList.remove('hidden');
-                })
-                .catch(err => {
-                    console.error(err);
-                    document.getElementById('loading').innerHTML = `<p class="text-rosepine-love">Error: Could not load article.</p>`;
-                });
+        function toggleSidebar() {
+            const isClosed = sidebar.classList.contains('-translate-x-full');
+            if (isClosed) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
         }
+
+        sidebarToggle.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+
+        function renderSidebar(articles) {
+            const container = document.getElementById('sidebar-list');
+            container.innerHTML = '';
+            
+            const categories = {};
+            articles.forEach(art => {
+                const cat = art.category || 'Uncategorized';
+                if(!categories[cat]) categories[cat] = [];
+                categories[cat].push(art);
+            });
+
+            for (const [cat, items] of Object.entries(categories)) {
+                const catHeader = document.createElement('h3');
+                catHeader.className = 'text-xs font-bold font-mono text-rosepine-iris uppercase tracking-wider mb-2 mt-4 first:mt-0';
+                catHeader.textContent = cat;
+                container.appendChild(catHeader);
+
+                const ul = document.createElement('ul');
+                ul.className = 'space-y-1 mb-4';
+                
+                items.forEach(art => {
+                    const li = document.createElement('li');
+                    const isActive = art.id === currentArticleId;
+                    
+                    li.innerHTML = `
+                        <a href="read.html?id=${art.id}" class="block text-sm py-1.5 px-3 rounded-md transition-colors ${isActive ? 'bg-rosepine-highlight-med text-rosepine-rose font-semibold' : 'text-rosepine-muted hover:text-rosepine-text hover:bg-rosepine-overlay'}">
+                            ${art.title}
+                        </a>
+                    `;
+                    ul.appendChild(li);
+                });
+                container.appendChild(ul);
+            }
+        }
+
+        document.getElementById('sidebar-search').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = allArticles.filter(a => a.title.toLowerCase().includes(term));
+            renderSidebar(filtered);
+        });
+
+        fetch('data/content.json')
+            .then(r => r.json())
+            .then(data => {
+                if(data.profile) document.getElementById('nav-github').href = data.profile.github;
+                
+                if(data.articles) {
+                    allArticles = data.articles;
+                    renderSidebar(allArticles);
+
+                    if (currentArticleId) {
+                        const article = data.articles.find(a => a.id === currentArticleId);
+                        if (article) {
+                            document.title = article.title + " | 0xAns";
+                            document.getElementById('art-title').textContent = article.title;
+                            document.getElementById('art-date').textContent = article.date;
+                            document.getElementById('art-category').textContent = article.category || 'Article';
+                            
+                            const tagContainer = document.getElementById('tags-container');
+                            article.tags.forEach(tag => {
+                                tagContainer.innerHTML += `<span class="px-2 py-1 text-xs font-mono bg-rosepine-highlight-low border border-rosepine-highlight-med text-rosepine-foam rounded">${tag}</span>`;
+                            });
+
+                            fetch(article.file)
+                                .then(r => r.text())
+                                .then(md => {
+                                    document.getElementById('markdown-body').innerHTML = marked.parse(md);
+                                    document.querySelectorAll('pre code').forEach((el) => hljs.highlightElement(el));
+                                    document.getElementById('loading').classList.add('hidden');
+                                    document.getElementById('content-area').classList.remove('hidden');
+                                });
+                        }
+                    } else {
+                         document.getElementById('loading').innerHTML = `<p class="text-rosepine-love">Select an article from the sidebar.</p>`;
+                    }
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                document.getElementById('loading').innerHTML = `<p class="text-rosepine-love">Error loading content.</p>`;
+            });
     </script>
 </body>
 </html>
