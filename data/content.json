@@ -1,7 +1,7 @@
 {
   "profile": {
     "name": "Anas",
-    "role": "Red Teamer | Malware Dev | Rust | eCPPT",
+    "role": "Red Teamer | Exploit Dev | eCPPT",
     "bio": "I specialize in Network/Web Pentesting, Malware Development, and System Internals. Building advanced tooling and breaking complex systems.",
     "github": "https://github.com/0xans",
     "avatar": "https://avatars.githubusercontent.com/u/151745138?v=4"
@@ -23,23 +23,24 @@
       "title": "CORS Scanner",
       "description": "A Python tool that scans for Cross-Origin Resource Sharing (CORS) vulnerabilities.",
       "tags": ["Python", "Web Sec", "Automation"],
-      "link": "https://github.com/0xans/cors"
+      "link": "https://github.com/0xans/CORS-Scanner"
     },
     {
       "title": "BoF ToolKit",
-      "description": "A toolkit assisting in identifying and exploiting buffer overflow vulnerabilities.",
-      "tags": ["Python", "Exploitation", "Memory"],
-      "link": "https://github.com/0xans/BufferOverflowToolkit"
+      "description": "A toolkit that assists in identifying and exploiting buffer overflow vulnerabilities.",
+      "tags": ["Python", "Exploit Dev", "Binary"],
+      "link": "https://github.com/0xans/BoF-ToolKit"
     }
   ],
   "articles": [
     {
-      "id": "i-d-k",
-      "title": "IDK what should I talk about",
-      "date": "2025-04-15",
-      "tags": ["Red Team?", "Malware?", "Network?", "AD?"],
-      "summary": "BlahBlahBlahBlahBlahBlahBlah",
-      "file": "posts/placeholder.md"
-    }
+      "id": "malware-dev-mirror-gate",
+      "title": "MirrorGate",
+      "date": "2025-11-22",
+      "category": "Malware Development",
+      "summary": "Abusing Console APIs for indirect Memory Injection.",
+      "tags": ["Rust", "Malware Dev", "Windows"],
+      "file": "posts/MirrorGate.md"
+    },
   ]
 }
