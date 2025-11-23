@@ -60,8 +60,8 @@
         "Malware Dev",
         "Windows"
       ],
-      "file": "posts/MirrorGate.md",
-      "cover_image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop"
+      "cover": "https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=2574&auto=format&fit=crop",
+      "file": "posts/MirrorGate.md"
     }
   ]
 }
