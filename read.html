@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reading... | 0xAns</title>
+    <title>Reader | 0xAns</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     
@@ -21,109 +21,220 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                     colors: {
-                        rosepine: { base: '#191724', surface: '#1f1d2e', overlay: '#26233a', muted: '#6e6a86', text: '#e0def4', love: '#eb6f92', gold: '#f6c177', rose: '#ebbcba', pine: '#31748f', foam: '#9ccfd8', iris: '#c4a7e7', highlight: { low: '#21202e', med: '#403d52' } }
-                    },
+                        rosepine: { base: '#191724', surface: '#1f1d2e', overlay: '#26233a', muted: '#6e6a86', text: '#e0def4', love: '#eb6f92', gold: '#f6c177', rose: '#ebbcba', pine: '#31748f', foam: '#9ccfd8', iris: '#c4a7e7', highlight: { low: '#21202e', med: '#403d52', high: '#524f67' } }
+                    }
                 }
             }
         }
     </script>
+
     <style>
-        html { overflow-y: scroll; }
-        body { background-color: #191724; }
-        .article-content h1 { font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; color: #eb6f92; font-family: 'JetBrains Mono'; margin-top: 2rem;}
-        .article-content h2 { font-size: 1.75rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; color: #9ccfd8; font-family: 'JetBrains Mono'; border-bottom: 1px solid #26233a; padding-bottom: 0.5rem; }
-        .article-content h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 1rem; color: #31748f; }
-        .article-content p { margin-bottom: 1.25rem; line-height: 1.8; color: #e0def4; font-size: 1.05rem; }
-        .article-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #908caa; }
-        .article-content ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #908caa; }
-        .article-content pre { background: #1f1d2e; padding: 1.5rem; border-radius: 0.5rem; overflow-x: auto; margin-top: 1.5rem; margin-bottom: 1.5rem; border: 1px solid #26233a; }
-        .article-content code { font-family: 'JetBrains Mono'; font-size: 0.9em; color: #f6c177; }
-        .article-content blockquote { border-left: 4px solid #eb6f92; padding-left: 1rem; font-style: italic; color: #908caa; background: #1f1d2e; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 1.5rem; }
-        .article-content a { color: #ebbcba; text-decoration: underline; text-underline-offset: 4px; }
-        .article-content a:hover { color: #eb6f92; }
-        .article-content img { border-radius: 0.5rem; border: 1px solid #26233a; margin-top: 1.5rem; margin-bottom: 1.5rem; }
-        
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #191724; }
+        body { background-color: #191724; overflow: hidden; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #26233a; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #403d52; }
+
+        .article-content { font-size: 1.05rem; color: #e0def4; line-height: 1.8; }
+        
+        .article-content h1, .article-content h2, .article-content h3 { font-family: 'JetBrains Mono'; margin-top: 2em; margin-bottom: 0.75em; }
+        .article-content h1 { font-size: 2.25rem; font-weight: 700; color: #eb6f92; border-bottom: 1px solid #26233a; padding-bottom: 0.5rem; }
+        .article-content h2 { font-size: 1.75rem; font-weight: 600; color: #9ccfd8; }
+        .article-content h3 { font-size: 1.4rem; font-weight: 600; color: #c4a7e7; }
+        
+        .article-content p { margin-bottom: 1.25em; }
+        .article-content a { color: #ebbcba; text-decoration: underline; text-underline-offset: 4px; transition: color 0.2s; }
+        .article-content a:hover { color: #eb6f92; }
+        .article-content blockquote { border-left: 4px solid #eb6f92; background: #1f1d2e; padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin: 1.5rem 0; color: #908caa; font-style: italic; }
+        .article-content strong { color: #f6c177; font-weight: 600; }
+        
+        .article-content ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #908caa; }
+        .article-content ol { list-style: decimal; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #908caa; }
+        .article-content li { margin-bottom: 0.5em; }
+        
+        .article-content pre { background: #1f1d2e !important; padding: 1rem; border-radius: 0.5rem; border: 1px solid #26233a; margin: 1.5rem 0; overflow-x: auto; }
+        .article-content code { font-family: 'JetBrains Mono'; font-size: 0.9em; background: #26233a; padding: 0.2em 0.4em; rounded: 0.25rem; color: #e0def4; border-radius: 4px; }
+        .article-content pre code { background: transparent; padding: 0; color: inherit; }
+        
+        .article-content img { max-width: 100%; height: auto; display: block; margin: 2rem auto; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); border: 1px solid #26233a; }
+        
+        .article-content table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.95rem; }
+        .article-content th { background: #1f1d2e; color: #9ccfd8; font-weight: 600; text-align: left; padding: 0.75rem; border-bottom: 2px solid #26233a; }
+        .article-content td { padding: 0.75rem; border-bottom: 1px solid #26233a; color: #908caa; }
+        .article-content tr:hover td { background: #21202e; }
+
+        .search-match { background-color: rgba(235, 111, 146, 0.2); color: #eb6f92; font-weight: bold; border-radius: 2px; padding: 0 2px; }
+
+        .resizer { width: 4px; cursor: col-resize; background: transparent; transition: background 0.2s; z-index: 50; flex-shrink: 0; }
+        .resizer:hover, .resizer.active { background: #eb6f92; }
     </style>
 </head>
-<body class="antialiased text-rosepine-text flex flex-col h-screen overflow-hidden">
+<body class="antialiased text-rosepine-text flex h-screen w-screen">
 
-    <nav class="flex-none w-full z-50 backdrop-blur-md bg-rosepine-base/90 border-b border-rosepine-highlight-low">
-        <div class="w-full px-6 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <button id="sidebar-toggle" class="lg:hidden text-rosepine-text hover:text-rosepine-love">
-                    <i class="ph ph-list text-2xl"></i>
-                </button>
-                <a href="index.html" class="font-mono text-xl font-bold text-rosepine-rose hover:text-rosepine-love transition-colors">0xAns</a>
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-30 hidden lg:hidden backdrop-blur-sm transition-opacity"></div>
+
+    <aside id="sidebar" class="bg-rosepine-surface border-r border-rosepine-highlight-low flex flex-col h-full absolute lg:relative z-40 transition-transform duration-300 -translate-x-full lg:translate-x-0 w-[280px] shrink-0">
+        
+        <div class="h-14 flex items-center justify-between px-4 border-b border-rosepine-highlight-low shrink-0">
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-rosepine-love"></div>
+                <span class="font-mono font-bold text-rosepine-text">0xAns</span>
             </div>
-            <div class="hidden md:flex space-x-8 font-mono text-sm text-rosepine-muted">
-                <a href="index.html" class="hover:text-rosepine-text transition-colors">./home</a>
-                <a href="articles.html" class="text-rosepine-love transition-colors">./articles</a>
+            <button id="collapse-btn" class="hidden lg:flex p-1 hover:bg-rosepine-overlay rounded text-rosepine-muted hover:text-rosepine-text transition-colors" title="Close Sidebar">
+                <i class="ph ph-arrows-in-line-horizontal"></i>
+            </button>
+            <button id="mobile-close-btn" class="lg:hidden p-1 text-rosepine-love">
+                <i class="ph ph-x text-lg"></i>
+            </button>
+        </div>
+
+        <div class="p-3 shrink-0">
+            <div class="relative group">
+                <i class="ph ph-magnifying-glass absolute left-2.5 top-1/2 -translate-y-1/2 text-rosepine-muted group-focus-within:text-rosepine-love transition-colors text-sm"></i>
+                <input type="text" id="sidebar-search" placeholder="Search..." 
+                    class="w-full bg-rosepine-base/50 border border-rosepine-highlight-med rounded-md py-1.5 pl-8 pr-3 text-sm text-rosepine-text focus:outline-none focus:border-rosepine-love focus:bg-rosepine-base transition-all placeholder-rosepine-highlight-high">
             </div>
-            <a id="nav-github" href="#" target="_blank" class="text-rosepine-text hover:text-rosepine-love transition-transform hover:scale-110">
-                <i class="ph ph-github-logo text-2xl"></i>
+        </div>
+        
+        <div class="flex-grow overflow-y-auto px-3 pb-4 space-y-6" id="sidebar-list">
+            </div>
+
+        <div class="p-4 border-t border-rosepine-highlight-low shrink-0">
+            <a id="nav-github" href="#" target="_blank" class="flex items-center gap-2 text-xs font-mono text-rosepine-muted hover:text-rosepine-love transition-colors">
+                <i class="ph ph-github-logo text-lg"></i>
+                <span>github.com/0xAns</span>
             </a>
         </div>
-    </nav>
+    </aside>
 
-    <div class="flex flex-grow overflow-hidden relative">
-        <aside id="sidebar" class="absolute inset-y-0 left-0 transform -translate-x-full lg:relative lg:translate-x-0 lg:w-80 bg-rosepine-surface border-r border-rosepine-highlight-low z-40 transition-transform duration-300 flex flex-col">
-            <div class="p-4 border-b border-rosepine-highlight-low">
-                <div class="relative">
-                    <i class="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-rosepine-muted text-sm"></i>
-                    <input type="text" id="sidebar-search" placeholder="Filter articles..." 
-                        class="w-full bg-rosepine-base border border-rosepine-highlight-med rounded-md py-1.5 pl-9 pr-3 text-sm text-rosepine-text focus:outline-none focus:border-rosepine-love placeholder-rosepine-muted">
+    <div id="resizer" class="resizer hidden lg:block"></div>
+
+    <main class="flex-1 flex flex-col h-full min-w-0 bg-rosepine-base relative">
+        
+        <header class="h-14 border-b border-rosepine-highlight-low flex items-center px-6 justify-between bg-rosepine-base/95 backdrop-blur z-20 sticky top-0">
+            <div class="flex items-center gap-3">
+                <button id="mobile-menu-btn" class="lg:hidden text-rosepine-text hover:text-rosepine-love">
+                    <i class="ph ph-list text-xl"></i>
+                </button>
+                
+                <button id="expand-btn" class="hidden text-rosepine-muted hover:text-rosepine-love transition-colors" title="Open Sidebar">
+                    <i class="ph ph-sidebar text-xl"></i>
+                </button>
+
+                <div class="hidden sm:flex items-center gap-2 text-sm font-mono text-rosepine-muted" id="breadcrumbs">
+                    <span>/</span>
+                    <span class="text-rosepine-text" id="crumb-title">Select an article</span>
                 </div>
             </div>
             
-            <div class="flex-grow overflow-y-auto p-4" id="sidebar-list">
+            <div class="flex gap-4 text-sm font-mono">
+                 <a href="index.html" class="text-rosepine-rose hover:text-rosepine-love">./home</a>
             </div>
-        </aside>
+        </header>
 
-        <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden lg:hidden"></div>
-
-        <main class="flex-1 overflow-y-auto w-full" id="main-scroll">
+        <div id="main-scroll" class="flex-1 overflow-y-auto scroll-smooth">
             <div class="max-w-3xl mx-auto px-6 py-12">
-                <div id="loading" class="text-center font-mono text-rosepine-muted animate-pulse py-20">Initialising Reader...</div>
                 
-                <article id="content-area" class="hidden">
+                <div id="loading" class="flex flex-col items-center justify-center py-20 text-rosepine-muted animate-pulse">
+                    <i class="ph ph-spinner-gap text-3xl mb-4 animate-spin"></i>
+                    <span class="font-mono text-sm">Initialising Reader...</span>
+                </div>
+                
+                <article id="content-area" class="hidden fade-in">
                     <header class="mb-10 pb-6 border-b border-rosepine-highlight-low">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="flex gap-2" id="tags-container"></div>
-                            <span id="art-category" class="text-xs font-mono text-rosepine-iris border border-rosepine-iris/30 px-2 py-0.5 rounded-md bg-rosepine-iris/5"></span>
-                        </div>
-                        <h1 id="art-title" class="text-3xl md:text-4xl font-bold text-rosepine-text mb-4"></h1>
-                        <div class="flex items-center gap-4 text-sm font-mono text-rosepine-muted">
-                            <i class="ph ph-calendar-blank text-rosepine-love"></i>
-                            <span id="art-date"></span>
-                            <span>•</span>
-                            <span>By 0xAns</span>
+                        <div class="flex flex-wrap gap-2 mb-4" id="tags-container"></div>
+                        
+                        <h1 id="art-title" class="text-3xl md:text-4xl font-bold text-rosepine-text mb-4 font-mono"></h1>
+                        
+                        <div class="flex flex-wrap items-center gap-4 text-sm font-mono text-rosepine-muted">
+                            <div class="flex items-center gap-1.5">
+                                <i class="ph ph-calendar-blank text-rosepine-love"></i>
+                                <span id="art-date"></span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <i class="ph ph-folder-open text-rosepine-foam"></i>
+                                <span id="art-category"></span>
+                            </div>
                         </div>
                     </header>
 
                     <div id="markdown-body" class="article-content"></div>
                 </article>
                 
-                <footer class="mt-20 pt-10 border-t border-rosepine-highlight-low text-center">
-                    <p class="font-mono text-sm text-rosepine-muted">Designed with <span class="text-rosepine-love">♥</span> by 0xAns</p>
+                <footer class="mt-20 pt-10 border-t border-rosepine-highlight-low text-center pb-10">
+                    <p class="font-mono text-sm text-rosepine-muted">0xAns Reader Engine v2.0</p>
                 </footer>
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const currentArticleId = urlParams.get('id');
         let allArticles = [];
-
-        const sidebarToggle = document.getElementById('sidebar-toggle');
+        
         const sidebar = document.getElementById('sidebar');
+        const resizer = document.getElementById('resizer');
+        const collapseBtn = document.getElementById('collapse-btn');
+        const expandBtn = document.getElementById('expand-btn');
+        
+        let sidebarWidth = parseInt(localStorage.getItem('sidebarWidth')) || 280;
+        let isSidebarOpen = localStorage.getItem('isSidebarOpen') !== 'false';
+
+        function setSidebarState(isOpen, width) {
+            if (!isOpen) {
+                sidebar.style.display = 'none';
+                resizer.style.display = 'none';
+                expandBtn.classList.remove('hidden');
+            } else {
+                sidebar.style.display = 'flex';
+                resizer.style.display = 'block';
+                sidebar.style.width = `${width}px`;
+                expandBtn.classList.add('hidden');
+            }
+            localStorage.setItem('isSidebarOpen', isOpen);
+            localStorage.setItem('sidebarWidth', width);
+        }
+
+        if (window.innerWidth >= 1024) {
+            setSidebarState(isSidebarOpen, sidebarWidth);
+        }
+
+        let isResizing = false;
+
+        resizer.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            document.body.style.cursor = 'col-resize';
+            resizer.classList.add('active');
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isResizing) return;
+            let newWidth = e.clientX;
+            if (newWidth < 200) newWidth = 200;
+            if (newWidth > 500) newWidth = 500;
+            
+            sidebarWidth = newWidth;
+            sidebar.style.width = `${newWidth}px`;
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (isResizing) {
+                isResizing = false;
+                document.body.style.cursor = 'default';
+                resizer.classList.remove('active');
+                localStorage.setItem('sidebarWidth', sidebarWidth);
+            }
+        });
+
+        collapseBtn.addEventListener('click', () => setSidebarState(false, sidebarWidth));
+        expandBtn.addEventListener('click', () => setSidebarState(true, sidebarWidth));
+
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileCloseBtn = document.getElementById('mobile-close-btn');
         const overlay = document.getElementById('sidebar-overlay');
 
-        function toggleSidebar() {
+        function toggleMobileMenu() {
             const isClosed = sidebar.classList.contains('-translate-x-full');
             if (isClosed) {
                 sidebar.classList.remove('-translate-x-full');
@@ -134,36 +245,55 @@
             }
         }
 
-        sidebarToggle.addEventListener('click', toggleSidebar);
-        overlay.addEventListener('click', toggleSidebar);
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        mobileCloseBtn.addEventListener('click', toggleMobileMenu);
+        overlay.addEventListener('click', toggleMobileMenu);
 
-        function renderSidebar(articles) {
+        function highlightMatch(text, term) {
+            if (!term) return text;
+            const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const regex = new RegExp(`(${escapedTerm})`, 'gi');
+            return text.replace(regex, '<span class="search-match">$1</span>');
+        }
+
+        function renderSidebar(articles, searchTerm = "") {
             const container = document.getElementById('sidebar-list');
             container.innerHTML = '';
             
             const categories = {};
             articles.forEach(art => {
-                const cat = art.category || 'Uncategorized';
+                const cat = art.category || 'General';
                 if(!categories[cat]) categories[cat] = [];
                 categories[cat].push(art);
             });
 
+            const hasResults = Object.keys(categories).length > 0;
+
+            if (!hasResults) {
+                container.innerHTML = `<div class="text-xs text-rosepine-muted text-center italic mt-4">No matching articles found.</div>`;
+                return;
+            }
+
             for (const [cat, items] of Object.entries(categories)) {
                 const catHeader = document.createElement('h3');
-                catHeader.className = 'text-xs font-bold font-mono text-rosepine-iris uppercase tracking-wider mb-2 mt-4 first:mt-0';
+                catHeader.className = 'text-[11px] font-bold font-mono text-rosepine-muted uppercase tracking-wider mb-2 mt-2 px-2';
                 catHeader.textContent = cat;
                 container.appendChild(catHeader);
 
                 const ul = document.createElement('ul');
-                ul.className = 'space-y-1 mb-4';
+                ul.className = 'space-y-0.5 mb-4';
                 
                 items.forEach(art => {
                     const li = document.createElement('li');
                     const isActive = art.id === currentArticleId;
                     
+                    const displayTitle = highlightMatch(art.title, searchTerm);
+                    
                     li.innerHTML = `
-                        <a href="read.html?id=${art.id}" class="block text-sm py-1.5 px-3 rounded-md transition-colors ${isActive ? 'bg-rosepine-highlight-med text-rosepine-rose font-semibold' : 'text-rosepine-muted hover:text-rosepine-text hover:bg-rosepine-overlay'}">
-                            ${art.title}
+                        <a href="?id=${art.id}" class="block text-[13px] py-1.5 px-2.5 rounded transition-all truncate border border-transparent ${isActive 
+                            ? 'bg-rosepine-highlight-low border-rosepine-highlight-med text-rosepine-rose font-medium shadow-sm' 
+                            : 'text-rosepine-subtle hover:text-rosepine-text hover:bg-rosepine-surface hover:border-rosepine-highlight-low'}">
+                            ${displayTitle}
                         </a>
                     `;
                     ul.appendChild(li);
@@ -175,7 +305,12 @@
         document.getElementById('sidebar-search').addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
             const filtered = allArticles.filter(a => a.title.toLowerCase().includes(term));
-            renderSidebar(filtered);
+            renderSidebar(filtered, e.target.value);
+        });
+
+        marked.use({ 
+            gfm: true,
+            breaks: true 
         });
 
         fetch('data/content.json')
@@ -192,31 +327,46 @@
                         if (article) {
                             document.title = article.title + " | 0xAns";
                             document.getElementById('art-title').textContent = article.title;
+                            document.getElementById('crumb-title').textContent = article.title;
                             document.getElementById('art-date').textContent = article.date;
                             document.getElementById('art-category').textContent = article.category || 'Article';
                             
                             const tagContainer = document.getElementById('tags-container');
                             article.tags.forEach(tag => {
-                                tagContainer.innerHTML += `<span class="px-2 py-1 text-xs font-mono bg-rosepine-highlight-low border border-rosepine-highlight-med text-rosepine-foam rounded">${tag}</span>`;
+                                tagContainer.innerHTML += `
+                                    <span class="px-2 py-0.5 text-[10px] font-mono bg-rosepine-highlight-low border border-rosepine-highlight-med text-rosepine-iris rounded-md opacity-80 hover:opacity-100 transition-opacity">#${tag}</span>
+                                `;
                             });
 
                             fetch(article.file)
                                 .then(r => r.text())
                                 .then(md => {
-                                    document.getElementById('markdown-body').innerHTML = marked.parse(md);
+                                    const contentDiv = document.getElementById('markdown-body');
+                                    contentDiv.innerHTML = marked.parse(md);
+                                    
+                                    // Apply Highlight.js
                                     document.querySelectorAll('pre code').forEach((el) => hljs.highlightElement(el));
+                                    
+                                    // UI State Update
                                     document.getElementById('loading').classList.add('hidden');
                                     document.getElementById('content-area').classList.remove('hidden');
+                                })
+                                .catch(err => {
+                                     document.getElementById('loading').innerHTML = `<p class="text-rosepine-love">Failed to load markdown file.</p>`;
                                 });
                         }
                     } else {
-                         document.getElementById('loading').innerHTML = `<p class="text-rosepine-love">Select an article from the sidebar.</p>`;
+                         document.getElementById('loading').innerHTML = `
+                            <div class="text-center">
+                                <i class="ph ph-book-open text-4xl text-rosepine-iris mb-4"></i>
+                                <p class="text-rosepine-text">Select an article from the sidebar to begin reading.</p>
+                            </div>`;
                     }
                 }
             })
             .catch(err => {
                 console.error(err);
-                document.getElementById('loading').innerHTML = `<p class="text-rosepine-love">Error loading content.</p>`;
+                document.getElementById('loading').innerHTML = `<p class="text-rosepine-love">Error loading content data.</p>`;
             });
     </script>
 </body>
