@@ -10,25 +10,41 @@
     {
       "title": "Process Injector",
       "description": "A Rust-based tool designed for process injection using WinAPI and NativeAPI.",
-      "tags": ["Rust", "WinAPI", "Malware"],
+      "tags": [
+        "Rust",
+        "WinAPI",
+        "Malware"
+      ],
       "link": "https://github.com/0xans/process-injector"
     },
     {
       "title": "DLL Injector",
       "description": "Advanced tool performing DLL injection, useful for testing application defenses and red teaming.",
-      "tags": ["Rust", "Injection", "Security"],
+      "tags": [
+        "Rust",
+        "Injection",
+        "Security"
+      ],
       "link": "https://github.com/0xans/DLLinjection"
     },
     {
       "title": "CORS Scanner",
       "description": "A Python tool that scans for Cross-Origin Resource Sharing (CORS) vulnerabilities.",
-      "tags": ["Python", "Web Sec", "Automation"],
+      "tags": [
+        "Python",
+        "Web Sec",
+        "Automation"
+      ],
       "link": "https://github.com/0xans/CORS-Scanner"
     },
     {
       "title": "BoF ToolKit",
       "description": "A toolkit that assists in identifying and exploiting buffer overflow vulnerabilities.",
-      "tags": ["Python", "Exploit Dev", "Binary"],
+      "tags": [
+        "Python",
+        "Exploit Dev",
+        "Binary"
+      ],
       "link": "https://github.com/0xans/BoF-ToolKit"
     }
   ],
@@ -39,8 +55,13 @@
       "date": "2025-11-22",
       "category": "Malware Development",
       "summary": "Abusing Console APIs for indirect Memory Injection.",
-      "tags": ["Rust", "Malware Dev", "Windows"],
-      "file": "posts/MirrorGate.md"
+      "tags": [
+        "Rust",
+        "Malware Dev",
+        "Windows"
+      ],
+      "file": "posts/MirrorGate.md",
+      "cover_image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop"
     }
   ]
 }
