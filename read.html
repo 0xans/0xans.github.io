@@ -1,336 +1,481 @@
 <!DOCTYPE html>
-
-<html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Reader | 0xAns</title> <link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<script src="[https://unpkg.com/@phosphor-icons/web](https://unpkg.com/@phosphor-icons/web)"></script>
-<script src="[https://cdn.jsdelivr.net/npm/marked/marked.min.js](https://cdn.jsdelivr.net/npm/marked/marked.min.js)"></script>
-<link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css](https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css)">
-<script src="[https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js](https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js)"></script>
-<script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-
-<script>
-    tailwind.config = {
-        darkMode: 'class',
-        theme: {
-            extend: {
-                fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
-                colors: {
-                    rosepine: { base: '#191724', surface: '#1f1d2e', overlay: '#26233a', muted: '#6e6a86', text: '#e0def4', love: '#eb6f92', gold: '#f6c177', rose: '#ebbcba', pine: '#31748f', foam: '#9ccfd8', iris: '#c4a7e7', highlight: { low: '#21202e', med: '#403d52', high: '#524f67' } }
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Reader | 0xAns</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <script src="[https://unpkg.com/@phosphor-icons/web](https://unpkg.com/@phosphor-icons/web)"></script>
+        <script src="[https://cdn.jsdelivr.net/npm/marked/marked.min.js](https://cdn.jsdelivr.net/npm/marked/marked.min.js)"></script>
+        <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css](https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css)">
+        <script src="[https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js](https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js)"></script>
+        <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+                        colors: {
+                            rosepine: { base: '#191724', surface: '#1f1d2e', overlay: '#26233a', muted: '#6e6a86', text: '#e0def4', love: '#eb6f92', gold: '#f6c177', rose: '#ebbcba', pine: '#31748f', foam: '#9ccfd8', iris: '#c4a7e7', highlight: { low: '#21202e', med: '#403d52', high: '#524f67' } }
+                        }
+                    }
                 }
             }
-        }
-    }
-</script>
-
-<style>
-    body { background-color: #191724; min-height: 100vh; display: flex; flex-direction: column; }
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: #191724; }
-    ::-webkit-scrollbar-thumb { background: #26233a; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #403d52; }
-
-    .article-content { font-size: 1.05rem; color: #e0def4; line-height: 1.75; }
-    .article-content h1, .article-content h2, .article-content h3 { font-family: 'Inter', sans-serif; margin-top: 1.5em; margin-bottom: 0.5em; letter-spacing: -0.02em; scroll-margin-top: 100px; }
-    .article-content h1 { font-size: 2.25rem; font-weight: 700; color: #e0def4; margin-top: 2rem; border-bottom: 1px solid #26233a; padding-bottom: 0.5rem; }
-    .article-content h2 { font-size: 1.75rem; font-weight: 600; color: #e0def4; }
-    .article-content h3 { font-size: 1.4rem; font-weight: 600; color: #c4a7e7; }
-    .article-content p { margin-bottom: 1.25em; }
-    .article-content a { color: #ebbcba; text-decoration: underline; text-underline-offset: 4px; transition: color 0.2s; }
-    .article-content a:hover { color: #eb6f92; }
-    .article-content blockquote { border-left: 4px solid #c4a7e7; background: #1f1d2e; padding: 1rem 1.5rem; border-radius: 4px; margin: 1.5rem 0; color: #e0def4; }
-    .article-content strong { color: #f6c177; font-weight: 600; }
-    .article-content ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #908caa; }
-    .article-content ol { list-style: decimal; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #908caa; }
-    .article-content li { margin-bottom: 0.4em; }
-    .article-content pre { background: #1f1d2e !important; padding: 1rem; border-radius: 0.5rem; border: 1px solid #26233a; margin: 1.5rem 0; overflow-x: auto; }
-    .article-content code { font-family: 'JetBrains Mono'; font-size: 0.85em; background: #26233a; padding: 0.2em 0.4em; border-radius: 4px; color: #eb6f92; }
-    .article-content pre code { background: transparent; padding: 0; color: inherit; border-radius: 0; }
-    .article-content img { max-width: 100%; height: auto; display: block; margin: 2rem auto; border-radius: 8px; border: 1px solid #26233a; }
-    .article-content table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.95rem; }
-    .article-content th { background: #1f1d2e; color: #9ccfd8; font-weight: 600; text-align: left; padding: 0.75rem; border-bottom: 2px solid #26233a; }
-    .article-content td { padding: 0.75rem; border-bottom: 1px solid #26233a; color: #908caa; }
-    .article-content tr:hover td { background: #21202e; }
-
-    .toc-active { color: #eb6f92 !important; border-left-color: #eb6f92 !important; font-weight: 600; }
-    .search-match { background-color: rgba(235, 111, 146, 0.2); color: #eb6f92; font-weight: bold; border-radius: 2px; }
-</style>
-</head> <body class="text-rosepine-text bg-rosepine-base">
-
-<div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden backdrop-blur-sm transition-opacity"></div>
-
-<aside id="sidebar" class="fixed top-0 bottom-0 left-0 bg-rosepine-surface border-r border-rosepine-highlight-low flex flex-col z-50 transition-transform duration-300 -translate-x-full lg:translate-x-0 w-[280px]">
-    <div class="h-16 flex items-center justify-between px-6 border-b border-rosepine-highlight-low shrink-0">
-        <span class="font-mono font-bold text-rosepine-text text-lg">0xAns</span>
-        <button id="mobile-close-btn" class="lg:hidden text-rosepine-love"><i class="ph ph-x text-lg"></i></button>
-    </div>
-
-    <div class="p-4 shrink-0">
-        <div class="relative group">
-            <i class="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-rosepine-muted"></i>
-            <input type="text" id="sidebar-search" placeholder="Search..." class="w-full bg-rosepine-base/50 border border-rosepine-highlight-med rounded-md py-2 pl-9 pr-3 text-sm text-rosepine-text focus:outline-none focus:border-rosepine-love transition-colors">
-        </div>
-    </div>
-    
-    <div class="flex-grow overflow-y-auto px-4 pb-4 space-y-4" id="sidebar-list"></div>
-
-    <div class="p-4 border-t border-rosepine-highlight-low shrink-0 text-center">
-        <a href="index.html" class="text-xs font-mono text-rosepine-muted hover:text-rosepine-text">Back to Home</a>
-    </div>
-</aside>
-
-<div class="lg:pl-[280px] min-h-screen flex flex-col transition-all duration-300" id="main-wrapper">
-    
-    <header class="h-16 border-b border-rosepine-highlight-low flex items-center px-6 justify-between bg-rosepine-base/95 backdrop-blur z-30 sticky top-0">
-        <div class="flex items-center gap-4">
-            <button id="mobile-menu-btn" class="lg:hidden text-rosepine-text hover:text-rosepine-love"><i class="ph ph-list text-2xl"></i></button>
-            <div class="hidden sm:flex items-center gap-2 text-sm font-mono text-rosepine-muted">
-                <span>/</span>
-                <span class="text-rosepine-text truncate max-w-[200px]" id="crumb-title">Loading...</span>
-            </div>
-        </div>
-        
-        <div class="relative">
-            <button id="view-options-btn" class="flex items-center gap-2 text-rosepine-muted hover:text-rosepine-text transition-colors">
-                <span class="text-xs font-mono hidden sm:inline">Options</span>
-                <i class="ph ph-gear text-xl"></i>
-            </button>
-            <div id="view-options-menu" class="hidden absolute right-0 top-full mt-2 w-48 bg-rosepine-surface border border-rosepine-highlight-med rounded-lg shadow-xl z-50 py-1">
-                <button id="full-width-toggle" class="w-full text-left px-4 py-3 text-sm text-rosepine-text hover:bg-rosepine-overlay flex items-center justify-between">
-                    <span>Full Width</span>
-                    <div class="w-8 h-4 bg-rosepine-base rounded-full relative border border-rosepine-highlight-med">
-                        <div id="full-width-dot" class="absolute top-0.5 left-0.5 w-3 h-3 bg-rosepine-muted rounded-full transition-all"></div>
-                    </div>
+        </script>
+        <style>
+            body { background-color: #191724; overflow: hidden; }
+            ::-webkit-scrollbar { width: 6px; height: 6px; }
+            ::-webkit-scrollbar-track { background: transparent; }
+            ::-webkit-scrollbar-thumb { background: #26233a; border-radius: 3px; }
+            ::-webkit-scrollbar-thumb:hover { background: #403d52; }
+            .article-content { font-size: 1.05rem; color: #e0def4; line-height: 1.8; }
+            .article-content h1, .article-content h2, .article-content h3, .article-content h4 { 
+            font-family: 'Inter', sans-serif; 
+            font-weight: 700; 
+            margin-top: 2em; 
+            margin-bottom: 0.5em; 
+            color: #e0def4;
+            letter-spacing: -0.025em;
+            }
+            .article-content h1 { font-size: 2.5rem; border-bottom: 1px solid #26233a; padding-bottom: 0.5rem; margin-bottom: 1rem; }
+            .article-content h2 { font-size: 1.8rem; }
+            .article-content h3 { font-size: 1.5rem; }
+            .article-content h4 { font-size: 1.2rem; }
+            .article-content p { margin-bottom: 1.25em; }
+            .article-content a { color: #ebbcba; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; transition: all 0.2s; }
+            .article-content a:hover { color: #eb6f92; text-decoration-thickness: 2px; }
+            .article-content blockquote { 
+            border-left: 3px solid #eb6f92; 
+            background: transparent; 
+            padding-left: 1.25rem; 
+            margin: 1.5rem 0; 
+            color: #e0def4; 
+            font-size: 1.1em;
+            }
+            .article-content strong { color: #f6c177; font-weight: 600; }
+            .article-content em { color: #ebbcba; font-style: italic; }
+            .article-content ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #e0def4; }
+            .article-content ol { list-style: decimal; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #e0def4; }
+            .article-content li { margin-bottom: 0.25em; padding-left: 0.25em; }
+            .article-content li::marker { color: #6e6a86; }
+            .article-content pre { 
+            background: #1f1d2e !important; 
+            padding: 1rem; 
+            border-radius: 0.5rem; 
+            border: 1px solid #26233a; 
+            margin: 1.5rem 0; 
+            overflow-x: auto; 
+            font-size: 0.9rem;
+            }
+            .article-content code { 
+            font-family: 'JetBrains Mono'; 
+            background: rgba(235, 111, 146, 0.15); 
+            color: #eb6f92;
+            padding: 0.2em 0.4em; 
+            border-radius: 4px; 
+            font-size: 0.85em;
+            }
+            .article-content pre code { background: transparent; padding: 0; color: inherit; font-size: inherit; }
+            .article-content img { 
+            max-width: 100%; 
+            height: auto; 
+            display: block; 
+            margin: 2rem auto; 
+            border-radius: 8px; 
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5); 
+            }
+            .article-content table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.95rem; }
+            .article-content th { background: #1f1d2e; color: #9ccfd8; font-weight: 600; text-align: left; padding: 0.75rem; border-bottom: 2px solid #26233a; }
+            .article-content td { padding: 0.75rem; border-bottom: 1px solid #26233a; color: #e0def4; }
+            .article-content tr:hover td { background: #21202e; }
+            .toc-active { color: #eb6f92 !important; font-weight: 600; border-left: 2px solid #eb6f92; padding-left: 0.5rem; margin-left: -2px; }
+            .toc-link { transition: all 0.2s; display: block; padding: 2px 0; border-left: 2px solid transparent; }
+            .toc-link:hover { color: #e0def4; }
+            .search-match { background-color: rgba(235, 111, 146, 0.2); color: #eb6f92; font-weight: bold; border-radius: 2px; padding: 0 2px; }
+            .resizer { width: 4px; cursor: col-resize; background: transparent; transition: background 0.2s; z-index: 50; flex-shrink: 0; }
+            .resizer:hover, .resizer.active { background: #eb6f92; }
+        </style>
+    </head>
+    <body class="antialiased text-rosepine-text flex h-screen w-screen">
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-30 hidden lg:hidden backdrop-blur-sm transition-opacity"></div>
+        <aside id="sidebar" class="bg-rosepine-surface border-r border-rosepine-highlight-low flex flex-col h-full absolute lg:relative z-40 transition-transform duration-300 -translate-x-full lg:translate-x-0 w-[280px] shrink-0">
+            <div class="h-14 flex items-center justify-between px-4 border-b border-rosepine-highlight-low shrink-0">
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-rosepine-love"></div>
+                    <span class="font-mono font-bold text-rosepine-text">0xAns</span>
+                </div>
+                <button id="collapse-btn" class="hidden lg:flex p-1 hover:bg-rosepine-overlay rounded text-rosepine-muted hover:text-rosepine-text transition-colors" title="Close Sidebar">
+                <i class="ph ph-arrows-in-line-horizontal"></i>
+                </button>
+                <button id="mobile-close-btn" class="lg:hidden p-1 text-rosepine-love">
+                <i class="ph ph-x text-lg"></i>
                 </button>
             </div>
-        </div>
-    </header>
-
-    <div class="flex flex-1 relative">
-        <div id="cover-image-wrapper" class="hidden w-full h-64 md:h-80 absolute top-0 left-0 z-0">
-            <img id="cover-image" src="" class="w-full h-full object-cover opacity-60">
-            <div class="absolute inset-0 bg-gradient-to-b from-rosepine-base/10 to-rosepine-base"></div>
-        </div>
-
-        <main id="article-container" class="flex-1 w-full max-w-3xl mx-auto px-6 py-12 z-10 relative transition-all duration-300">
-            
-            <div id="error-msg" class="hidden p-4 bg-rosepine-love/10 border border-rosepine-love text-rosepine-love rounded-lg mb-8 text-center"></div>
-
-            <div id="loading" class="flex flex-col items-center justify-center py-20 text-rosepine-muted">
-                <i class="ph ph-spinner-gap text-3xl mb-4 animate-spin"></i>
-                <span class="font-mono text-sm">Loading content...</span>
+            <div class="p-3 shrink-0">
+                <div class="relative group">
+                    <i class="ph ph-magnifying-glass absolute left-2.5 top-1/2 -translate-y-1/2 text-rosepine-muted group-focus-within:text-rosepine-love transition-colors text-sm"></i>
+                    <input type="text" id="sidebar-search" placeholder="Search..." 
+                        class="w-full bg-rosepine-base/50 border border-rosepine-highlight-med rounded-md py-1.5 pl-8 pr-3 text-sm text-rosepine-text focus:outline-none focus:border-rosepine-love focus:bg-rosepine-base transition-all placeholder-rosepine-highlight-high">
+                </div>
             </div>
-            
-            <article id="content-area" class="hidden">
-                <header class="mb-10">
-                    <div class="flex flex-wrap gap-2 mb-4" id="tags-container"></div>
-                    <h1 id="art-title" class="text-4xl md:text-5xl font-bold text-rosepine-text mb-6 tracking-tight"></h1>
-                    <div class="flex items-center gap-6 text-sm font-mono text-rosepine-muted border-b border-rosepine-highlight-low pb-6">
-                        <span id="art-date"></span>
-                        <span id="art-category" class="text-rosepine-iris"></span>
-                    </div>
-                </header>
-
-                <div id="markdown-body" class="article-content"></div>
-            </article>
-
-            <footer class="mt-20 pt-10 border-t border-rosepine-highlight-low text-center pb-10">
-                <p class="font-mono text-sm text-rosepine-muted">0xAns Knowledge Base</p>
-            </footer>
-        </main>
-
-        <aside id="toc-sidebar" class="hidden xl:block w-64 shrink-0 border-l border-rosepine-highlight-low bg-rosepine-base z-10 p-6 sticky top-16 h-[calc(100vh-64px)] overflow-y-auto">
-            <h3 class="font-mono text-xs font-bold text-rosepine-muted uppercase tracking-wider mb-4">Table of Contents</h3>
-            <ul id="toc-list" class="space-y-1 text-sm border-l border-rosepine-highlight-low pl-3"></ul>
+            <div class="flex-grow overflow-y-auto px-3 pb-4 space-y-6" id="sidebar-list">
+            </div>
+            <div class="p-4 border-t border-rosepine-highlight-low shrink-0">
+                <a id="nav-github" href="#" target="_blank" class="flex items-center gap-2 text-xs font-mono text-rosepine-muted hover:text-rosepine-love transition-colors">
+                <i class="ph ph-github-logo text-lg"></i>
+                <span>[github.com/0xAns](https://github.com/0xAns)</span>
+                </a>
+            </div>
         </aside>
-    </div>
-
-</div>
-
-<script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const currentArticleId = urlParams.get('id');
-    let allArticles = [];
-    let isFullWidth = localStorage.getItem('isFullWidth') === 'true';
-    
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebar-overlay');
-    const articleContainer = document.getElementById('article-container');
-    const fullWidthDot = document.getElementById('full-width-dot');
-    const viewOptionsMenu = document.getElementById('view-options-menu');
-    const errorMsg = document.getElementById('error-msg');
-
-    function updateFullWidthUI() {
-        if (isFullWidth) {
-            articleContainer.classList.remove('max-w-3xl');
-            articleContainer.classList.add('max-w-full', 'px-12', 'lg:px-20');
-            fullWidthDot.classList.add('translate-x-4', 'bg-rosepine-love');
-            fullWidthDot.classList.remove('bg-rosepine-muted');
-        } else {
-            articleContainer.classList.add('max-w-3xl');
-            articleContainer.classList.remove('max-w-full', 'px-12', 'lg:px-20');
-            fullWidthDot.classList.remove('translate-x-4', 'bg-rosepine-love');
-            fullWidthDot.classList.add('bg-rosepine-muted');
-        }
-        localStorage.setItem('isFullWidth', isFullWidth);
-    }
-    updateFullWidthUI();
-
-    document.getElementById('full-width-toggle').addEventListener('click', () => {
-        isFullWidth = !isFullWidth;
-        updateFullWidthUI();
-    });
-
-    document.getElementById('view-options-btn').addEventListener('click', (e) => {
-        e.stopPropagation();
-        viewOptionsMenu.classList.toggle('hidden');
-    });
-
-    document.addEventListener('click', (e) => {
-        if (!viewOptionsMenu.contains(e.target) && !document.getElementById('view-options-btn').contains(e.target)) {
-            viewOptionsMenu.classList.add('hidden');
-        }
-    });
-
-    function toggleMobileMenu() {
-        const isClosed = sidebar.classList.contains('-translate-x-full');
-        if (isClosed) {
-            sidebar.classList.remove('-translate-x-full');
-            overlay.classList.remove('hidden');
-        } else {
-            sidebar.classList.add('-translate-x-full');
-            overlay.classList.add('hidden');
-        }
-    }
-    document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
-    document.getElementById('mobile-close-btn').addEventListener('click', toggleMobileMenu);
-    overlay.addEventListener('click', toggleMobileMenu);
-
-    function renderSidebar(articles, searchTerm = "") {
-        const container = document.getElementById('sidebar-list');
-        container.innerHTML = '';
-        
-        const filtered = articles.filter(a => a.title.toLowerCase().includes(searchTerm.toLowerCase()));
-        
-        if (filtered.length === 0) {
-            container.innerHTML = `<div class="text-sm text-rosepine-muted text-center italic">No articles found.</div>`;
-            return;
-        }
-
-        filtered.forEach(art => {
-            const isActive = art.id === currentArticleId;
-            const div = document.createElement('div');
-            div.innerHTML = `
-                <a href="?id=${art.id}" class="block text-sm py-2 px-3 rounded transition-all truncate border ${isActive ? 'bg-rosepine-highlight-low border-rosepine-highlight-med text-rosepine-rose' : 'border-transparent text-rosepine-muted hover:text-rosepine-text hover:bg-rosepine-surface'}">
-                    ${art.title}
-                </a>`;
-            container.appendChild(div);
-        });
-    }
-
-    document.getElementById('sidebar-search').addEventListener('input', (e) => renderSidebar(allArticles, e.target.value));
-
-    function generateToC() {
-        const content = document.getElementById('markdown-body');
-        const headers = content.querySelectorAll('h1, h2, h3');
-        const tocList = document.getElementById('toc-list');
-        const tocSidebar = document.getElementById('toc-sidebar');
-        
-        tocList.innerHTML = '';
-
-        if (headers.length < 2) {
-            tocSidebar.classList.add('hidden');
-            return;
-        }
-
-        headers.forEach((header, index) => {
-            if (!header.id) header.id = `section-${index}`;
-            const li = document.createElement('li');
-            const link = document.createElement('a');
-            link.href = `#${header.id}`;
-            link.textContent = header.textContent;
-            link.className = 'block py-1 pl-2 border-l-2 border-transparent text-rosepine-muted hover:text-rosepine-text hover:border-rosepine-iris transition-colors truncate';
-            if (header.tagName === 'H3') link.classList.add('ml-3', 'text-xs');
+        <div id="resizer" class="resizer hidden lg:block"></div>
+        <main class="flex-1 flex flex-col h-full min-w-0 bg-rosepine-base relative">
+            <header class="h-14 border-b border-rosepine-highlight-low flex items-center px-6 justify-between bg-rosepine-base/95 backdrop-blur z-20 sticky top-0">
+                <div class="flex items-center gap-3">
+                    <button id="mobile-menu-btn" class="lg:hidden text-rosepine-text hover:text-rosepine-love">
+                    <i class="ph ph-list text-xl"></i>
+                    </button>
+                    <button id="expand-btn" class="hidden text-rosepine-muted hover:text-rosepine-love transition-colors" title="Open Sidebar">
+                    <i class="ph ph-sidebar text-xl"></i>
+                    </button>
+                    <div class="hidden sm:flex items-center gap-2 text-sm font-mono text-rosepine-muted" id="breadcrumbs">
+                        <span>/</span>
+                        <span class="text-rosepine-text truncate max-w-[200px]" id="crumb-title">Select an article</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button id="width-toggle-btn" class="text-rosepine-muted hover:text-rosepine-text transition-colors flex items-center gap-1 text-xs font-mono border border-rosepine-highlight-med px-2 py-1 rounded hover:bg-rosepine-surface">
+                    <i class="ph ph-arrows-out-line-horizontal"></i>
+                    <span class="hidden sm:inline">Full Width</span>
+                    </button>
+                    <div class="h-4 w-px bg-rosepine-highlight-med"></div>
+                    <a href="index.html" class="text-sm font-mono text-rosepine-rose hover:text-rosepine-love transition-colors">./home</a>
+                </div>
+            </header>
+            <div id="main-scroll" class="flex-1 overflow-y-auto scroll-smooth relative">
+                <div class="flex justify-center">
+                    <div id="article-container" class="w-full max-w-3xl px-6 py-12 transition-all duration-300 ease-in-out shrink-0">
+                        <div id="loading" class="flex flex-col items-center justify-center py-20 text-rosepine-muted animate-pulse">
+                            <i class="ph ph-spinner-gap text-3xl mb-4 animate-spin"></i>
+                            <span class="font-mono text-sm">Initialising Reader...</span>
+                        </div>
+                        <article id="content-area" class="hidden fade-in pb-32">
+                            <div id="cover-image-container" class="w-full mb-8 hidden">
+                                <img id="cover-image" src="" alt="Cover" class="w-full h-48 md:h-64 object-cover rounded-xl shadow-2xl border border-rosepine-highlight-low">
+                            </div>
+                            <header class="mb-10 pb-6 border-b border-rosepine-highlight-low">
+                                <div class="flex flex-wrap gap-2 mb-4" id="tags-container"></div>
+                                <h1 id="art-title" class="text-3xl md:text-5xl font-bold text-rosepine-text mb-6 tracking-tight"></h1>
+                                <div class="flex flex-wrap items-center gap-4 text-sm font-mono text-rosepine-muted">
+                                    <div class="flex items-center gap-1.5">
+                                        <i class="ph ph-calendar-blank text-rosepine-love"></i>
+                                        <span id="art-date"></span>
+                                    </div>
+                                    <div class="flex items-center gap-1.5">
+                                        <i class="ph ph-folder-open text-rosepine-foam"></i>
+                                        <span id="art-category"></span>
+                                    </div>
+                                </div>
+                            </header>
+                            <div id="markdown-body" class="article-content"></div>
+                        </article>
+                        <footer id="article-footer" class="hidden mt-20 pt-10 border-t border-rosepine-highlight-low text-center pb-10">
+                            <p class="font-mono text-sm text-rosepine-muted">0xAns Reader Engine v2.0</p>
+                        </footer>
+                    </div>
+                    <aside id="toc-sidebar" class="hidden xl:block w-64 sticky top-0 h-screen pt-12 pr-6 overflow-y-auto shrink-0">
+                        <div class="pl-6 border-l border-rosepine-highlight-low/50">
+                            <h4 class="font-mono text-xs font-bold text-rosepine-muted uppercase tracking-wider mb-4">On this page</h4>
+                            <nav id="toc-nav" class="flex flex-col space-y-1 text-sm text-rosepine-muted/80"></nav>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </main>
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentArticleId = urlParams.get('id');
+            let allArticles = [];
             
-            link.onclick = (e) => {
-                e.preventDefault();
-                document.getElementById(header.id).scrollIntoView({ behavior: 'smooth' });
-            };
-            li.appendChild(link);
-            tocList.appendChild(li);
-        });
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    document.querySelectorAll('#toc-list a').forEach(a => {
-                        a.classList.remove('toc-active');
-                        if (a.getAttribute('href') === `#${entry.target.id}`) {
-                            a.classList.add('toc-active');
-                        }
-                    });
+            const sidebar = document.getElementById('sidebar');
+            const resizer = document.getElementById('resizer');
+            const collapseBtn = document.getElementById('collapse-btn');
+            const expandBtn = document.getElementById('expand-btn');
+            const articleContainer = document.getElementById('article-container');
+            const widthToggleBtn = document.getElementById('width-toggle-btn');
+            
+            let sidebarWidth = parseInt(localStorage.getItem('sidebarWidth')) || 280;
+            let isSidebarOpen = localStorage.getItem('isSidebarOpen') !== 'false';
+            let isFullWidth = localStorage.getItem('isFullWidth') === 'true';
+            
+            function setSidebarState(isOpen, width) {
+                if (!isOpen) {
+                    sidebar.style.display = 'none';
+                    resizer.style.display = 'none';
+                    expandBtn.classList.remove('hidden');
+                } else {
+                    sidebar.style.display = 'flex';
+                    resizer.style.display = 'block';
+                    sidebar.style.width = `${width}px`;
+                    expandBtn.classList.add('hidden');
+                }
+                localStorage.setItem('isSidebarOpen', isOpen);
+                localStorage.setItem('sidebarWidth', width);
+            }
+            
+            function toggleWidth() {
+                isFullWidth = !isFullWidth;
+                applyWidth();
+                localStorage.setItem('isFullWidth', isFullWidth);
+            }
+            
+            function applyWidth() {
+                if (isFullWidth) {
+                    articleContainer.classList.remove('max-w-3xl');
+                    articleContainer.classList.add('max-w-[90%]', 'xl:max-w-[85%]');
+                    widthToggleBtn.querySelector('span').innerText = "Standard";
+                    widthToggleBtn.querySelector('i').classList.replace('ph-arrows-out-line-horizontal', 'ph-arrows-in-line-horizontal');
+                    widthToggleBtn.classList.add('text-rosepine-love', 'border-rosepine-love');
+                } else {
+                    articleContainer.classList.add('max-w-3xl');
+                    articleContainer.classList.remove('max-w-[90%]', 'xl:max-w-[85%]');
+                    widthToggleBtn.querySelector('span').innerText = "Full Width";
+                    widthToggleBtn.querySelector('i').classList.replace('ph-arrows-in-line-horizontal', 'ph-arrows-out-line-horizontal');
+                    widthToggleBtn.classList.remove('text-rosepine-love', 'border-rosepine-love');
+                }
+            }
+            
+            if (window.innerWidth >= 1024) {
+                setSidebarState(isSidebarOpen, sidebarWidth);
+            }
+            applyWidth();
+            widthToggleBtn.addEventListener('click', toggleWidth);
+            
+            let isResizing = false;
+            
+            resizer.addEventListener('mousedown', (e) => {
+                isResizing = true;
+                document.body.style.cursor = 'col-resize';
+                resizer.classList.add('active');
+            });
+            
+            document.addEventListener('mousemove', (e) => {
+                if (!isResizing) return;
+                let newWidth = e.clientX;
+                if (newWidth < 200) newWidth = 200;
+                if (newWidth > 500) newWidth = 500;
+                
+                sidebarWidth = newWidth;
+                sidebar.style.width = `${newWidth}px`;
+            });
+            
+            document.addEventListener('mouseup', () => {
+                if (isResizing) {
+                    isResizing = false;
+                    document.body.style.cursor = 'default';
+                    resizer.classList.remove('active');
+                    localStorage.setItem('sidebarWidth', sidebarWidth);
                 }
             });
-        }, { rootMargin: '-100px 0px -60% 0px' });
-        headers.forEach(h => observer.observe(h));
-    }
-
-    async function loadContent() {
-        try {
-            const response = await fetch('data/content.json');
-            if (!response.ok) throw new Error('Could not load data/content.json');
-            const data = await response.json();
             
-            if (data.articles) {
-                allArticles = data.articles;
-                renderSidebar(allArticles);
+            collapseBtn.addEventListener('click', () => setSidebarState(false, sidebarWidth));
+            expandBtn.addEventListener('click', () => setSidebarState(true, sidebarWidth));
+            
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileCloseBtn = document.getElementById('mobile-close-btn');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            function toggleMobileMenu() {
+                const isClosed = sidebar.classList.contains('-translate-x-full');
+                if (isClosed) {
+                    sidebar.classList.remove('-translate-x-full');
+                    overlay.classList.remove('hidden');
+                } else {
+                    sidebar.classList.add('-translate-x-full');
+                    overlay.classList.add('hidden');
+                }
+            }
+            
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            mobileCloseBtn.addEventListener('click', toggleMobileMenu);
+            overlay.addEventListener('click', toggleMobileMenu);
+            
+            function highlightMatch(text, term) {
+                if (!term) return text;
+                const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regex = new RegExp(`(${escapedTerm})`, 'gi');
+                return text.replace(regex, '<span class="search-match">$1</span>');
+            }
+            
+            function renderSidebar(articles, searchTerm = "") {
+                const container = document.getElementById('sidebar-list');
+                container.innerHTML = '';
                 
-                if (!currentArticleId) {
-                    document.getElementById('loading').innerHTML = `<p class="text-rosepine-text">Select an article from the sidebar.</p>`;
-                    document.getElementById('crumb-title').textContent = "Home";
+                const categories = {};
+                articles.forEach(art => {
+                    const cat = art.category || 'General';
+                    if(!categories[cat]) categories[cat] = [];
+                    categories[cat].push(art);
+                });
+            
+                const hasResults = Object.keys(categories).length > 0;
+            
+                if (!hasResults) {
+                    container.innerHTML = `<div class="text-xs text-rosepine-muted text-center italic mt-4">No matching articles found.</div>`;
                     return;
                 }
-
-                const article = allArticles.find(a => a.id === currentArticleId);
-                if (!article) throw new Error('Article not found');
-
-                document.title = article.title + " | 0xAns";
-                document.getElementById('art-title').textContent = article.title;
-                document.getElementById('crumb-title').textContent = article.title;
-                document.getElementById('art-date').textContent = article.date;
-                document.getElementById('art-category').textContent = article.category || 'Article';
-                
-                if (article.tags) {
-                    document.getElementById('tags-container').innerHTML = article.tags.map(t => 
-                        `<span class="px-2 py-1 text-xs font-mono bg-rosepine-highlight-low rounded text-rosepine-iris">#${t}</span>`
-                    ).join('');
+            
+                for (const [cat, items] of Object.entries(categories)) {
+                    const catHeader = document.createElement('h3');
+                    catHeader.className = 'text-[11px] font-bold font-mono text-rosepine-muted uppercase tracking-wider mb-2 mt-2 px-2';
+                    catHeader.textContent = cat;
+                    container.appendChild(catHeader);
+            
+                    const ul = document.createElement('ul');
+                    ul.className = 'space-y-0.5 mb-4';
+                    
+                    items.forEach(art => {
+                        const li = document.createElement('li');
+                        const isActive = art.id === currentArticleId;
+                        
+                        const displayTitle = highlightMatch(art.title, searchTerm);
+                        
+                        li.innerHTML = `
+                            <a href="?id=${art.id}" class="block text-[13px] py-1.5 px-2.5 rounded transition-all truncate border border-transparent ${isActive 
+                                ? 'bg-rosepine-highlight-low border-rosepine-highlight-med text-rosepine-rose font-medium shadow-sm' 
+                                : 'text-rosepine-subtle hover:text-rosepine-text hover:bg-rosepine-surface hover:border-rosepine-highlight-low'}">
+                                ${displayTitle}
+                            </a>
+                        `;
+                        ul.appendChild(li);
+                    });
+                    container.appendChild(ul);
                 }
-
-                if (article.cover_image) {
-                    const coverWrapper = document.getElementById('cover-image-wrapper');
-                    document.getElementById('cover-image').src = article.cover_image;
-                    coverWrapper.classList.remove('hidden');
-                }
-
-                const mdResponse = await fetch(article.file);
-                if (!mdResponse.ok) throw new Error(`Could not load markdown file: ${article.file}`);
-                const mdText = await mdResponse.text();
-                
-                document.getElementById('markdown-body').innerHTML = marked.parse(mdText);
-                document.querySelectorAll('pre code').forEach((el) => hljs.highlightElement(el));
-                
-                document.getElementById('loading').classList.add('hidden');
-                document.getElementById('content-area').classList.remove('hidden');
-                generateToC();
             }
-
-        } catch (err) {
-            console.error(err);
-            document.getElementById('loading').classList.add('hidden');
-            errorMsg.classList.remove('hidden');
-            errorMsg.textContent = `Error: ${err.message}. If you are opening this locally (file://), you must use a local server (e.g., VSCode Live Server).`;
-        }
-    }
-
-    loadContent();
-</script>
-</body> </html>
+            
+            function generateTOC() {
+                const contentDiv = document.getElementById('markdown-body');
+                const tocNav = document.getElementById('toc-nav');
+                const headers = contentDiv.querySelectorAll('h1, h2, h3');
+                
+                tocNav.innerHTML = '';
+                
+                if (headers.length === 0) {
+                    document.getElementById('toc-sidebar').classList.add('hidden');
+                    return;
+                }
+            
+                headers.forEach((header, index) => {
+                    if (!header.id) {
+                        header.id = `heading-${index}`;
+                    }
+                    
+                    const link = document.createElement('a');
+                    link.href = `#${header.id}`;
+                    link.innerText = header.innerText;
+                    link.className = 'toc-link';
+                    
+                    if (header.tagName === 'H1') link.classList.add('pl-0', 'font-bold');
+                    if (header.tagName === 'H2') link.classList.add('pl-0');
+                    if (header.tagName === 'H3') link.classList.add('pl-4', 'text-xs');
+                    
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        document.getElementById(header.id).scrollIntoView({ behavior: 'smooth' });
+                    });
+            
+                    tocNav.appendChild(link);
+                });
+            
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const id = entry.target.getAttribute('id');
+                        const link = document.querySelector(`#toc-nav a[href="#${id}"]`);
+                        if (entry.isIntersecting) {
+                            document.querySelectorAll('#toc-nav a').forEach(a => a.classList.remove('toc-active'));
+                            if(link) link.classList.add('toc-active');
+                        }
+                    });
+                }, { root: document.getElementById('main-scroll'), threshold: 0.1, rootMargin: "0px 0px -80% 0px" });
+            
+                headers.forEach(header => observer.observe(header));
+            }
+            
+            document.getElementById('sidebar-search').addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase();
+                const filtered = allArticles.filter(a => a.title.toLowerCase().includes(term));
+                renderSidebar(filtered, e.target.value);
+            });
+            
+            marked.use({ 
+                gfm: true,
+                breaks: true 
+            });
+            
+            fetch('data/content.json')
+                .then(r => r.json())
+                .then(data => {
+                    if(data.profile) document.getElementById('nav-github').href = data.profile.github;
+                    
+                    if(data.articles) {
+                        allArticles = data.articles;
+                        renderSidebar(allArticles);
+            
+                        if (currentArticleId) {
+                            const article = data.articles.find(a => a.id === currentArticleId);
+                            if (article) {
+                                document.title = article.title + " | 0xAns";
+                                document.getElementById('art-title').textContent = article.title;
+                                document.getElementById('crumb-title').textContent = article.title;
+                                document.getElementById('art-date').textContent = article.date;
+                                document.getElementById('art-category').textContent = article.category || 'Article';
+                                
+                                if (article.cover) {
+                                    const imgContainer = document.getElementById('cover-image-container');
+                                    const img = document.getElementById('cover-image');
+                                    img.src = article.cover;
+                                    imgContainer.classList.remove('hidden');
+                                }
+            
+                                const tagContainer = document.getElementById('tags-container');
+                                article.tags.forEach(tag => {
+                                    tagContainer.innerHTML += `
+                                        <span class="px-2 py-0.5 text-[10px] font-mono bg-rosepine-highlight-low border border-rosepine-highlight-med text-rosepine-iris rounded-md opacity-80 hover:opacity-100 transition-opacity">#${tag}</span>
+                                    `;
+                                });
+            
+                                fetch(article.file)
+                                    .then(r => r.text())
+                                    .then(md => {
+                                        const contentDiv = document.getElementById('markdown-body');
+                                        contentDiv.innerHTML = marked.parse(md);
+                                        
+                                        document.querySelectorAll('pre code').forEach((el) => hljs.highlightElement(el));
+                                        
+                                        document.getElementById('loading').classList.add('hidden');
+                                        document.getElementById('content-area').classList.remove('hidden');
+                                        document.getElementById('article-footer').classList.remove('hidden');
+                                        
+                                        generateTOC();
+                                    })
+                                    .catch(err => {
+                                         document.getElementById('loading').innerHTML = `<p class="text-rosepine-love">Failed to load markdown file.</p>`;
+                                    });
+                            }
+                        } else {
+                             document.getElementById('loading').innerHTML = `
+                                <div class="text-center">
+                                    <i class="ph ph-book-open text-4xl text-rosepine-iris mb-4"></i>
+                                    <p class="text-rosepine-text">Select an article from the sidebar to begin reading.</p>
+                                </div>`;
+                        }
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    document.getElementById('loading').innerHTML = `<p class="text-rosepine-love">Error loading content data.</p>`;
+                });
+        </script>
+    </body>
+</html>
