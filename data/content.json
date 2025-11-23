@@ -60,7 +60,7 @@
         "Malware Dev",
         "Windows"
       ],
-      "cover": "https://github.com/0xans/0xans.github.io/blob/main/assets/images/mirrorgate.png",
+      "cover": "assets/images/mirrorgate.png",
       "file": "posts/MirrorGate.md"
     }
   ]
