@@ -14,14 +14,12 @@
         <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
         <script>
             tailwind.config = {
+                darkMode: 'class',
                 theme: {
                     extend: {
                         fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
                         colors: {
                             rosepine: { base: '#191724', surface: '#1f1d2e', overlay: '#26233a', muted: '#6e6a86', text: '#e0def4', love: '#eb6f92', gold: '#f6c177', rose: '#ebbcba', pine: '#31748f', foam: '#9ccfd8', iris: '#c4a7e7', highlight: { low: '#21202e', med: '#403d52', high: '#524f67' } }
-                        },
-                        typography: {
-                            DEFAULT: { css: { color: '#e0def4', maxWidth: 'none' } }
                         }
                     }
                 }
@@ -34,38 +32,36 @@
             ::-webkit-scrollbar-thumb { background: #26233a; border-radius: 3px; }
             ::-webkit-scrollbar-thumb:hover { background: #403d52; }
             .article-content { font-size: 1.05rem; color: #e0def4; line-height: 1.75; }
-            .article-content h1, .article-content h2, .article-content h3, .article-content h4 { scroll-margin-top: 100px; font-weight: 700; color: #e0def4; margin-top: 2em; margin-bottom: 0.5em; letter-spacing: -0.025em; }
-            .article-content h1 { font-size: 2rem; border-bottom: 1px solid #26233a; padding-bottom: 0.5rem; color: #ebbcba; }
-            .article-content h2 { font-size: 1.5rem; color: #eb6f92; }
-            .article-content h3 { font-size: 1.25rem; color: #9ccfd8; }
-            .article-content h4 { font-size: 1.1rem; color: #c4a7e7; }
-            .article-content p { margin-bottom: 1.5em; color: #e0def4; }
-            .article-content a { color: #ebbcba; text-decoration: none; border-bottom: 1px solid #ebbcba; transition: all 0.2s; }
-            .article-content a:hover { background: rgba(235, 188, 186, 0.1); border-bottom-color: transparent; }
-            .article-content blockquote { border-left: 3px solid #eb6f92; padding-left: 1rem; margin: 1.5rem 0; color: #908caa; font-style: italic; }
+            .article-content h1, .article-content h2, .article-content h3 { font-family: 'Inter', sans-serif; margin-top: 1.5em; margin-bottom: 0.5em; letter-spacing: -0.02em; scroll-margin-top: 80px; }
+            .article-content h1 { font-size: 2.25rem; font-weight: 700; color: #e0def4; margin-top: 2rem; }
+            .article-content h2 { font-size: 1.75rem; font-weight: 600; color: #e0def4; border-bottom: 1px solid #26233a; padding-bottom: 0.3em; }
+            .article-content h3 { font-size: 1.4rem; font-weight: 600; color: #e0def4; }
+            .article-content p { margin-bottom: 1.25em; }
+            .article-content a { color: #ebbcba; text-decoration: underline; text-underline-offset: 4px; transition: color 0.2s; }
+            .article-content a:hover { color: #eb6f92; }
+            .article-content blockquote { border-left: 4px solid #c4a7e7; background: #1f1d2e; padding: 1rem 1.5rem; border-radius: 4px; margin: 1.5rem 0; color: #e0def4; }
             .article-content strong { color: #f6c177; font-weight: 600; }
-            .article-content ul, .article-content ol { padding-left: 1.5rem; margin-bottom: 1.5rem; color: #e0def4; }
-            .article-content ul { list-style: disc; }
-            .article-content ol { list-style: decimal; }
-            .article-content li { margin-bottom: 0.5em; }
-            .article-content li::marker { color: #6e6a86; }
-            .article-content pre { background: #1f1d2e !important; padding: 1rem; border-radius: 6px; border: 1px solid #26233a; margin: 1.5rem 0; overflow-x: auto; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-            .article-content code { font-family: 'JetBrains Mono'; font-size: 0.85em; background: rgba(235, 111, 146, 0.1); padding: 0.2em 0.4em; border-radius: 4px; color: #eb6f92; }
-            .article-content pre code { background: transparent; padding: 0; color: inherit; font-size: 0.9em; }
-            .article-content img { max-width: 100%; height: auto; display: block; margin: 2rem auto; border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3); }
-            .article-content hr { border-color: #26233a; margin: 3rem 0; }
-            .article-content table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.9rem; }
-            .article-content th { text-align: left; padding: 0.75rem; border-bottom: 1px solid #403d52; color: #9ccfd8; font-weight: 600; }
+            .article-content ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #908caa; }
+            .article-content ol { list-style: decimal; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #908caa; }
+            .article-content li { margin-bottom: 0.4em; }
+            .article-content pre { background: #1f1d2e !important; padding: 1rem; border-radius: 0.5rem; border: 1px solid #26233a; margin: 1.5rem 0; overflow-x: auto; }
+            .article-content code { font-family: 'JetBrains Mono'; font-size: 0.85em; background: #26233a; padding: 0.2em 0.4em; border-radius: 4px; color: #eb6f92; }
+            .article-content pre code { background: transparent; padding: 0; color: inherit; border-radius: 0; }
+            .article-content img { max-width: 100%; height: auto; display: block; margin: 2rem auto; border-radius: 8px; border: 1px solid #26233a; }
+            .article-content table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.95rem; }
+            .article-content th { background: #1f1d2e; color: #9ccfd8; font-weight: 600; text-align: left; padding: 0.75rem; border-bottom: 2px solid #26233a; }
             .article-content td { padding: 0.75rem; border-bottom: 1px solid #26233a; color: #908caa; }
+            .article-content tr:hover td { background: #21202e; }
             .search-match { background-color: rgba(235, 111, 146, 0.2); color: #eb6f92; font-weight: bold; border-radius: 2px; padding: 0 2px; }
             .resizer { width: 4px; cursor: col-resize; background: transparent; transition: background 0.2s; z-index: 50; flex-shrink: 0; }
             .resizer:hover, .resizer.active { background: #eb6f92; }
-            .toc-link.active { color: #eb6f92; border-left-color: #eb6f92; font-weight: 600; }
-            .toc-link { border-left: 2px solid transparent; padding-left: 1rem; display: block; transition: all 0.2s; }
-            .toc-link:hover { color: #e0def4; border-left-color: #403d52; }
+            .toc-active { color: #eb6f92 !important; border-left-color: #eb6f92 !important; font-weight: 600; }
+            input[type="checkbox"] { accent-color: #eb6f92; }
+            .article-content ul.contains-task-list { list-style: none; padding-left: 0; }
+            .article-content li.task-list-item { display: flex; align-items: flex-start; gap: 0.5rem; }
         </style>
     </head>
-    <body class="antialiased text-rosepine-text flex h-screen w-screen">
+    <body class="antialiased text-rosepine-text flex h-screen w-screen bg-rosepine-base">
         <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-30 hidden lg:hidden backdrop-blur-sm transition-opacity"></div>
         <aside id="sidebar" class="bg-rosepine-surface border-r border-rosepine-highlight-low flex flex-col h-full absolute lg:relative z-40 transition-transform duration-300 -translate-x-full lg:translate-x-0 w-[280px] shrink-0">
             <div class="h-14 flex items-center justify-between px-4 border-b border-rosepine-highlight-low shrink-0">
@@ -73,7 +69,7 @@
                     <div class="w-2 h-2 rounded-full bg-rosepine-love"></div>
                     <span class="font-mono font-bold text-rosepine-text">0xAns</span>
                 </div>
-                <button id="collapse-btn" class="hidden lg:flex p-1 hover:bg-rosepine-overlay rounded text-rosepine-muted hover:text-rosepine-text transition-colors" title="Close Sidebar">
+                <button id="collapse-btn" class="hidden lg:flex p-1 hover:bg-rosepine-overlay rounded text-rosepine-muted hover:text-rosepine-text transition-colors">
                 <i class="ph ph-arrows-in-line-horizontal"></i>
                 </button>
                 <button id="mobile-close-btn" class="lg:hidden p-1 text-rosepine-love">
@@ -98,42 +94,52 @@
         </aside>
         <div id="resizer" class="resizer hidden lg:block"></div>
         <main class="flex-1 flex flex-col h-full min-w-0 bg-rosepine-base relative">
-            <header class="h-14 border-b border-rosepine-highlight-low flex items-center px-6 justify-between bg-rosepine-base/95 backdrop-blur z-20 sticky top-0">
-                <div class="flex items-center gap-3 overflow-hidden">
+            <header class="h-14 border-b border-rosepine-highlight-low flex items-center px-6 justify-between bg-rosepine-base/95 backdrop-blur z-20 sticky top-0 shrink-0">
+                <div class="flex items-center gap-3">
                     <button id="mobile-menu-btn" class="lg:hidden text-rosepine-text hover:text-rosepine-love">
                     <i class="ph ph-list text-xl"></i>
                     </button>
-                    <button id="expand-btn" class="hidden text-rosepine-muted hover:text-rosepine-love transition-colors" title="Open Sidebar">
+                    <button id="expand-btn" class="hidden text-rosepine-muted hover:text-rosepine-love transition-colors">
                     <i class="ph ph-sidebar text-xl"></i>
                     </button>
-                    <div class="hidden sm:flex items-center gap-2 text-sm font-mono text-rosepine-muted whitespace-nowrap overflow-hidden text-ellipsis" id="breadcrumbs">
+                    <div class="hidden sm:flex items-center gap-2 text-sm font-mono text-rosepine-muted" id="breadcrumbs">
                         <span>/</span>
-                        <span class="text-rosepine-text truncate" id="crumb-title">Select an article</span>
+                        <span class="text-rosepine-text truncate max-w-[200px]" id="crumb-title">Select an article</span>
                     </div>
                 </div>
-                <div class="flex items-center gap-3 text-sm font-mono shrink-0">
-                    <button id="width-toggle" onclick="toggleWidth()" class="flex items-center gap-2 text-rosepine-muted hover:text-rosepine-text transition-colors px-2 py-1 hover:bg-rosepine-overlay rounded" title="Toggle Full Width">
-                    <i id="width-icon" class="ph ph-arrows-out-line-horizontal text-lg"></i>
-                    <span class="hidden md:inline text-xs">Full Width</span>
-                    </button>
-                    <div class="w-px h-4 bg-rosepine-highlight-med mx-1"></div>
+                <div class="flex items-center gap-4 text-sm font-mono">
+                    <div class="relative">
+                        <button id="view-options-btn" class="flex items-center gap-1.5 text-rosepine-muted hover:text-rosepine-text transition-colors">
+                        <i class="ph ph-dots-three text-xl"></i>
+                        </button>
+                        <div id="view-options-menu" class="hidden absolute right-0 top-full mt-2 w-48 bg-rosepine-surface border border-rosepine-highlight-med rounded-lg shadow-xl z-50 py-1">
+                            <div class="px-3 py-2 text-xs font-bold text-rosepine-muted uppercase tracking-wider">Page Options</div>
+                            <button id="full-width-toggle" class="w-full text-left px-4 py-2 text-sm text-rosepine-text hover:bg-rosepine-overlay flex items-center justify-between group">
+                                <span>Full Width</span>
+                                <div class="w-8 h-4 bg-rosepine-base rounded-full relative border border-rosepine-highlight-med">
+                                    <div id="full-width-dot" class="absolute top-0.5 left-0.5 w-3 h-3 bg-rosepine-muted rounded-full transition-all"></div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
                     <a href="index.html" class="text-rosepine-rose hover:text-rosepine-love">./home</a>
                 </div>
             </header>
-            <div id="main-scroll" class="flex-1 overflow-y-auto scroll-smooth">
-                <div class="flex justify-center min-h-full">
-                    <div id="article-wrapper" class="flex-1 w-full max-w-3xl px-6 py-12 transition-all duration-300 mx-auto">
+            <div class="flex-1 flex overflow-hidden">
+                <div id="main-scroll" class="flex-1 overflow-y-auto scroll-smooth relative">
+                    <div id="cover-image-container" class="w-full hidden group relative">
+                        <img id="cover-image" src="" class="w-full h-[30vh] object-cover object-center select-none">
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-rosepine-base"></div>
+                    </div>
+                    <div id="article-container" class="max-w-3xl mx-auto px-6 py-12 transition-all duration-300">
                         <div id="loading" class="flex flex-col items-center justify-center py-20 text-rosepine-muted animate-pulse">
                             <i class="ph ph-spinner-gap text-3xl mb-4 animate-spin"></i>
                             <span class="font-mono text-sm">Initialising Reader...</span>
                         </div>
                         <article id="content-area" class="hidden fade-in">
-                            <div id="header-image-container" class="mb-8 hidden">
-                                <img id="header-image" src="" alt="Header" class="w-full h-48 md:h-64 object-cover rounded-xl border border-rosepine-highlight-low shadow-lg shadow-rosepine-base/50">
-                            </div>
                             <header class="mb-10 pb-6 border-b border-rosepine-highlight-low">
                                 <div class="flex flex-wrap gap-2 mb-4" id="tags-container"></div>
-                                <h1 id="art-title" class="text-3xl md:text-5xl font-bold text-rosepine-text mb-6 tracking-tight"></h1>
+                                <h1 id="art-title" class="text-4xl md:text-5xl font-bold text-rosepine-text mb-6 tracking-tight"></h1>
                                 <div class="flex flex-wrap items-center gap-6 text-sm font-mono text-rosepine-muted">
                                     <div class="flex items-center gap-2">
                                         <i class="ph ph-calendar-blank text-rosepine-love"></i>
@@ -145,56 +151,73 @@
                                     </div>
                                 </div>
                             </header>
-                            <div id="markdown-body" class="article-content font-sans"></div>
+                            <div id="markdown-body" class="article-content"></div>
                         </article>
                         <footer class="mt-20 pt-10 border-t border-rosepine-highlight-low text-center pb-10">
-                            <p class="font-mono text-sm text-rosepine-muted">0xAns Reader Engine v2.1</p>
+                            <p class="font-mono text-sm text-rosepine-muted">0xAns Reader Engine v2.0</p>
                         </footer>
                     </div>
-                    <aside id="toc-sidebar" class="hidden xl:block w-64 shrink-0 border-l border-rosepine-highlight-low bg-rosepine-base/50 p-6 sticky top-0 h-screen overflow-y-auto">
-                        <h4 class="text-xs font-bold font-mono text-rosepine-muted uppercase tracking-wider mb-4">On this page</h4>
-                        <nav id="toc-content" class="text-sm space-y-1 text-rosepine-muted">
-                        </nav>
-                    </aside>
                 </div>
+                <aside id="toc-sidebar" class="w-64 shrink-0 border-l border-rosepine-highlight-low bg-rosepine-base overflow-y-auto hidden xl:block p-6">
+                    <div class="sticky top-0">
+                        <h3 class="font-mono text-xs font-bold text-rosepine-muted uppercase tracking-wider mb-4">On this page</h3>
+                        <ul id="toc-list" class="space-y-1 text-sm border-l border-rosepine-highlight-low">
+                        </ul>
+                    </div>
+                </aside>
             </div>
         </main>
         <script>
             const urlParams = new URLSearchParams(window.location.search);
             const currentArticleId = urlParams.get('id');
             let allArticles = [];
-            let isFullWidth = localStorage.getItem('isFullWidth') === 'true';
             
             const sidebar = document.getElementById('sidebar');
             const resizer = document.getElementById('resizer');
             const collapseBtn = document.getElementById('collapse-btn');
             const expandBtn = document.getElementById('expand-btn');
-            const articleWrapper = document.getElementById('article-wrapper');
-            const tocSidebar = document.getElementById('toc-sidebar');
-            const widthIcon = document.getElementById('width-icon');
+            const articleContainer = document.getElementById('article-container');
+            const fullWidthToggle = document.getElementById('full-width-toggle');
+            const fullWidthDot = document.getElementById('full-width-dot');
+            const viewOptionsBtn = document.getElementById('view-options-btn');
+            const viewOptionsMenu = document.getElementById('view-options-menu');
             
             let sidebarWidth = parseInt(localStorage.getItem('sidebarWidth')) || 280;
             let isSidebarOpen = localStorage.getItem('isSidebarOpen') !== 'false';
+            let isFullWidth = localStorage.getItem('isFullWidth') === 'true';
             
-            function toggleWidth() {
-                isFullWidth = !isFullWidth;
-                localStorage.setItem('isFullWidth', isFullWidth);
-                applyWidth();
-            }
-            
-            function applyWidth() {
+            function updateFullWidthUI() {
                 if (isFullWidth) {
-                    articleWrapper.classList.remove('max-w-3xl', 'mx-auto');
-                    articleWrapper.classList.add('max-w-full', 'px-10', 'lg:px-20');
-                    widthIcon.classList.replace('ph-arrows-out-line-horizontal', 'ph-arrows-in-line-horizontal');
+                    articleContainer.classList.remove('max-w-3xl');
+                    articleContainer.classList.add('max-w-full', 'px-12');
+                    fullWidthDot.classList.add('translate-x-4', 'bg-rosepine-love');
+                    fullWidthDot.classList.remove('bg-rosepine-muted');
                 } else {
-                    articleWrapper.classList.add('max-w-3xl', 'mx-auto');
-                    articleWrapper.classList.remove('max-w-full', 'px-10', 'lg:px-20');
-                    widthIcon.classList.replace('ph-arrows-in-line-horizontal', 'ph-arrows-out-line-horizontal');
+                    articleContainer.classList.add('max-w-3xl');
+                    articleContainer.classList.remove('max-w-full', 'px-12');
+                    fullWidthDot.classList.remove('translate-x-4', 'bg-rosepine-love');
+                    fullWidthDot.classList.add('bg-rosepine-muted');
                 }
+                localStorage.setItem('isFullWidth', isFullWidth);
             }
             
-            applyWidth();
+            updateFullWidthUI();
+            
+            fullWidthToggle.addEventListener('click', () => {
+                isFullWidth = !isFullWidth;
+                updateFullWidthUI();
+            });
+            
+            viewOptionsBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                viewOptionsMenu.classList.toggle('hidden');
+            });
+            
+            document.addEventListener('click', (e) => {
+                if (!viewOptionsMenu.contains(e.target) && !viewOptionsBtn.contains(e.target)) {
+                    viewOptionsMenu.classList.add('hidden');
+                }
+            });
             
             function setSidebarState(isOpen, width) {
                 if (!isOpen) {
@@ -317,55 +340,6 @@
                 }
             }
             
-            function generateToC() {
-                const tocContainer = document.getElementById('toc-content');
-                tocContainer.innerHTML = '';
-                
-                const headings = document.querySelectorAll('#markdown-body h1, #markdown-body h2, #markdown-body h3');
-                
-                if (headings.length === 0) {
-                    tocSidebar.classList.add('hidden');
-                    return;
-                } else {
-                    tocSidebar.classList.remove('hidden');
-                }
-            
-                headings.forEach((heading, index) => {
-                    if (!heading.id) {
-                        heading.id = `heading-${index}`;
-                    }
-            
-                    const link = document.createElement('a');
-                    link.href = `#${heading.id}`;
-                    link.className = 'toc-link block py-1 text-rosepine-muted hover:text-rosepine-text transition-colors truncate';
-                    link.textContent = heading.textContent;
-                    
-                    if (heading.tagName === 'H3') {
-                        link.style.paddingLeft = '1.5rem';
-                        link.style.fontSize = '0.9em';
-                    }
-                    
-                    link.onclick = (e) => {
-                        e.preventDefault();
-                        document.getElementById(heading.id).scrollIntoView({ behavior: 'smooth' });
-                    };
-            
-                    tocContainer.appendChild(link);
-                });
-            
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
-                            const activeLink = document.querySelector(`.toc-link[href="#${entry.target.id}"]`);
-                            if (activeLink) activeLink.classList.add('active');
-                        }
-                    });
-                }, { rootMargin: '-100px 0px -66%' });
-            
-                headings.forEach(h => observer.observe(h));
-            }
-            
             document.getElementById('sidebar-search').addEventListener('input', (e) => {
                 const term = e.target.value.toLowerCase();
                 const filtered = allArticles.filter(a => a.title.toLowerCase().includes(term));
@@ -374,8 +348,57 @@
             
             marked.use({ 
                 gfm: true,
-                breaks: true 
+                breaks: true
             });
+            
+            function generateToC() {
+                const content = document.getElementById('markdown-body');
+                const headers = content.querySelectorAll('h1, h2, h3');
+                const tocList = document.getElementById('toc-list');
+                tocList.innerHTML = '';
+            
+                if (headers.length === 0) {
+                    document.getElementById('toc-sidebar').classList.add('hidden');
+                    return;
+                }
+            
+                headers.forEach((header, index) => {
+                    if (!header.id) {
+                        header.id = `section-${index}`;
+                    }
+            
+                    const li = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = `#${header.id}`;
+                    link.textContent = header.textContent;
+                    link.className = 'block py-1 pl-3 border-l-2 border-transparent text-rosepine-muted hover:text-rosepine-text hover:border-rosepine-muted transition-colors truncate';
+                    
+                    if (header.tagName === 'H3') link.classList.add('ml-4');
+                    
+                    link.onclick = (e) => {
+                        e.preventDefault();
+                        document.getElementById(header.id).scrollIntoView({ behavior: 'smooth' });
+                    };
+            
+                    li.appendChild(link);
+                    tocList.appendChild(li);
+                });
+            
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            document.querySelectorAll('#toc-list a').forEach(a => {
+                                a.classList.remove('toc-active');
+                                if (a.getAttribute('href') === `#${entry.target.id}`) {
+                                    a.classList.add('toc-active');
+                                }
+                            });
+                        }
+                    });
+                }, { rootMargin: '-100px 0px -60% 0px' });
+            
+                headers.forEach(h => observer.observe(h));
+            }
             
             fetch('data/content.json')
                 .then(r => r.json())
@@ -395,11 +418,9 @@
                                 document.getElementById('art-date').textContent = article.date;
                                 document.getElementById('art-category').textContent = article.category || 'Article';
                                 
-                                if (article.image) {
-                                    const imgContainer = document.getElementById('header-image-container');
-                                    const img = document.getElementById('header-image');
-                                    img.src = article.image;
-                                    imgContainer.classList.remove('hidden');
+                                if (article.cover_image) {
+                                    document.getElementById('cover-image').src = article.cover_image;
+                                    document.getElementById('cover-image-container').classList.remove('hidden');
                                 }
             
                                 const tagContainer = document.getElementById('tags-container');
@@ -432,9 +453,6 @@
                                     <i class="ph ph-book-open text-4xl text-rosepine-iris mb-4"></i>
                                     <p class="text-rosepine-text">Select an article from the sidebar to begin reading.</p>
                                 </div>`;
-                                
-                             tocSidebar.classList.add('hidden');
-                             document.getElementById('width-toggle').classList.add('hidden');
                         }
                     }
                 })
