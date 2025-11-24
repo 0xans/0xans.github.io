@@ -6,20 +6,25 @@
     <title>Reader | 0xAns</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
     
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'], 
+                        serif: ['Merriweather', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'] 
+                    },
                     colors: {
                         rosepine: { base: '#191724', surface: '#1f1d2e', overlay: '#26233a', muted: '#6e6a86', text: '#e0def4', love: '#eb6f92', gold: '#f6c177', rose: '#ebbcba', pine: '#31748f', foam: '#9ccfd8', iris: '#c4a7e7', highlight: { low: '#21202e', med: '#403d52', high: '#524f67' } }
                     }
@@ -30,34 +35,49 @@
 
     <style>
         body { background-color: #191724; overflow: hidden; }
+        
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #26233a; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #403d52; }
 
-        .article-content { font-size: 1.05rem; color: #e0def4; line-height: 1.8; }
+        .article-content { color: #e0def4; line-height: 1.8; }
+        .article-content h1, .article-content h2, .article-content h3 { font-family: 'Inter', sans-serif; font-weight: 700; margin-top: 1.5em; margin-bottom: 0.5em; scroll-margin-top: 100px; }
         
-        .article-content h1, .article-content h2, .article-content h3 { font-family: 'Inter'; font-weight: 700; margin-top: 1.5em; margin-bottom: 0.5em; scroll-margin-top: 100px; }
+        .font-mode-serif .article-content { font-family: 'Merriweather', serif; }
+        .font-mode-sans .article-content { font-family: 'Inter', sans-serif; }
+        
         .article-content h1 { font-size: 2rem; color: #e0def4; }
-        .article-content h2 { font-size: 1.5rem; color: #e0def4; }
+        .article-content h2 { font-size: 1.5rem; color: #e0def4; border-bottom: 1px solid #26233a; padding-bottom: 0.3em; }
         .article-content h3 { font-size: 1.25rem; color: #e0def4; }
         
-        .article-content p { margin-bottom: 1em; }
-        .article-content a { color: #e0def4; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: #eb6f92; transition: all 0.2s; }
+        .article-content p { margin-bottom: 1.2em; }
+        .article-content a { color: #ebbcba; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: #eb6f92; transition: all 0.2s; }
         .article-content a:hover { background: #eb6f92; color: #191724; text-decoration: none; }
-        .article-content blockquote { border-left: 3px solid #eb6f92; padding-left: 1rem; margin: 1.5rem 0; color: #e0def4; }
+        
+        .article-content blockquote { border-left: 3px solid #eb6f92; padding-left: 1rem; margin: 1.5rem 0; color: #908caa; font-style: italic; background: rgba(31, 29, 46, 0.5); padding: 1rem; border-radius: 0 8px 8px 0; }
         .article-content strong { color: #ebbcba; font-weight: 600; }
         
         .article-content ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #e0def4; }
         .article-content ol { list-style: decimal; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #e0def4; }
         .article-content li { margin-bottom: 0.25em; }
-        .article-content li::marker { color: #6e6a86; }
+        .article-content li::marker { color: #eb6f92; }
         
-        .article-content pre { background: #1f1d2e !important; padding: 1rem; border-radius: 0.5rem; border: 1px solid #26233a; margin: 1.5rem 0; overflow-x: auto; }
+        .code-wrapper { position: relative; margin: 1.5rem 0; }
+        .article-content pre { background: #1f1d2e !important; padding: 1rem; border-radius: 0.5rem; border: 1px solid #26233a; overflow-x: auto; }
         .article-content code { font-family: 'JetBrains Mono'; font-size: 0.85em; background: #26233a; padding: 0.2em 0.4em; border-radius: 4px; color: #eb6f92; }
         .article-content pre code { background: transparent; padding: 0; color: inherit; border-radius: 0; }
         
-        .article-content img { max-width: 100%; height: auto; display: block; margin: 2rem auto; border-radius: 8px; border: 1px solid #26233a; }
+        .copy-btn {
+            position: absolute; top: 0.5rem; right: 0.5rem;
+            background: #26233a; color: #908caa; border: 1px solid #403d52;
+            padding: 4px 8px; border-radius: 4px; font-size: 12px; font-family: 'Inter';
+            cursor: pointer; opacity: 0; transition: opacity 0.2s, background 0.2s;
+        }
+        .code-wrapper:hover .copy-btn { opacity: 1; }
+        .copy-btn:hover { background: #eb6f92; color: #191724; }
+
+        .article-content img { max-width: 100%; height: auto; display: block; margin: 2rem auto; border-radius: 8px; border: 1px solid #26233a; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5); }
         
         .article-content table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.95rem; }
         .article-content th { background: #1f1d2e; color: #9ccfd8; font-weight: 600; text-align: left; padding: 0.75rem; border-bottom: 2px solid #26233a; }
@@ -69,45 +89,63 @@
         .resizer { width: 4px; cursor: col-resize; background: transparent; transition: background 0.2s; z-index: 50; flex-shrink: 0; }
         .resizer:hover, .resizer.active { background: #eb6f92; }
 
-        .toc-item.active { color: #eb6f92; font-weight: 600; border-left-color: #eb6f92; }
+        .toc-item.active { color: #eb6f92; font-weight: 600; border-left-color: #eb6f92; transform: translateX(4px); }
         .toc-item { transition: all 0.2s; border-left: 2px solid transparent; }
-        .toc-item:hover { color: #e0def4; }
+        .toc-item:hover { color: #e0def4; transform: translateX(4px); }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+
+        .settings-popover {
+            opacity: 0; visibility: hidden; transform: translateY(-10px) scale(0.95);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .settings-popover.open {
+            opacity: 1; visibility: visible; transform: translateY(0) scale(1);
+        }
     </style>
 </head>
-<body class="antialiased text-rosepine-text flex h-screen w-screen">
+<body class="antialiased text-rosepine-text flex h-screen w-screen font-mode-sans">
 
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-30 hidden lg:hidden backdrop-blur-sm transition-opacity"></div>
 
-    <aside id="sidebar" class="bg-rosepine-surface border-r border-rosepine-highlight-low flex flex-col h-full absolute lg:relative z-40 transition-transform duration-300 -translate-x-full lg:translate-x-0 w-[280px] shrink-0">
+    <aside id="sidebar" class="bg-rosepine-surface border-r border-rosepine-highlight-low flex flex-col h-full absolute lg:relative z-40 transition-transform duration-300 -translate-x-full lg:translate-x-0 w-[280px] shrink-0 shadow-2xl lg:shadow-none">
         
         <div class="h-14 flex items-center justify-between px-4 border-b border-rosepine-highlight-low shrink-0">
             <div class="flex items-center gap-2">
-                <div class="w-2 h-2 rounded-full bg-rosepine-love"></div>
-                <span class="font-mono font-bold text-rosepine-text">0xAns</span>
+                <div class="w-2 h-2 rounded-full bg-rosepine-love animate-pulse"></div>
+                <span class="font-mono font-bold text-rosepine-text tracking-tight">0xAns<span class="text-rosepine-muted">.reader</span></span>
             </div>
-            <button id="collapse-btn" class="hidden lg:flex p-1 hover:bg-rosepine-overlay rounded text-rosepine-muted hover:text-rosepine-text transition-colors" title="Close Sidebar">
-                <i class="ph ph-arrows-in-line-horizontal"></i>
-            </button>
-            <button id="mobile-close-btn" class="lg:hidden p-1 text-rosepine-love">
-                <i class="ph ph-x text-lg"></i>
-            </button>
+            <div class="flex gap-1">
+                <button id="collapse-btn" class="hidden lg:flex p-1.5 hover:bg-rosepine-overlay rounded text-rosepine-muted hover:text-rosepine-text transition-colors" title="Collapse Sidebar">
+                    <i class="ph ph-arrows-in-line-horizontal"></i>
+                </button>
+                <button id="mobile-close-btn" class="lg:hidden p-1 text-rosepine-love">
+                    <i class="ph ph-x text-lg"></i>
+                </button>
+            </div>
         </div>
 
         <div class="p-3 shrink-0">
             <div class="relative group">
                 <i class="ph ph-magnifying-glass absolute left-2.5 top-1/2 -translate-y-1/2 text-rosepine-muted group-focus-within:text-rosepine-love transition-colors text-sm"></i>
-                <input type="text" id="sidebar-search" placeholder="Search..." 
-                    class="w-full bg-rosepine-base/50 border border-rosepine-highlight-med rounded-md py-1.5 pl-8 pr-3 text-sm text-rosepine-text focus:outline-none focus:border-rosepine-love focus:bg-rosepine-base transition-all placeholder-rosepine-highlight-high">
+                <input type="text" id="sidebar-search" placeholder="Search articles..." 
+                    class="w-full bg-rosepine-base/50 border border-rosepine-highlight-med rounded-md py-1.5 pl-8 pr-3 text-sm text-rosepine-text focus:outline-none focus:border-rosepine-love focus:bg-rosepine-base transition-all placeholder-rosepine-highlight-high shadow-inner">
             </div>
         </div>
         
-        <div class="flex-grow overflow-y-auto px-3 pb-4 space-y-6" id="sidebar-list">
-        </div>
+        <div class="flex-grow overflow-y-auto px-3 pb-4 space-y-6 scrollbar-thin" id="sidebar-list">
+            </div>
 
-        <div class="p-4 border-t border-rosepine-highlight-low shrink-0">
-            <a id="nav-github" href="#" target="_blank" class="flex items-center gap-2 text-xs font-mono text-rosepine-muted hover:text-rosepine-love transition-colors">
+        <div class="p-4 border-t border-rosepine-highlight-low shrink-0 space-y-2">
+             <a id="nav-project" href="#" target="_blank" class="hidden flex items-center justify-center gap-2 text-xs font-bold bg-rosepine-highlight-low hover:bg-rosepine-highlight-med text-rosepine-text py-2 rounded border border-rosepine-highlight-med transition-all">
+                <i class="ph ph-git-fork"></i>
+                <span>View Project Source</span>
+            </a>
+            
+            <a id="nav-github" href="#" target="_blank" class="flex items-center gap-2 text-xs font-mono text-rosepine-muted hover:text-rosepine-love transition-colors justify-center">
                 <i class="ph ph-github-logo text-lg"></i>
-                <span>github.com/0xAns</span>
+                <span>0xAns</span>
             </a>
         </div>
     </aside>
@@ -122,25 +160,52 @@
                     <i class="ph ph-list text-xl"></i>
                 </button>
                 
-                <button id="expand-btn" class="hidden text-rosepine-muted hover:text-rosepine-love transition-colors" title="Open Sidebar">
+                <button id="expand-btn" class="hidden text-rosepine-muted hover:text-rosepine-love transition-colors p-1 hover:bg-rosepine-overlay rounded" title="Open Sidebar">
                     <i class="ph ph-sidebar text-xl"></i>
                 </button>
 
                 <div class="hidden sm:flex items-center gap-2 text-sm font-mono text-rosepine-muted" id="breadcrumbs">
                     <span>/</span>
-                    <span class="text-rosepine-text truncate max-w-[200px]" id="crumb-title">Select an article</span>
+                    <span class="text-rosepine-text truncate max-w-[200px] lg:max-w-[400px]" id="crumb-title">Library</span>
                 </div>
             </div>
             
-            <div class="flex items-center gap-4">
-                <button id="width-toggle-btn" class="text-rosepine-muted hover:text-rosepine-text transition-colors flex items-center gap-1.5 text-xs font-mono border border-rosepine-highlight-med px-2 py-1 rounded hover:bg-rosepine-surface" title="Toggle Full Width">
+            <div class="flex items-center gap-3 relative">
+                <button id="width-toggle-btn" class="text-rosepine-muted hover:text-rosepine-text transition-colors flex items-center gap-1.5 text-xs font-mono border border-rosepine-highlight-med px-2 py-1.5 rounded hover:bg-rosepine-surface" title="Toggle Width">
                     <i class="ph ph-arrows-out-line-horizontal"></i>
-                    <span class="hidden sm:inline">Full Width</span>
                 </button>
 
-                <div class="flex gap-4 text-sm font-mono border-l border-rosepine-highlight-low pl-4">
-                     <a href="index.html" class="text-rosepine-rose hover:text-rosepine-love">./home</a>
+                <div class="relative">
+                    <button id="settings-btn" class="text-rosepine-muted hover:text-rosepine-text hover:bg-rosepine-surface p-1.5 rounded transition-colors">
+                        <i class="ph ph-gear text-lg"></i>
+                    </button>
+                    
+                    <div id="settings-menu" class="settings-popover absolute right-0 top-full mt-2 w-56 bg-rosepine-surface border border-rosepine-highlight-med rounded-lg shadow-xl z-50 p-4">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-xs font-mono text-rosepine-muted uppercase tracking-wider mb-2 block">Font Size</label>
+                                <div class="flex items-center gap-2 bg-rosepine-base rounded border border-rosepine-highlight-low p-1">
+                                    <button onclick="adjustFontSize(-1)" class="flex-1 hover:bg-rosepine-highlight-low text-rosepine-muted hover:text-rosepine-text rounded py-1"><i class="ph ph-minus"></i></button>
+                                    <span id="font-size-display" class="text-xs font-mono text-rosepine-text w-8 text-center">100%</span>
+                                    <button onclick="adjustFontSize(1)" class="flex-1 hover:bg-rosepine-highlight-low text-rosepine-muted hover:text-rosepine-text rounded py-1"><i class="ph ph-plus"></i></button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-xs font-mono text-rosepine-muted uppercase tracking-wider mb-2 block">Typeface</label>
+                                <div class="flex gap-2">
+                                    <button onclick="setFontMode('sans')" id="btn-font-sans" class="flex-1 py-1.5 text-xs border border-rosepine-love bg-rosepine-love/10 text-rosepine-love rounded">Sans</button>
+                                    <button onclick="setFontMode('serif')" id="btn-font-serif" class="flex-1 py-1.5 text-xs border border-rosepine-highlight-med text-rosepine-muted hover:text-rosepine-text rounded">Serif</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="h-4 w-px bg-rosepine-highlight-med mx-1"></div>
+                
+                <a href="index.html" class="text-rosepine-rose hover:text-rosepine-love text-sm font-mono">
+                    <i class="ph ph-house"></i>
+                </a>
             </div>
         </header>
 
@@ -151,20 +216,23 @@
                     
                     <div id="loading" class="flex flex-col items-center justify-center py-20 text-rosepine-muted animate-pulse">
                         <i class="ph ph-spinner-gap text-3xl mb-4 animate-spin"></i>
-                        <span class="font-mono text-sm">Initialising Reader...</span>
+                        <span class="font-mono text-sm">Fetching document...</span>
                     </div>
                     
                     <article id="content-area" class="hidden fade-in relative">
                         
-                        <div id="cover-image-container" class="mb-8 hidden">
-                            <img id="cover-image" src="" alt="Cover" class="w-full h-48 md:h-64 object-cover rounded-lg border border-rosepine-highlight-low shadow-lg">
+                        <div id="cover-image-container" class="mb-8 hidden group relative overflow-hidden rounded-lg border border-rosepine-highlight-low">
+                            <img id="cover-image" src="" alt="Cover" class="w-full h-48 md:h-80 object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div class="absolute inset-0 bg-gradient-to-t from-rosepine-base to-transparent opacity-60"></div>
                         </div>
 
                         <header class="mb-10 pb-6 border-b border-rosepine-highlight-low">
-                            <div class="flex items-center gap-3 text-xs font-mono text-rosepine-muted mb-4">
-                                <span id="art-date" class="flex items-center gap-1"><i class="ph ph-calendar-blank"></i> <span id="art-date-text"></span></span>
+                            <div class="flex flex-wrap items-center gap-3 text-xs font-mono text-rosepine-muted mb-4">
+                                <span id="art-date" class="flex items-center gap-1 text-rosepine-iris"><i class="ph ph-calendar-blank"></i> <span id="art-date-text"></span></span>
                                 <span>•</span>
-                                <span id="art-category" class="text-rosepine-foam"></span>
+                                <span id="read-time" class="flex items-center gap-1"><i class="ph ph-clock"></i> <span>... min read</span></span>
+                                <span>•</span>
+                                <span id="art-category" class="px-2 py-0.5 bg-rosepine-surface border border-rosepine-highlight-med rounded text-rosepine-foam"></span>
                             </div>
 
                             <h1 id="art-title" class="text-3xl md:text-5xl font-bold text-rosepine-text mb-6 font-sans tracking-tight leading-tight"></h1>
@@ -172,16 +240,16 @@
                             <div class="flex flex-wrap gap-2" id="tags-container"></div>
                         </header>
 
-                        <div id="markdown-body" class="article-content font-sans"></div>
+                        <div id="markdown-body" class="article-content"></div>
                     </article>
                     
-                    <footer id="article-footer" class="hidden mt-20 pt-10 border-t border-rosepine-highlight-low text-center pb-10">
-                        <p class="font-mono text-sm text-rosepine-muted">0xAns Reader Engine v2.1</p>
+                    <footer class="py-10 text-center border-t border-rosepine-highlight-low bg-rosepine-base">
+                        <p class="font-mono text-sm text-rosepine-muted">Designed with <span class="text-rosepine-love">♥</span> by 0xAns</p>
                     </footer>
                 </div>
 
-                <div id="toc-container" class="hidden xl:block w-64 flex-shrink-0 pt-12 pr-6 sticky top-0 h-screen overflow-y-auto">
-                    <div class="text-[11px] font-bold font-mono text-rosepine-muted uppercase tracking-wider mb-4 pl-3">On this page</div>
+                <div id="toc-container" class="hidden xl:block w-64 flex-shrink-0 pt-12 pr-6 sticky top-0 h-screen overflow-y-auto custom-scrollbar">
+                    <div class="text-[11px] font-bold font-mono text-rosepine-muted uppercase tracking-wider mb-4 pl-3 opacity-70">On this page</div>
                     <nav id="toc-nav" class="space-y-1 text-sm text-rosepine-muted border-l border-rosepine-highlight-low"></nav>
                 </div>
 
@@ -196,163 +264,148 @@
         
         const sidebar = document.getElementById('sidebar');
         const resizer = document.getElementById('resizer');
-        const collapseBtn = document.getElementById('collapse-btn');
-        const expandBtn = document.getElementById('expand-btn');
-        const widthToggleBtn = document.getElementById('width-toggle-btn');
         const contentWrapper = document.getElementById('content-wrapper');
         const tocContainer = document.getElementById('toc-container');
+        const settingsMenu = document.getElementById('settings-menu');
         
         let sidebarWidth = parseInt(localStorage.getItem('sidebarWidth')) || 280;
         let isSidebarOpen = localStorage.getItem('isSidebarOpen') !== 'false';
         let isFullWidth = localStorage.getItem('isFullWidth') === 'true';
+        let currentFontSize = parseInt(localStorage.getItem('fontSize')) || 100;
+        let currentFontMode = localStorage.getItem('fontMode') || 'sans';
 
         function setSidebarState(isOpen, width) {
             if (!isOpen) {
                 sidebar.style.display = 'none';
                 resizer.style.display = 'none';
-                expandBtn.classList.remove('hidden');
+                document.getElementById('expand-btn').classList.remove('hidden');
             } else {
                 sidebar.style.display = 'flex';
                 resizer.style.display = 'block';
                 sidebar.style.width = `${width}px`;
-                expandBtn.classList.add('hidden');
+                document.getElementById('expand-btn').classList.add('hidden');
             }
             localStorage.setItem('isSidebarOpen', isOpen);
             localStorage.setItem('sidebarWidth', width);
         }
 
         function setContentWidth(full) {
+            const btn = document.getElementById('width-toggle-btn');
             if (full) {
                 contentWrapper.classList.remove('max-w-3xl');
-                contentWrapper.classList.add('max-w-[90%]', 'xl:max-w-[1200px]');
-                widthToggleBtn.classList.add('text-rosepine-text', 'bg-rosepine-surface', 'border-rosepine-love');
-                widthToggleBtn.querySelector('span').textContent = 'Center';
+                contentWrapper.classList.add('max-w-[95%]', 'xl:max-w-[1400px]');
+                btn.classList.add('text-rosepine-iris', 'border-rosepine-iris');
             } else {
                 contentWrapper.classList.add('max-w-3xl');
-                contentWrapper.classList.remove('max-w-[90%]', 'xl:max-w-[1200px]');
-                widthToggleBtn.classList.remove('text-rosepine-text', 'bg-rosepine-surface', 'border-rosepine-love');
-                widthToggleBtn.querySelector('span').textContent = 'Full Width';
+                contentWrapper.classList.remove('max-w-[95%]', 'xl:max-w-[1400px]');
+                btn.classList.remove('text-rosepine-iris', 'border-rosepine-iris');
             }
             isFullWidth = full;
             localStorage.setItem('isFullWidth', full);
         }
 
-        if (window.innerWidth >= 1024) {
-            setSidebarState(isSidebarOpen, sidebarWidth);
+        document.getElementById('settings-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            settingsMenu.classList.toggle('open');
+        });
+        
+        document.addEventListener('click', (e) => {
+            if (!settingsMenu.contains(e.target)) settingsMenu.classList.remove('open');
+        });
+
+        function adjustFontSize(direction) {
+            currentFontSize += (direction * 10);
+            if (currentFontSize < 80) currentFontSize = 80;
+            if (currentFontSize > 150) currentFontSize = 150;
+            
+            document.getElementById('markdown-body').style.fontSize = `${currentFontSize}%`;
+            document.getElementById('font-size-display').textContent = `${currentFontSize}%`;
+            localStorage.setItem('fontSize', currentFontSize);
         }
+
+        function setFontMode(mode) {
+            document.body.classList.remove('font-mode-sans', 'font-mode-serif');
+            document.body.classList.add(`font-mode-${mode}`);
+            
+            const btnSans = document.getElementById('btn-font-sans');
+            const btnSerif = document.getElementById('btn-font-serif');
+            
+            const activeClass = ['border-rosepine-love', 'bg-rosepine-love/10', 'text-rosepine-love'];
+            const inactiveClass = ['border-rosepine-highlight-med', 'text-rosepine-muted', 'hover:text-rosepine-text'];
+
+            if(mode === 'sans') {
+                btnSans.classList.add(...activeClass); btnSans.classList.remove('border-rosepine-highlight-med', 'text-rosepine-muted');
+                btnSerif.classList.remove(...activeClass); btnSerif.classList.add(...inactiveClass);
+            } else {
+                btnSerif.classList.add(...activeClass); btnSerif.classList.remove('border-rosepine-highlight-med', 'text-rosepine-muted');
+                btnSans.classList.remove(...activeClass); btnSans.classList.add(...inactiveClass);
+            }
+            
+            localStorage.setItem('fontMode', mode);
+        }
+
+        if (window.innerWidth >= 1024) setSidebarState(isSidebarOpen, sidebarWidth);
         setContentWidth(isFullWidth);
+        adjustFontSize(0);
+        setFontMode(currentFontMode);
 
-        widthToggleBtn.addEventListener('click', () => {
-            setContentWidth(!isFullWidth);
-        });
-
+        document.getElementById('width-toggle-btn').addEventListener('click', () => setContentWidth(!isFullWidth));
+        document.getElementById('collapse-btn').addEventListener('click', () => setSidebarState(false, sidebarWidth));
+        document.getElementById('expand-btn').addEventListener('click', () => setSidebarState(true, sidebarWidth));
+        
         let isResizing = false;
-
-        resizer.addEventListener('mousedown', (e) => {
-            isResizing = true;
-            document.body.style.cursor = 'col-resize';
-            resizer.classList.add('active');
-        });
-
+        resizer.addEventListener('mousedown', () => { isResizing = true; document.body.style.cursor = 'col-resize'; resizer.classList.add('active'); });
         document.addEventListener('mousemove', (e) => {
             if (!isResizing) return;
-            let newWidth = e.clientX;
-            if (newWidth < 200) newWidth = 200;
-            if (newWidth > 500) newWidth = 500;
-            
-            sidebarWidth = newWidth;
-            sidebar.style.width = `${newWidth}px`;
+            let w = e.clientX;
+            if (w < 220) w = 220; if (w > 600) w = 600;
+            sidebarWidth = w;
+            sidebar.style.width = `${w}px`;
         });
-
         document.addEventListener('mouseup', () => {
-            if (isResizing) {
-                isResizing = false;
-                document.body.style.cursor = 'default';
-                resizer.classList.remove('active');
-                localStorage.setItem('sidebarWidth', sidebarWidth);
-            }
+            if (isResizing) { isResizing = false; document.body.style.cursor = 'default'; resizer.classList.remove('active'); localStorage.setItem('sidebarWidth', sidebarWidth); }
         });
 
-        collapseBtn.addEventListener('click', () => setSidebarState(false, sidebarWidth));
-        expandBtn.addEventListener('click', () => setSidebarState(true, sidebarWidth));
-
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileCloseBtn = document.getElementById('mobile-close-btn');
-        const overlay = document.getElementById('sidebar-overlay');
-
-        function toggleMobileMenu() {
+        const toggleMobile = () => {
             const isClosed = sidebar.classList.contains('-translate-x-full');
-            if (isClosed) {
-                sidebar.classList.remove('-translate-x-full');
-                overlay.classList.remove('hidden');
-            } else {
-                sidebar.classList.add('-translate-x-full');
-                overlay.classList.add('hidden');
-            }
+            sidebar.classList.toggle('-translate-x-full', !isClosed);
+            document.getElementById('sidebar-overlay').classList.toggle('hidden', !isClosed);
+        };
+        ['mobile-menu-btn', 'mobile-close-btn', 'sidebar-overlay'].forEach(id => document.getElementById(id).addEventListener('click', toggleMobile));
+
+
+        function calculateReadingTime(text) {
+            const wpm = 225;
+            const words = text.trim().split(/\s+/).length;
+            const time = Math.ceil(words / wpm);
+            document.getElementById('read-time').querySelector('span').textContent = `${time} min read`;
         }
 
-        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-        mobileCloseBtn.addEventListener('click', toggleMobileMenu);
-        overlay.addEventListener('click', toggleMobileMenu);
+        function addCopyButtons() {
+            document.querySelectorAll('pre').forEach((pre) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'code-wrapper';
+                pre.parentNode.insertBefore(wrapper, pre);
+                wrapper.appendChild(pre);
 
-        function highlightMatch(text, term) {
-            if (!term) return text;
-            const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            const regex = new RegExp(`(${escapedTerm})`, 'gi');
-            return text.replace(regex, '<span class="search-match">$1</span>');
-        }
-
-        function renderSidebar(articles, searchTerm = "") {
-            const container = document.getElementById('sidebar-list');
-            container.innerHTML = '';
-            
-            const categories = {};
-            articles.forEach(art => {
-                const cat = art.category || 'General';
-                if(!categories[cat]) categories[cat] = [];
-                categories[cat].push(art);
-            });
-
-            const hasResults = Object.keys(categories).length > 0;
-
-            if (!hasResults) {
-                container.innerHTML = `<div class="text-xs text-rosepine-muted text-center italic mt-4">No matching articles found.</div>`;
-                return;
-            }
-
-            for (const [cat, items] of Object.entries(categories)) {
-                const catHeader = document.createElement('h3');
-                catHeader.className = 'text-[11px] font-bold font-mono text-rosepine-muted uppercase tracking-wider mb-2 mt-2 px-2';
-                catHeader.textContent = cat;
-                container.appendChild(catHeader);
-
-                const ul = document.createElement('ul');
-                ul.className = 'space-y-0.5 mb-4';
+                const btn = document.createElement('button');
+                btn.className = 'copy-btn';
+                btn.innerHTML = '<i class="ph ph-copy"></i> Copy';
                 
-                items.forEach(art => {
-                    const li = document.createElement('li');
-                    const isActive = art.id === currentArticleId;
-                    
-                    const displayTitle = highlightMatch(art.title, searchTerm);
-                    
-                    li.innerHTML = `
-                        <a href="?id=${art.id}" class="block text-[13px] py-1.5 px-2.5 rounded transition-all truncate border border-transparent ${isActive 
-                            ? 'bg-rosepine-highlight-low border-rosepine-highlight-med text-rosepine-rose font-medium shadow-sm' 
-                            : 'text-rosepine-muted hover:text-rosepine-text hover:bg-rosepine-surface hover:border-rosepine-highlight-low'}">
-                            ${displayTitle}
-                        </a>
-                    `;
-                    ul.appendChild(li);
+                btn.addEventListener('click', () => {
+                    const code = pre.querySelector('code').innerText;
+                    navigator.clipboard.writeText(code);
+                    btn.innerHTML = '<i class="ph ph-check"></i> Copied';
+                    btn.style.color = '#9ccfd8';
+                    setTimeout(() => {
+                        btn.innerHTML = '<i class="ph ph-copy"></i> Copy';
+                        btn.style.color = '';
+                    }, 2000);
                 });
-                container.appendChild(ul);
-            }
+                
+                wrapper.appendChild(btn);
+            });
         }
-
-        document.getElementById('sidebar-search').addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            const filtered = allArticles.filter(a => a.title.toLowerCase().includes(term));
-            renderSidebar(filtered, e.target.value);
-        });
 
         function generateTOC() {
             const content = document.getElementById('markdown-body');
@@ -360,32 +413,23 @@
             const headers = content.querySelectorAll('h1, h2, h3');
             
             tocNav.innerHTML = '';
+            if (headers.length === 0) { tocContainer.classList.add('hidden'); return; }
             
-            if (headers.length === 0) {
-                tocContainer.classList.add('hidden');
-                return;
-            } else {
-                if(window.innerWidth >= 1280) tocContainer.classList.remove('hidden');
-            }
-
             headers.forEach((header, index) => {
                 const id = header.id || `section-${index}`;
                 header.id = id;
-                
                 const link = document.createElement('a');
                 link.href = `#${id}`;
                 link.textContent = header.textContent;
-                link.className = 'toc-item block py-1 pl-3 text-rosepine-muted hover:text-rosepine-text text-xs';
+                link.className = 'toc-item block py-1 pl-3 text-rosepine-muted hover:text-rosepine-text text-xs truncate';
                 link.dataset.target = id;
-                
                 if (header.tagName === 'H2') link.classList.add('pl-3');
-                if (header.tagName === 'H3') link.classList.add('pl-6');
+                if (header.tagName === 'H3') link.classList.add('pl-6', 'opacity-80');
                 
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
                 });
-                
                 tocNav.appendChild(link);
             });
 
@@ -398,20 +442,69 @@
                     }
                 });
             }, { rootMargin: '-100px 0px -60% 0px' });
-
             headers.forEach(header => observer.observe(header));
         }
 
-        marked.use({ 
-            gfm: true,
-            breaks: true 
+        function renderSidebar(articles, term = "") {
+            const container = document.getElementById('sidebar-list');
+            container.innerHTML = '';
+            
+            const categories = {};
+            articles.forEach(art => {
+                const cat = art.category || 'General';
+                if(!categories[cat]) categories[cat] = [];
+                categories[cat].push(art);
+            });
+
+            if (Object.keys(categories).length === 0) {
+                container.innerHTML = `<div class="text-xs text-rosepine-muted text-center italic mt-4">No articles found.</div>`;
+                return;
+            }
+
+            for (const [cat, items] of Object.entries(categories)) {
+                const catHeader = document.createElement('h3');
+                catHeader.className = 'text-[11px] font-bold font-mono text-rosepine-muted uppercase tracking-wider mb-2 mt-4 first:mt-0 px-2';
+                catHeader.textContent = cat;
+                container.appendChild(catHeader);
+
+                const ul = document.createElement('ul');
+                ul.className = 'space-y-1';
+                items.forEach(art => {
+                    const li = document.createElement('li');
+                    const isActive = art.id === currentArticleId;
+                    const title = term ? art.title.replace(new RegExp(`(${term})`, 'gi'), '<span class="search-match">$1</span>') : art.title;
+                    
+                    li.innerHTML = `
+                        <a href="?id=${art.id}" class="block text-[13px] py-1.5 px-2.5 rounded transition-all truncate border border-transparent ${isActive 
+                            ? 'bg-rosepine-highlight-low border-rosepine-highlight-med text-rosepine-rose font-medium shadow-sm' 
+                            : 'text-rosepine-muted hover:text-rosepine-text hover:bg-rosepine-surface hover:border-rosepine-highlight-low'}">
+                            ${title}
+                        </a>`;
+                    ul.appendChild(li);
+                });
+                container.appendChild(ul);
+            }
+        }
+
+        document.getElementById('sidebar-search').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            renderSidebar(allArticles.filter(a => a.title.toLowerCase().includes(term)), e.target.value);
         });
+
+        marked.use({ gfm: true, breaks: true });
 
         fetch('data/content.json')
             .then(r => r.json())
             .then(data => {
-                if(data.profile) document.getElementById('nav-github').href = data.profile.github;
-                
+                if(data.profile) {
+                    document.getElementById('nav-github').href = data.profile.github;
+                }
+                if(data.project_repo) {
+                    const projBtn = document.getElementById('nav-project');
+                    projBtn.href = data.project_repo;
+                    projBtn.classList.remove('hidden');
+                }
+
                 if(data.articles) {
                     allArticles = data.articles;
                     renderSidebar(allArticles);
@@ -433,41 +526,30 @@
 
                             const tagContainer = document.getElementById('tags-container');
                             article.tags.forEach(tag => {
-                                tagContainer.innerHTML += `
-                                    <span class="px-2 py-0.5 text-[11px] font-mono bg-rosepine-highlight-low border border-rosepine-highlight-med text-rosepine-iris rounded-md opacity-80 hover:opacity-100 transition-opacity">#${tag}</span>
-                                `;
+                                tagContainer.innerHTML += `<span class="px-2 py-0.5 text-[11px] font-mono bg-rosepine-highlight-low border border-rosepine-highlight-med text-rosepine-iris rounded-md opacity-80 hover:opacity-100">#${tag}</span>`;
                             });
 
-                            fetch(article.file)
-                                .then(r => r.text())
-                                .then(md => {
-                                    const contentDiv = document.getElementById('markdown-body');
-                                    contentDiv.innerHTML = marked.parse(md);
-                                    
-                                    document.querySelectorAll('pre code').forEach((el) => hljs.highlightElement(el));
-                                    
-                                    document.getElementById('loading').classList.add('hidden');
-                                    document.getElementById('content-area').classList.remove('hidden');
-                                    document.getElementById('article-footer').classList.remove('hidden');
-                                    
-                                    generateTOC();
-                                })
-                                .catch(err => {
-                                     document.getElementById('loading').innerHTML = `<p class="text-rosepine-love">Failed to load markdown file.</p>`;
-                                });
+                            fetch(article.file).then(r => r.text()).then(md => {
+                                document.getElementById('markdown-body').innerHTML = marked.parse(md);
+                                hljs.highlightAll();
+                                addCopyButtons();
+                                calculateReadingTime(md);
+                                
+                                document.getElementById('loading').classList.add('hidden');
+                                document.getElementById('content-area').classList.remove('hidden');
+                                document.getElementById('article-footer').classList.remove('hidden');
+                                
+                                setTimeout(generateTOC, 100); 
+                            });
                         }
                     } else {
-                         document.getElementById('loading').innerHTML = `
-                            <div class="text-center">
-                                <i class="ph ph-book-open text-4xl text-rosepine-iris mb-4"></i>
-                                <p class="text-rosepine-text">Select an article from the sidebar to begin reading.</p>
+                        document.getElementById('loading').innerHTML = `
+                            <div class="text-center opacity-50">
+                                <i class="ph ph-book-open text-5xl text-rosepine-iris mb-4"></i>
+                                <p class="text-rosepine-text text-lg">Select an article to start reading</p>
                             </div>`;
                     }
                 }
-            })
-            .catch(err => {
-                console.error(err);
-                document.getElementById('loading').innerHTML = `<p class="text-rosepine-love">Error loading content data.</p>`;
             });
     </script>
 </body>
