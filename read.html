@@ -89,9 +89,9 @@
         .resizer { width: 4px; cursor: col-resize; background: transparent; transition: background 0.2s; z-index: 50; flex-shrink: 0; }
         .resizer:hover, .resizer.active { background: #eb6f92; }
 
-        .toc-item.active { color: #eb6f92; font-weight: 600; border-left-color: #eb6f92; transform: translateX(4px); }
+        .toc-item.active { color: #eb6f92; font-weight: 600; border-left-color: #eb6f92; }
         .toc-item { transition: all 0.2s; border-left: 2px solid transparent; }
-        .toc-item:hover { color: #e0def4; transform: translateX(4px); }
+        .toc-item:hover { color: #e0def4; border-left-color: #403d52; }
         
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .fade-in { animation: fadeIn 0.4s ease-out forwards; }
@@ -247,21 +247,20 @@
                             <div id="markdown-body" class="article-content"></div>
                         </article>
                         
-                        <footer class="py-10 text-center border-t border-rosepine-highlight-low bg-rosepine-base">
-                            <p class="font-mono text-sm text-rosepine-muted">Designed with <span class="text-rosepine-love">♥</span> by 0xAns</p>
+                        <footer id="article-footer" class="hidden mt-20 pt-10 border-t border-rosepine-highlight-low text-center pb-10">
+                            <p class="font-mono text-xs text-rosepine-muted">
+                                <i class="ph ph-code"></i> with <i class="ph ph-heart-fill text-rosepine-love"></i> by 0xAns
+                            </p>
                         </footer>
                     </div>
 
                 </div>
             </div>
 
-            <aside id="toc-container" class="hidden lg:block w-64 bg-rosepine-base border-l border-rosepine-highlight-low overflow-y-auto pt-8 pb-8 px-4 shrink-0 z-10">
-                <div class="sticky top-4">
-                    <div class="flex items-center gap-2 mb-4 pl-2">
-                        <i class="ph ph-list-bullets text-rosepine-iris"></i>
-                        <span class="text-xs font-bold font-mono text-rosepine-muted uppercase tracking-wider">On this page</span>
-                    </div>
-                    <nav id="toc-nav" class="space-y-1 text-sm text-rosepine-muted border-l border-rosepine-highlight-low ml-1"></nav>
+            <aside id="toc-container" class="hidden lg:block w-64 pt-12 pr-6 shrink-0 z-10 h-full">
+                 <div class="sticky top-12">
+                    <div class="text-[11px] font-bold font-mono text-rosepine-muted uppercase tracking-wider mb-4 pl-3">On this page</div>
+                    <nav id="toc-nav" class="space-y-1 text-sm text-rosepine-muted border-l border-rosepine-highlight-low"></nav>
                 </div>
             </aside>
 
@@ -363,7 +362,6 @@
             localStorage.setItem('fontMode', mode);
         }
 
-        // Initialize UI
         if (window.innerWidth >= 1024) setSidebarState(isSidebarOpen, sidebarWidth);
         else setSidebarState(false, sidebarWidth);
         
