@@ -105,11 +105,13 @@
         }
     </style>
 </head>
-<body class="antialiased text-rosepine-text flex h-screen w-screen font-mode-sans">
+<body class="antialiased text-rosepine-text flex h-screen w-screen font-mode-sans bg-rosepine-base overflow-hidden">
 
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-30 hidden lg:hidden backdrop-blur-sm transition-opacity"></div>
 
-    <aside id="sidebar" class="bg-rosepine-surface border-r border-rosepine-highlight-low flex flex-col h-full absolute lg:relative z-40 transition-transform duration-300 -translate-x-full lg:translate-x-0 w-[280px] shrink-0 shadow-2xl lg:shadow-none">
+    <aside id="sidebar" class="bg-rosepine-surface border-r border-rosepine-highlight-low flex flex-col h-full 
+                               fixed lg:relative z-40 w-[280px] shrink-0 shadow-2xl lg:shadow-none 
+                               transition-transform lg:transition-[width] duration-300 -translate-x-full lg:translate-x-0">
         
         <div class="h-14 flex items-center justify-between px-4 border-b border-rosepine-highlight-low shrink-0">
             <div class="flex items-center gap-2">
@@ -150,11 +152,11 @@
         </div>
     </aside>
 
-    <div id="resizer" class="resizer hidden lg:block"></div>
+    <div id="resizer" class="resizer hidden lg:block h-full"></div>
 
     <main class="flex-1 flex flex-col h-full min-w-0 bg-rosepine-base relative">
         
-        <header class="h-14 border-b border-rosepine-highlight-low flex items-center px-4 md:px-6 justify-between bg-rosepine-base/95 backdrop-blur z-20 sticky top-0">
+        <header class="h-14 border-b border-rosepine-highlight-low flex items-center px-4 md:px-6 justify-between bg-rosepine-base/95 backdrop-blur z-20 sticky top-0 shrink-0">
             <div class="flex items-center gap-3">
                 <button id="mobile-menu-btn" class="lg:hidden text-rosepine-text hover:text-rosepine-love">
                     <i class="ph ph-list text-xl"></i>
@@ -209,51 +211,60 @@
             </div>
         </header>
 
-        <div id="main-scroll" class="flex-1 overflow-y-auto scroll-smooth relative">
-            <div class="flex justify-center min-h-full">
-                
-                <div id="content-wrapper" class="w-full max-w-3xl transition-all duration-300 ease-in-out px-6 py-12 flex-shrink-0">
+        <div class="flex-1 flex overflow-hidden">
+            
+            <div id="main-scroll" class="flex-1 overflow-y-auto scroll-smooth relative">
+                <div class="flex justify-center min-h-full">
                     
-                    <div id="loading" class="flex flex-col items-center justify-center py-20 text-rosepine-muted animate-pulse">
-                        <i class="ph ph-spinner-gap text-3xl mb-4 animate-spin"></i>
-                        <span class="font-mono text-sm">Fetching document...</span>
-                    </div>
-                    
-                    <article id="content-area" class="hidden fade-in relative">
+                    <div id="content-wrapper" class="w-full max-w-3xl transition-all duration-300 ease-in-out px-6 py-12 flex-shrink-0">
                         
-                        <div id="cover-image-container" class="mb-8 hidden group relative overflow-hidden rounded-lg border border-rosepine-highlight-low">
-                            <img id="cover-image" src="" alt="Cover" class="w-full h-48 md:h-80 object-cover transition-transform duration-700 group-hover:scale-105">
-                            <div class="absolute inset-0 bg-gradient-to-t from-rosepine-base to-transparent opacity-60"></div>
+                        <div id="loading" class="flex flex-col items-center justify-center py-20 text-rosepine-muted animate-pulse">
+                            <i class="ph ph-spinner-gap text-3xl mb-4 animate-spin"></i>
+                            <span class="font-mono text-sm">Fetching document...</span>
                         </div>
-
-                        <header class="mb-10 pb-6 border-b border-rosepine-highlight-low">
-                            <div class="flex flex-wrap items-center gap-3 text-xs font-mono text-rosepine-muted mb-4">
-                                <span id="art-date" class="flex items-center gap-1 text-rosepine-iris"><i class="ph ph-calendar-blank"></i> <span id="art-date-text"></span></span>
-                                <span>•</span>
-                                <span id="read-time" class="flex items-center gap-1"><i class="ph ph-clock"></i> <span>... min read</span></span>
-                                <span>•</span>
-                                <span id="art-category" class="px-2 py-0.5 bg-rosepine-surface border border-rosepine-highlight-med rounded text-rosepine-foam"></span>
+                        
+                        <article id="content-area" class="hidden fade-in relative">
+                            
+                            <div id="cover-image-container" class="mb-8 hidden group relative overflow-hidden rounded-lg border border-rosepine-highlight-low">
+                                <img id="cover-image" src="" alt="Cover" class="w-full h-48 md:h-80 object-cover transition-transform duration-700 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-gradient-to-t from-rosepine-base to-transparent opacity-60"></div>
                             </div>
 
-                            <h1 id="art-title" class="text-3xl md:text-5xl font-bold text-rosepine-text mb-6 font-sans tracking-tight leading-tight"></h1>
-                            
-                            <div class="flex flex-wrap gap-2" id="tags-container"></div>
-                        </header>
+                            <header class="mb-10 pb-6 border-b border-rosepine-highlight-low">
+                                <div class="flex flex-wrap items-center gap-3 text-xs font-mono text-rosepine-muted mb-4">
+                                    <span id="art-date" class="flex items-center gap-1 text-rosepine-iris"><i class="ph ph-calendar-blank"></i> <span id="art-date-text"></span></span>
+                                    <span>•</span>
+                                    <span id="read-time" class="flex items-center gap-1"><i class="ph ph-clock"></i> <span>... min read</span></span>
+                                    <span>•</span>
+                                    <span id="art-category" class="px-2 py-0.5 bg-rosepine-surface border border-rosepine-highlight-med rounded text-rosepine-foam"></span>
+                                </div>
 
-                        <div id="markdown-body" class="article-content"></div>
-                    </article>
-                    
-                    <footer class="py-10 text-center border-t border-rosepine-highlight-low bg-rosepine-base">
-                        <p class="font-mono text-sm text-rosepine-muted">Designed with <span class="text-rosepine-love">♥</span> by 0xAns</p>
-                    </footer>
+                                <h1 id="art-title" class="text-3xl md:text-5xl font-bold text-rosepine-text mb-6 font-sans tracking-tight leading-tight"></h1>
+                                
+                                <div class="flex flex-wrap gap-2" id="tags-container"></div>
+                            </header>
+
+                            <div id="markdown-body" class="article-content"></div>
+                        </article>
+                        
+                        <footer class="py-10 text-center border-t border-rosepine-highlight-low bg-rosepine-base">
+                            <p class="font-mono text-sm text-rosepine-muted">Designed with <span class="text-rosepine-love">♥</span> by 0xAns</p>
+                        </footer>
+                    </div>
+
                 </div>
-
-                <div id="toc-container" class="hidden xl:block w-64 flex-shrink-0 pt-12 pr-6 sticky top-0 h-screen overflow-y-auto custom-scrollbar">
-                    <div class="text-[11px] font-bold font-mono text-rosepine-muted uppercase tracking-wider mb-4 pl-3 opacity-70">On this page</div>
-                    <nav id="toc-nav" class="space-y-1 text-sm text-rosepine-muted border-l border-rosepine-highlight-low"></nav>
-                </div>
-
             </div>
+
+            <aside id="toc-container" class="hidden lg:block w-64 bg-rosepine-base border-l border-rosepine-highlight-low overflow-y-auto pt-8 pb-8 px-4 shrink-0 z-10">
+                <div class="sticky top-4">
+                    <div class="flex items-center gap-2 mb-4 pl-2">
+                        <i class="ph ph-list-bullets text-rosepine-iris"></i>
+                        <span class="text-xs font-bold font-mono text-rosepine-muted uppercase tracking-wider">On this page</span>
+                    </div>
+                    <nav id="toc-nav" class="space-y-1 text-sm text-rosepine-muted border-l border-rosepine-highlight-low ml-1"></nav>
+                </div>
+            </aside>
+
         </div>
     </main>
 
@@ -274,17 +285,24 @@
         let currentFontSize = parseInt(localStorage.getItem('fontSize')) || 100;
         let currentFontMode = localStorage.getItem('fontMode') || 'sans';
 
+
         function setSidebarState(isOpen, width) {
             if (!isOpen) {
-                sidebar.style.display = 'none';
-                resizer.style.display = 'none';
+                sidebar.classList.add('hidden', 'lg:hidden'); 
+                resizer.classList.add('hidden', 'lg:hidden');
                 document.getElementById('expand-btn').classList.remove('hidden');
             } else {
-                sidebar.style.display = 'flex';
-                resizer.style.display = 'block';
+                sidebar.classList.remove('hidden', 'lg:hidden');
+                resizer.classList.remove('hidden', 'lg:hidden');
                 sidebar.style.width = `${width}px`;
                 document.getElementById('expand-btn').classList.add('hidden');
             }
+            
+            if(window.innerWidth < 1024) {
+                if(isOpen) sidebar.classList.remove('-translate-x-full');
+                else sidebar.classList.add('-translate-x-full');
+            }
+
             localStorage.setItem('isSidebarOpen', isOpen);
             localStorage.setItem('sidebarWidth', width);
         }
@@ -303,6 +321,7 @@
             isFullWidth = full;
             localStorage.setItem('isFullWidth', full);
         }
+
 
         document.getElementById('settings-btn').addEventListener('click', (e) => {
             e.stopPropagation();
@@ -344,7 +363,10 @@
             localStorage.setItem('fontMode', mode);
         }
 
+        // Initialize UI
         if (window.innerWidth >= 1024) setSidebarState(isSidebarOpen, sidebarWidth);
+        else setSidebarState(false, sidebarWidth);
+        
         setContentWidth(isFullWidth);
         adjustFontSize(0);
         setFontMode(currentFontMode);
@@ -368,8 +390,15 @@
 
         const toggleMobile = () => {
             const isClosed = sidebar.classList.contains('-translate-x-full');
-            sidebar.classList.toggle('-translate-x-full', !isClosed);
-            document.getElementById('sidebar-overlay').classList.toggle('hidden', !isClosed);
+            if(isClosed) {
+                sidebar.classList.remove('hidden');
+                setTimeout(() => sidebar.classList.remove('-translate-x-full'), 10);
+                document.getElementById('sidebar-overlay').classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                document.getElementById('sidebar-overlay').classList.add('hidden');
+                setTimeout(() => sidebar.classList.add('hidden'), 300);
+            }
         };
         ['mobile-menu-btn', 'mobile-close-btn', 'sidebar-overlay'].forEach(id => document.getElementById(id).addEventListener('click', toggleMobile));
 
@@ -413,7 +442,12 @@
             const headers = content.querySelectorAll('h1, h2, h3');
             
             tocNav.innerHTML = '';
-            if (headers.length === 0) { tocContainer.classList.add('hidden'); return; }
+            if (headers.length === 0) { 
+                tocContainer.classList.add('lg:hidden'); 
+                return; 
+            } else {
+                tocContainer.classList.remove('lg:hidden');
+            }
             
             headers.forEach((header, index) => {
                 const id = header.id || `section-${index}`;
@@ -441,7 +475,10 @@
                         if (activeLink) activeLink.classList.add('active');
                     }
                 });
-            }, { rootMargin: '-100px 0px -60% 0px' });
+            }, { 
+                root: document.getElementById('main-scroll'),
+                rootMargin: '-50px 0px -60% 0px' 
+            });
             headers.forEach(header => observer.observe(header));
         }
 
@@ -548,6 +585,7 @@
                                 <i class="ph ph-book-open text-5xl text-rosepine-iris mb-4"></i>
                                 <p class="text-rosepine-text text-lg">Select an article to start reading</p>
                             </div>`;
+                        tocContainer.classList.add('lg:hidden');
                     }
                 }
             });
