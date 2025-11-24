@@ -1,11 +1,5 @@
 # MirrorGate: Abusing Console APIs for indirect Memory Injection.
-
-Author: 0xans
-
-Date: 21 November, 2025  
-
-Category: Evasion - Rust - Malware Development
-
+_The project can be found here on my_ [GitHub](https://github.com/0xans)
 ### Introduction
 
 We all know the drill. The holy trinity of process injection has been beaten to death: `OpenProcess`, `WriteProcessMemory`, `CreateRemoteThread`. Every single EDR on earth has these API calls hooked, tagged and begged. If you run that sequence today, you are lighting up the SOC dashboard. 
