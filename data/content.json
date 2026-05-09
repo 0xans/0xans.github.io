@@ -12,7 +12,7 @@
       "description": "Yurei is a Rust based port scanner.",
       "tags": [
         "Rust",
-        "Network",
+        "Network"
       ],
       "link": "https://github.com/0xans/Yurei"
     },
@@ -21,10 +21,10 @@
       "description": "A Rust malware technique that abuse the console APIs for indirect Memory Injection.",
       "tags": [
         "Rust",
-        "Malware",
+        "Malware"
       ],
       "link": "https://github.com/0xans/Mirror-Gate"
-    },
+    }
   ],
   "articles": [
     {
