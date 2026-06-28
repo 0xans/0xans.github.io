@@ -25,7 +25,7 @@ We are essentially using the console window title as a shared buffer to smuggle 
 
 ### The Implementation.
 
-I chose **Rust** for this because I love this language and for it’s direct control over memory and C-interop via `winapi`. Let’s break down the code block by block.
+I chose **Rust** for this because I love this language and for its direct control over memory and C-interop via `winapi`. Let's break down the code block by block.
 
 1. **Setup and Macros.**
 
@@ -97,7 +97,7 @@ fn MirrorGate(hThread: HANDLE, Rip: LPVOID, RetAddr: LPVOID, DestAddr: LPVOID, S
 
 The main function handles the logistics.
 
-First, we attach to the target process and allocate memory. Note that we still use `VirtualAllocEx`. While this is a flagged API, the specific “write” behavior is usually the stronger indicator of malicious intent that the allocation itself.
+First, we attach to the target process and allocate memory. Note that we still use `VirtualAllocEx`. While this is a flagged API, the specific "write" behavior is usually the stronger indicator of malicious intent than the allocation itself.
 
 ```rust
 // Attach to target console
@@ -113,7 +113,7 @@ if AttachConsole(pid) == 0 { // Hook into the target's console
 
 1. **Resolving Addresses.**
 
-We need to know where `GetConsoleTitleA` lives. Since system DLLs (like `kernalbase.dll`) are usually loaded at the same base address in all processes (thanks to ASLR optimizations), we can find the address in our process and assume it’s the same in the target.
+We need to know where `GetConsoleTitleA` lives. Since system DLLs (like `kernelbase.dll`) are usually loaded at the same base address in all processes (thanks to ASLR optimizations), we can find the address in our process and assume it is the same in the target.
 
 ```rust
 let hKernelBase = GetModuleHandleA(b"kernelbase.dll\0".as_ptr() as *const i8);
@@ -150,7 +150,7 @@ No technique is perfect. Here is the operational assessment of MirrorGate.
 
 - **Bypasses `WriteProcessMemory`**: We completely avoid the most monitored API for injection.
 - **Legitimate API Traffic**: `GetConsoleTitleA` is a benign API. Seeing a console apps querying their own title is rarely flagged as malicious.
-- **Harder to Hook**: Security products usually hook memory writes. They rarely hook “Get Window Title” because it generates too much noise.
+- **Harder to Hook**: Security products usually hook memory writes. They rarely hook "Get Window Title" because it generates too much noise.
 
 **(-) Cons:**
 
@@ -160,7 +160,7 @@ No technique is perfect. Here is the operational assessment of MirrorGate.
 
 ### Conclusion.
 
-MirrorGate demonstrates that you don’t need administrative write primitive to move code between processes. By understanding how Windows manages shared resources — like the Console Window — we can turn the operating system’s own feature into a transport mechanism for our payload.
+MirrorGate demonstrates that you do not need an administrative write primitive to move code between processes. By understanding how Windows manages shared resources, like the console window, we can turn the operating system's own feature into a transport mechanism for our payload.
 
 The code provides a template. The next step? Finding other shared resources (Clipboard? Named Pipes? Environment Variables?) to achieve the same result without the console limitation.
 

@@ -1,238 +1,240 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" data-theme="rose">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>0xAns | Red Teamer & Exploit Dev</title>
+    <meta name="description" content="0xAns, red teamer and exploit developer writing about malware development, penetration testing, Linux, and offensive security research.">
+    <title>0xAns | Red Teaming, Malware Development, Linux</title>
     <link rel="icon" href="assets/includes/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
-                    colors: {
-                        rosepine: { base: '#191724', surface: '#1f1d2e', overlay: '#26233a', muted: '#6e6a86', text: '#e0def4', love: '#eb6f92', gold: '#f6c177', rose: '#ebbcba', pine: '#31748f', foam: '#9ccfd8', iris: '#c4a7e7', highlight: { low: '#21202e', med: '#403d52' } }
-                    },
-                    animation: { 'fade-in-up': 'fadeInUp 0.8s ease-out forwards' },
-                    keyframes: { fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
-                }
-            }
+        try {
+            document.documentElement.dataset.theme = localStorage.getItem("0xans-theme") || "rose";
+        } catch (_) {
+            document.documentElement.dataset.theme = "rose";
         }
     </script>
-    <style>
-        html { overflow-y: scroll; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #191724; }
-        ::-webkit-scrollbar-thumb { background: #26233a; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #ebbcba; }
-        body { background-color: #191724; color: #e0def4; }
-    </style>
+    <link rel="stylesheet" href="assets/css/site.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
-<body class="antialiased selection:bg-rosepine-love selection:text-rosepine-base flex flex-col min-h-screen">
-
-    <nav class="fixed w-full z-50 backdrop-blur-md bg-rosepine-base/90 border-b border-rosepine-highlight-low">
-        <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-            <a href="index.html" class="font-mono text-xl font-bold text-rosepine-rose hover:text-rosepine-love transition-colors">0xAns</a>
-            <div class="hidden md:flex space-x-8 font-mono text-sm text-rosepine-muted">
-                <a href="index.html" class="text-rosepine-text transition-colors">./home</a>
-                <a href="index.html#about" class="hover:text-rosepine-foam transition-colors">./about</a>
-                <a href="index.html#skills" class="hover:text-rosepine-gold transition-colors">./skills</a>
-                <a href="index.html#projects" class="hover:text-rosepine-iris transition-colors">./projects</a>
-                <a href="articles.html" class="hover:text-rosepine-love transition-colors">./articles</a>
-            </div>
-            <a id="nav-github" href="#" target="_blank" class="text-rosepine-text hover:text-rosepine-love transition-transform hover:scale-110">
-                <i class="ph ph-github-logo text-2xl"></i>
+<body data-page="home">
+    <nav class="site-nav" aria-label="Primary navigation">
+        <div class="nav-inner">
+            <a class="brand" href="index.html" aria-label="0xAns home">
+                <span class="brand-mark">0x</span>
+                <span>0xAns</span>
             </a>
+            <div class="nav-links">
+                <a class="is-active" href="index.html">./home</a>
+                <a href="#about">./about</a>
+                <a href="#skills">./skills</a>
+                <a href="#projects">./projects</a>
+                <a href="articles.html">./articles</a>
+            </div>
+            <div class="nav-actions">
+                <div class="theme-switch" aria-label="Color theme">
+                    <button type="button" data-theme-option="rose">Rose</button>
+                    <button type="button" data-theme-option="dark">Dark</button>
+                    <button type="button" data-theme-option="light">Light</button>
+                </div>
+                <a class="icon-button" data-profile-github href="https://github.com/0xans" target="_blank" rel="noreferrer" aria-label="GitHub">
+                    <i class="ph ph-github-logo" aria-hidden="true"></i>
+                </a>
+            </div>
         </div>
     </nav>
 
-    <main class="flex-grow relative z-10 max-w-4xl mx-auto px-6 pt-32 pb-20">
-
-        <section class="flex flex-col md:flex-row items-center md:items-start gap-10 mb-32 opacity-0 animate-fade-in-up">
-            <div class="relative group shrink-0">
-                <div class="absolute -inset-0.5 bg-gradient-to-r from-rosepine-rose to-rosepine-iris rounded-full opacity-50 blur group-hover:opacity-100 transition duration-1000"></div>
-                <img id="profile-avatar" src="" alt="Avatar" class="relative w-40 h-40 rounded-full border-4 border-rosepine-surface object-cover shadow-2xl">
-            </div>
-            <div class="text-center md:text-left">
-                <h1 class="text-5xl md:text-6xl font-bold mb-4 tracking-tight text-rosepine-text">
-                    Hi, I'm <span id="profile-name" class="text-transparent bg-clip-text bg-gradient-to-r from-rosepine-rose to-rosepine-love"></span>.
-                </h1>
-                <h2 id="profile-role" class="text-xl md:text-2xl font-mono text-rosepine-muted mb-6"></h2>
-                <p id="profile-bio" class="text-rosepine-muted text-lg leading-relaxed max-w-2xl mb-8"></p>
-                
-                <div class="flex flex-wrap justify-center md:justify-start gap-4">
-                    <a id="hero-github" href="#" target="_blank" class="flex items-center gap-2 px-6 py-3 bg-rosepine-surface border border-rosepine-highlight-med rounded-lg hover:border-rosepine-rose hover:text-rosepine-rose transition-all group">
-                        <i class="ph ph-github-logo text-xl"></i><span>GitHub</span>
+    <main class="home-main">
+        <section class="hero container">
+            <div>
+                <p class="eyebrow">root@0xans:~$ whoami</p>
+                <h1>0x<span>Ans</span></h1>
+                <p class="hero-lead">
+                    I am <strong data-profile-name>Anas</strong>, a red teamer and exploit developer who likes calm tooling, Linux terminals, malware research, and practical writing that gets straight to the interesting part.
+                </p>
+                <div class="cta-row">
+                    <a class="button primary" href="articles.html">
+                        <i class="ph ph-newspaper-clipping" aria-hidden="true"></i>
+                        Read research
+                    </a>
+                    <a class="button ghost" data-profile-github href="https://github.com/0xans" target="_blank" rel="noreferrer">
+                        <i class="ph ph-github-logo" aria-hidden="true"></i>
+                        GitHub
                     </a>
                 </div>
             </div>
-        </section>
 
-        <section id="about" class="mb-32">
-            <div class="flex items-center gap-4 mb-8">
-                <h3 class="text-2xl font-bold text-rosepine-text flex items-center gap-2"><span class="text-rosepine-iris font-mono">01.</span> About Me</h3>
-                <div class="h-px flex-grow bg-rosepine-highlight-med"></div>
-            </div>
-            <div class="bg-rosepine-surface/50 p-8 rounded-2xl border border-rosepine-highlight-low backdrop-blur-sm">
-                <p class="text-rosepine-muted leading-relaxed">
-                    I am a passionate security researcher and developer. As a <span class="text-rosepine-love font-semibold">Red Teamer</span> and <span class="text-rosepine-gold font-semibold">Exploit Developer</span>, I build tools to exploit vulnerabilities and systems to fix them. My expertise ranges from low-level <span class="text-rosepine-pine font-semibold">Malware Development</span> to high-level <span class="text-rosepine-iris font-semibold">Web Systems</span>.
-                </p>
-            </div>
-        </section>
-
-        <section id="skills" class="mb-32">
-            <div class="flex items-center gap-4 mb-8">
-                <h3 class="text-2xl font-bold text-rosepine-text flex items-center gap-2">
-                    <span class="text-rosepine-gold font-mono">02.</span> Capabilities
-                </h3>
-                <div class="h-px flex-grow bg-rosepine-highlight-med"></div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                
-                <div class="bg-rosepine-surface/30 p-6 rounded-xl border border-rosepine-highlight-low hover:border-rosepine-love/30 transition-colors">
-                    <div class="flex items-center gap-3 mb-4 text-rosepine-love">
-                        <i class="ph ph-skull text-2xl"></i>
-                        <h4 class="font-bold font-mono">Offensive Ops</h4>
+            <div class="hero-visual" aria-label="Profile snapshot">
+                <div class="identity-panel">
+                    <div class="avatar-frame">
+                        <img data-profile-avatar src="" alt="0xAns avatar">
+                        <span class="status-dot" aria-hidden="true"></span>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Red Teaming</span>
-                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Web Pentesting</span>
-                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Active Directory</span>
-                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">C2 Operations</span>
+                    <div>
+                        <p class="identity-name" data-profile-name>Anas</p>
+                        <p class="identity-role" data-profile-role>Red Teamer | Exploit Dev | eCPPT</p>
                     </div>
                 </div>
 
-                <div class="bg-rosepine-surface/30 p-6 rounded-xl border border-rosepine-highlight-low hover:border-rosepine-foam/30 transition-colors">
-                    <div class="flex items-center gap-3 mb-4 text-rosepine-foam">
-                        <i class="ph ph-code-block text-2xl"></i>
-                        <h4 class="font-bold font-mono">Dev & Internals</h4>
+                <div class="terminal-window">
+                    <div class="terminal-titlebar">
+                        <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+                        <span>~/ops/notebook</span>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Rust</span>
-                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">C / C++</span>
-                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Malware Dev</span>
-                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">WinAPI</span>
-                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">x86/64 ASM</span>
-                    </div>
-                </div>
-
-                <div class="bg-rosepine-surface/30 p-6 rounded-xl border border-rosepine-highlight-low hover:border-rosepine-iris/30 transition-colors">
-                    <div class="flex items-center gap-3 mb-4 text-rosepine-iris">
-                        <i class="ph ph-server text-2xl"></i>
-                        <h4 class="font-bold font-mono">Backend & Sys</h4>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Python</span>
-                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Flask</span>
-                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Linux / Arch</span>
-                        <span class="px-3 py-1 bg-rosepine-overlay rounded text-rosepine-text text-sm border border-rosepine-highlight-med">Bash</span>
+                    <div class="terminal-body" aria-label="Terminal profile">
+                        <p><span class="cmd">$ cat focus.txt</span></p>
+                        <p>malware-dev, red-teaming, web-pentest</p>
+                        <p>linux-first workflow, rust when it matters</p>
+                        <p class="comment"># quietly technical, never boring</p>
                     </div>
                 </div>
 
+                <div class="signal-grid">
+                    <div class="signal">
+                        <strong>Rust</strong>
+                        <span>low-level tooling</span>
+                    </div>
+                    <div class="signal">
+                        <strong>Linux</strong>
+                        <span>daily driver energy</span>
+                    </div>
+                    <div class="signal">
+                        <strong>Red Team</strong>
+                        <span>operator mindset</span>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section id="projects" class="mb-32">
-            <div class="flex items-center gap-4 mb-10">
-                <h3 class="text-2xl font-bold text-rosepine-text flex items-center gap-2"><span class="text-rosepine-love font-mono">03.</span> Projects</h3>
-                <div class="h-px flex-grow bg-rosepine-highlight-med"></div>
-            </div>
-            <div id="projects-list" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <section id="about" class="section">
+            <div class="container">
+                <div class="section-head">
+                    <div>
+                        <p class="section-kicker">01 / About</p>
+                        <h2 class="section-title">Quiet focus, sharp edges.</h2>
+                    </div>
+                    <p class="section-note" data-profile-bio>Building advanced tooling and breaking complex systems.</p>
+                </div>
+
+                <div class="about-layout">
+                    <div class="about-copy">
+                        <p>
+                            I work around offensive security, systems internals, malware development, and penetration testing. The style is simple: understand how the system actually behaves, write the tool carefully, document the weird parts, then keep improving.
+                        </p>
+                        <p>
+                            This site is where I keep research notes, project writeups, and technical essays for people who care about how attacks, defenses, and operating systems meet in the real world.
+                        </p>
+                    </div>
+                    <div class="ops-list">
+                        <div class="ops-item">
+                            <i class="ph ph-crosshair" aria-hidden="true"></i>
+                            <div>
+                                <h3>Red Teaming</h3>
+                                <p>Calm execution, clean tradecraft, and clear reporting for complex environments.</p>
+                            </div>
+                        </div>
+                        <div class="ops-item">
+                            <i class="ph ph-bug-beetle" aria-hidden="true"></i>
+                            <div>
+                                <h3>Malware Development</h3>
+                                <p>Research-focused tooling, Windows internals, injection primitives, and Rust experiments.</p>
+                            </div>
+                        </div>
+                        <div class="ops-item">
+                            <i class="ph ph-terminal-window" aria-hidden="true"></i>
+                            <div>
+                                <h3>Linux Workflow</h3>
+                                <p>Terminal-native, scriptable, minimal, and comfortable living close to the machine.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section id="articles">
-            <div class="flex items-center gap-4 mb-10">
-                <h3 class="text-2xl font-bold text-rosepine-text flex items-center gap-2"><span class="text-rosepine-pine font-mono">04.</span> Recent Research</h3>
-                <div class="h-px flex-grow bg-rosepine-highlight-med"></div>
-            </div>
-            <div id="articles-list" class="grid gap-6">
-            </div>
-            <div class="mt-8 text-center">
-                <a href="articles.html" class="inline-block px-6 py-3 bg-rosepine-overlay border border-rosepine-highlight-med rounded-lg text-rosepine-text hover:text-rosepine-pine hover:border-rosepine-pine transition-colors font-mono text-sm">View All Articles</a>
+        <section id="skills" class="section">
+            <div class="container">
+                <div class="section-head">
+                    <div>
+                        <p class="section-kicker">02 / Capabilities</p>
+                        <h2 class="section-title">Built for the useful kind of dangerous.</h2>
+                    </div>
+                </div>
+
+                <div class="capability-grid">
+                    <article class="capability-card">
+                        <span class="capability-icon"><i class="ph ph-shield-warning" aria-hidden="true"></i></span>
+                        <h3>Offensive Ops</h3>
+                        <p>Red teaming, web penetration testing, Active Directory abuse paths, and operator-minded notes.</p>
+                        <div class="tag-row">
+                            <span class="tag accent">Red Teaming</span>
+                            <span class="tag">Web Pentest</span>
+                            <span class="tag">AD</span>
+                            <span class="tag">C2</span>
+                        </div>
+                    </article>
+                    <article class="capability-card">
+                        <span class="capability-icon"><i class="ph ph-cpu" aria-hidden="true"></i></span>
+                        <h3>Internals & Malware</h3>
+                        <p>Windows APIs, shellcode transport ideas, low-level behavior, and exploit development practice.</p>
+                        <div class="tag-row">
+                            <span class="tag accent">Rust</span>
+                            <span class="tag">C/C++</span>
+                            <span class="tag">WinAPI</span>
+                            <span class="tag">x86/x64</span>
+                        </div>
+                    </article>
+                    <article class="capability-card">
+                        <span class="capability-icon"><i class="ph ph-linux-logo" aria-hidden="true"></i></span>
+                        <h3>Systems Workflow</h3>
+                        <p>Linux-first development, automation, backend experiments, and clean terminal-driven habits.</p>
+                        <div class="tag-row">
+                            <span class="tag accent">Linux</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Bash</span>
+                            <span class="tag">Flask</span>
+                        </div>
+                    </article>
+                </div>
             </div>
         </section>
 
+        <section id="projects" class="section">
+            <div class="container">
+                <div class="section-head">
+                    <div>
+                        <p class="section-kicker">03 / Projects</p>
+                        <h2 class="section-title">Things I am building.</h2>
+                    </div>
+                    <p class="section-note">Small tools, focused experiments, and security research that gets shipped instead of sitting in a notes folder.</p>
+                </div>
+                <div id="projects-list" class="project-grid" data-load-error></div>
+            </div>
+        </section>
+
+        <section id="articles" class="section tight">
+            <div class="container">
+                <div class="section-head">
+                    <div>
+                        <p class="section-kicker">04 / Research</p>
+                        <h2 class="section-title">Recent field notes.</h2>
+                    </div>
+                    <a class="button ghost" href="articles.html">
+                        <i class="ph ph-arrow-right" aria-hidden="true"></i>
+                        All articles
+                    </a>
+                </div>
+                <div id="home-articles" class="article-grid" data-load-error></div>
+            </div>
+        </section>
     </main>
 
-    <footer id="article-footer" class="hidden mt-20 pt-10 border-t border-rosepine-highlight-low text-center pb-10">
-        <p class="font-mono text-xs text-rosepine-muted">
-            <i class="ph ph-code"></i> <i class="ph ph-heart-fill text-rosepine-love"></i> by 0xAns
-        </p>
+    <footer class="site-footer">
+        <p><i class="ph ph-code" aria-hidden="true"></i> Built by 0xAns. Calm terminal, sharp research.</p>
     </footer>
-    
-    <script>
-        async function loadData() {
-            try {
-                const response = await fetch('data/content.json');
-                if (!response.ok) throw new Error('Failed to load content');
-                return await response.json();
-            } catch (error) {
-                console.error(error);
-                return null;
-            }
-        }
 
-        loadData().then(data => {
-            if (!data) return;
-
-            if(data.profile) {
-                document.getElementById('profile-name').textContent = data.profile.name;
-                document.getElementById('profile-role').textContent = data.profile.role;
-                document.getElementById('profile-bio').textContent = data.profile.bio;
-                document.getElementById('profile-avatar').src = data.profile.avatar;
-                document.getElementById('nav-github').href = data.profile.github;
-                document.getElementById('hero-github').href = data.profile.github;
-            }
-
-            const projectsContainer = document.getElementById('projects-list');
-            if(data.projects) {
-                data.projects.slice(0, 4).forEach(proj => {
-                    const card = `
-                    <a href="${proj.link}" target="_blank" class="group relative bg-rosepine-surface p-6 rounded-xl border border-rosepine-highlight-med hover:-translate-y-1 hover:shadow-xl hover:shadow-rosepine-rose/5 transition-all duration-300">
-                        <div class="flex justify-between items-start mb-4">
-                            <i class="ph ph-folder text-4xl text-rosepine-rose group-hover:text-rosepine-love transition-colors"></i>
-                            <i class="ph ph-arrow-up-right text-xl text-rosepine-muted group-hover:text-rosepine-text"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-rosepine-text mb-2 group-hover:text-rosepine-rose transition-colors">${proj.title}</h4>
-                        <p class="text-rosepine-muted text-sm mb-6 h-12 overflow-hidden">${proj.description}</p>
-                        <div class="flex gap-3 font-mono text-xs text-rosepine-foam">
-                            ${proj.tags.map(tag => `<span>${tag}</span>`).join('')}
-                        </div>
-                    </a>`;
-                    projectsContainer.innerHTML += card;
-                });
-            }
-
-            const articlesContainer = document.getElementById('articles-list');
-            if(data.articles) {
-                data.articles.slice(0, 3).forEach(art => {
-                    const card = `
-                    <a href="read.html?id=${art.id}" class="block group p-6 bg-rosepine-surface/40 border border-rosepine-highlight-low rounded-xl hover:border-rosepine-pine hover:bg-rosepine-surface transition-all">
-                        <div class="flex flex-col md:flex-row justify-between md:items-center mb-2">
-                            <h4 class="text-lg font-bold text-rosepine-text group-hover:text-rosepine-pine transition-colors">${art.title}</h4>
-                            <span class="font-mono text-xs text-rosepine-muted">${art.date}</span>
-                        </div>
-                        <p class="text-rosepine-muted text-sm mb-4 max-w-2xl">${art.summary}</p>
-                        <div class="flex items-center gap-2 text-xs font-mono text-rosepine-subtle group-hover:text-rosepine-text transition-colors">
-                            <span>Read Article</span> <i class="ph ph-arrow-right"></i>
-                        </div>
-                    </a>`;
-                    articlesContainer.innerHTML += card;
-                });
-            }
-        });
-    </script>
+    <script src="assets/js/site.js"></script>
 </body>
 </html>
-
-
-
