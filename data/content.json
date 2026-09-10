@@ -8,13 +8,24 @@
   },
   "projects": [
     {
-      "title": "Yurei",
-      "description": "Yurei is a Rust based port scanner.",
+      "title": "Aria",
+      "description": "Aria is modern command and control framework.",
       "tags": [
         "Rust",
-        "Network"
+        "Malware",
+        "Red Team"
       ],
-      "link": "https://github.com/0xans/Yurei"
+      "link": "https://github.com/0xans/aria"
+    },
+    {
+      "title": "SysHaze",
+      "description": "SysHaze is a Rust based indirect syscall engine.",
+      "tags": [
+        "Rust",
+        "Malware",
+        "Red Team"
+      ],
+      "link": "https://github.com/0xans/SysHaze"
     },
     {
       "title": "Mirror Gate",
