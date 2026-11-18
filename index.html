@@ -1,240 +1,50 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="rose">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="0xAns, red teamer and exploit developer writing about malware development, penetration testing, Linux, and offensive security research.">
-    <title>0xAns | Red Teaming, Malware Development, Linux</title>
-    <link rel="icon" href="assets/includes/favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
-    <script>
-        try {
-            document.documentElement.dataset.theme = localStorage.getItem("0xans-theme") || "rose";
-        } catch (_) {
-            document.documentElement.dataset.theme = "rose";
-        }
-    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Anas’s personal blog on security research, Windows internals, and Rust.">
+    <title>Field notes by Anas | 0xAns</title>
+    <link rel="icon" href="assets/includes/favicon.ico?v=cat" sizes="16x16 32x32 48x48" type="image/x-icon">
+    <link rel="icon" href="assets/images/logo.svg" sizes="any" type="image/svg+xml">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#251b29">
     <link rel="stylesheet" href="assets/css/site.css">
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="assets/js/site.js" defer></script>
 </head>
 <body data-page="home">
-    <nav class="site-nav" aria-label="Primary navigation">
-        <div class="nav-inner">
-            <a class="brand" href="index.html" aria-label="0xAns home">
-                <span class="brand-mark">0x</span>
-                <span>0xAns</span>
-            </a>
-            <div class="nav-links">
-                <a class="is-active" href="index.html">./home</a>
-                <a href="#about">./about</a>
-                <a href="#skills">./skills</a>
-                <a href="#projects">./projects</a>
-                <a href="articles.html">./articles</a>
-            </div>
-            <div class="nav-actions">
-                <div class="theme-switch" aria-label="Color theme">
-                    <button type="button" data-theme-option="rose">Rose</button>
-                    <button type="button" data-theme-option="dark">Dark</button>
-                    <button type="button" data-theme-option="light">Light</button>
-                </div>
-                <a class="icon-button" data-profile-github href="https://github.com/0xans" target="_blank" rel="noreferrer" aria-label="GitHub">
-                    <i class="ph ph-github-logo" aria-hidden="true"></i>
-                </a>
-            </div>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="masthead">
+        <div class="container masthead-inner">
+            <a class="brand" href="index.html" aria-label="0xAns home"><img class="mark" src="assets/images/logo.svg" width="32" height="32" alt="">0xAns</a>
+            <nav aria-label="Main navigation">
+                <a href="index.html" aria-current="page">Home</a>
+                <a href="articles.html">Writing</a>
+                <a href="#projects">Projects</a>
+            </nav>
         </div>
-    </nav>
-
-    <main class="home-main">
-        <section class="hero container">
-            <div>
-                <p class="eyebrow">root@0xans:~$ whoami</p>
-                <h1>0x<span>Ans</span></h1>
-                <p class="hero-lead">
-                    I am <strong data-profile-name>Anas</strong>, a red teamer and exploit developer who likes calm tooling, Linux terminals, malware research, and practical writing that gets straight to the interesting part.
-                </p>
-                <div class="cta-row">
-                    <a class="button primary" href="articles.html">
-                        <i class="ph ph-newspaper-clipping" aria-hidden="true"></i>
-                        Read research
-                    </a>
-                    <a class="button ghost" data-profile-github href="https://github.com/0xans" target="_blank" rel="noreferrer">
-                        <i class="ph ph-github-logo" aria-hidden="true"></i>
-                        GitHub
-                    </a>
-                </div>
+    </header>
+    <main id="main" class="container">
+        <section class="hero" aria-labelledby="home-title">
+            <div class="hero-copy" id="about">
+                <h1 id="home-title">Hey, I’m <span>Anas.</span></h1>
+                <p class="intro" data-profile-bio>I’m usually poking around Windows internals or building something in Rust. This is where I jot down what I figure out.</p>
+                <a class="underlink" href="articles.html">Read my notes</a>
             </div>
-
-            <div class="hero-visual" aria-label="Profile snapshot">
-                <div class="identity-panel">
-                    <div class="avatar-frame">
-                        <img data-profile-avatar src="" alt="0xAns avatar">
-                        <span class="status-dot" aria-hidden="true"></span>
-                    </div>
-                    <div>
-                        <p class="identity-name" data-profile-name>Anas</p>
-                        <p class="identity-role" data-profile-role>Red Teamer | Exploit Dev | eCPPT</p>
-                    </div>
-                </div>
-
-                <div class="terminal-window">
-                    <div class="terminal-titlebar">
-                        <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
-                        <span>~/ops/notebook</span>
-                    </div>
-                    <div class="terminal-body" aria-label="Terminal profile">
-                        <p><span class="cmd">$ cat focus.txt</span></p>
-                        <p>malware-dev, red-teaming, web-pentest</p>
-                        <p>linux-first workflow, rust when it matters</p>
-                        <p class="comment"># quietly technical, never boring</p>
-                    </div>
-                </div>
-
-                <div class="signal-grid">
-                    <div class="signal">
-                        <strong>Rust</strong>
-                        <span>low-level tooling</span>
-                    </div>
-                    <div class="signal">
-                        <strong>Linux</strong>
-                        <span>daily driver energy</span>
-                    </div>
-                    <div class="signal">
-                        <strong>Red Team</strong>
-                        <span>operator mindset</span>
-                    </div>
-                </div>
-            </div>
+            <canvas id="window-seat" width="240" height="144" aria-hidden="true"></canvas>
         </section>
-
-        <section id="about" class="section">
-            <div class="container">
-                <div class="section-head">
-                    <div>
-                        <p class="section-kicker">01 / About</p>
-                        <h2 class="section-title">Quiet focus, sharp edges.</h2>
-                    </div>
-                    <p class="section-note" data-profile-bio>Building advanced tooling and breaking complex systems.</p>
-                </div>
-
-                <div class="about-layout">
-                    <div class="about-copy">
-                        <p>
-                            I work around offensive security, systems internals, malware development, and penetration testing. The style is simple: understand how the system actually behaves, write the tool carefully, document the weird parts, then keep improving.
-                        </p>
-                        <p>
-                            This site is where I keep research notes, project writeups, and technical essays for people who care about how attacks, defenses, and operating systems meet in the real world.
-                        </p>
-                    </div>
-                    <div class="ops-list">
-                        <div class="ops-item">
-                            <i class="ph ph-crosshair" aria-hidden="true"></i>
-                            <div>
-                                <h3>Red Teaming</h3>
-                                <p>Calm execution, clean tradecraft, and clear reporting for complex environments.</p>
-                            </div>
-                        </div>
-                        <div class="ops-item">
-                            <i class="ph ph-bug-beetle" aria-hidden="true"></i>
-                            <div>
-                                <h3>Malware Development</h3>
-                                <p>Research-focused tooling, Windows internals, injection primitives, and Rust experiments.</p>
-                            </div>
-                        </div>
-                        <div class="ops-item">
-                            <i class="ph ph-terminal-window" aria-hidden="true"></i>
-                            <div>
-                                <h3>Linux Workflow</h3>
-                                <p>Terminal-native, scriptable, minimal, and comfortable living close to the machine.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="skills" class="section">
-            <div class="container">
-                <div class="section-head">
-                    <div>
-                        <p class="section-kicker">02 / Capabilities</p>
-                        <h2 class="section-title">Built for the useful kind of dangerous.</h2>
-                    </div>
-                </div>
-
-                <div class="capability-grid">
-                    <article class="capability-card">
-                        <span class="capability-icon"><i class="ph ph-shield-warning" aria-hidden="true"></i></span>
-                        <h3>Offensive Ops</h3>
-                        <p>Red teaming, web penetration testing, Active Directory abuse paths, and operator-minded notes.</p>
-                        <div class="tag-row">
-                            <span class="tag accent">Red Teaming</span>
-                            <span class="tag">Web Pentest</span>
-                            <span class="tag">AD</span>
-                            <span class="tag">C2</span>
-                        </div>
-                    </article>
-                    <article class="capability-card">
-                        <span class="capability-icon"><i class="ph ph-cpu" aria-hidden="true"></i></span>
-                        <h3>Internals & Malware</h3>
-                        <p>Windows APIs, shellcode transport ideas, low-level behavior, and exploit development practice.</p>
-                        <div class="tag-row">
-                            <span class="tag accent">Rust</span>
-                            <span class="tag">C/C++</span>
-                            <span class="tag">WinAPI</span>
-                            <span class="tag">x86/x64</span>
-                        </div>
-                    </article>
-                    <article class="capability-card">
-                        <span class="capability-icon"><i class="ph ph-linux-logo" aria-hidden="true"></i></span>
-                        <h3>Systems Workflow</h3>
-                        <p>Linux-first development, automation, backend experiments, and clean terminal-driven habits.</p>
-                        <div class="tag-row">
-                            <span class="tag accent">Linux</span>
-                            <span class="tag">Python</span>
-                            <span class="tag">Bash</span>
-                            <span class="tag">Flask</span>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section id="projects" class="section">
-            <div class="container">
-                <div class="section-head">
-                    <div>
-                        <p class="section-kicker">03 / Projects</p>
-                        <h2 class="section-title">Things I am building.</h2>
-                    </div>
-                    <p class="section-note">Small tools, focused experiments, and security research that gets shipped instead of sitting in a notes folder.</p>
-                </div>
-                <div id="projects-list" class="project-grid" data-load-error></div>
-            </div>
-        </section>
-
-        <section id="articles" class="section tight">
-            <div class="container">
-                <div class="section-head">
-                    <div>
-                        <p class="section-kicker">04 / Research</p>
-                        <h2 class="section-title">Recent field notes.</h2>
-                    </div>
-                    <a class="button ghost" href="articles.html">
-                        <i class="ph ph-arrow-right" aria-hidden="true"></i>
-                        All articles
-                    </a>
-                </div>
-                <div id="home-articles" class="article-grid" data-load-error></div>
-            </div>
-        </section>
+        <div class="home-columns">
+            <section id="articles" aria-labelledby="writing-title">
+                <div class="section-head"><h2 id="writing-title">Latest notes</h2><a href="articles.html">Archive</a></div>
+                <div id="home-articles" data-load-error></div>
+            </section>
+            <section id="projects" aria-labelledby="projects-title">
+                <div class="section-head"><h2 id="projects-title">Projects</h2><a data-profile-github href="https://github.com/0xans">GitHub</a></div>
+                <div id="projects-list" data-load-error></div>
+            </section>
+        </div>
     </main>
-
-    <footer class="site-footer">
-        <p><i class="ph ph-code" aria-hidden="true"></i> Built by 0xAns. Calm terminal, sharp research.</p>
-    </footer>
-
-    <script src="assets/js/site.js"></script>
+    <footer class="container site-footer"><span>Anas <span aria-hidden="true">/</span> 0xAns</span><a data-profile-github href="https://github.com/0xans">GitHub</a></footer>
+    <script src="assets/js/illustration.js" defer></script>
 </body>
 </html>

@@ -1,142 +1,75 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="rose">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Read technical security research from 0xAns.">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Security research and field notes by Anas.">
     <title>Reader | 0xAns</title>
-    <link rel="icon" href="assets/includes/favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
-    <script>
-        try {
-            document.documentElement.dataset.theme = localStorage.getItem("0xans-theme") || "rose";
-        } catch (_) {
-            document.documentElement.dataset.theme = "rose";
-        }
-    </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <link rel="icon" href="assets/includes/favicon.ico?v=cat" sizes="16x16 32x32 48x48" type="image/x-icon">
+    <link rel="icon" href="assets/images/logo.svg" sizes="any" type="image/svg+xml">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#251b29">
     <link rel="stylesheet" href="assets/css/site.css">
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="assets/js/site.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
 </head>
-<body class="reader-body" data-page="reader">
-    <div id="sidebar-overlay" class="sidebar-overlay"></div>
-    <div class="reader-shell">
-        <aside id="reader-sidebar" class="reader-sidebar" aria-label="Article library">
-            <div class="reader-brandbar">
-                <a class="brand" href="index.html" aria-label="0xAns home">
-                    <span class="brand-mark">0x</span>
-                    <span>0xAns<span style="color: var(--subtle)">.reader</span></span>
-                </a>
-                <button id="sidebar-close" class="icon-button mobile-only" type="button" aria-label="Close article library">
-                    <i class="ph ph-x" aria-hidden="true"></i>
-                </button>
-            </div>
-
-            <div class="reader-sidebar-search">
-                <div class="search-row">
-                    <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
-                    <input id="reader-search" class="search-input" type="search" placeholder="Search library..." autocomplete="off">
-                </div>
-            </div>
-
-            <div id="reader-list" class="reader-sidebar-body scroll-area"></div>
-
-            <div class="reader-sidebar-foot">
-                <a class="button ghost" data-profile-github href="https://github.com/0xans" target="_blank" rel="noreferrer">
-                    <i class="ph ph-github-logo" aria-hidden="true"></i>
-                    GitHub
-                </a>
-                <a class="button ghost" href="articles.html">
-                    <i class="ph ph-newspaper" aria-hidden="true"></i>
-                    Articles
-                </a>
-            </div>
-        </aside>
-
-        <main class="reader-main">
-            <header class="reader-topbar">
-                <div class="reader-titleline">
-                    <button id="mobile-menu" class="icon-button mobile-only" type="button" aria-label="Open article library">
-                        <i class="ph ph-list" aria-hidden="true"></i>
-                    </button>
-                    <span>/</span>
-                    <span id="crumb-title">Library</span>
-                </div>
-
-                <div class="reader-toolbar">
-                    <div class="theme-switch" aria-label="Color theme">
-                        <button type="button" data-theme-option="rose">Rose</button>
-                        <button type="button" data-theme-option="dark">Dark</button>
-                        <button type="button" data-theme-option="light">Light</button>
+<body data-page="reader">
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="masthead">
+        <div class="container masthead-inner">
+            <a class="brand" href="index.html" aria-label="0xAns home"><img class="mark" src="assets/images/logo.svg" width="32" height="32" alt="">0xAns</a>
+            <nav aria-label="Main navigation">
+                <a href="index.html">Home</a>
+                <a href="articles.html">Writing</a>
+                <a href="index.html#projects">Projects</a>
+            </nav>
+        </div>
+    </header>
+    <main id="main" class="container reader">
+        <div class="reader-tools">
+            <button class="library-toggle" id="library-toggle" type="button" aria-controls="library-panel" aria-expanded="false"><span class="rail-icon" aria-hidden="true"></span>Article library</button>
+            <details class="settings">
+                <summary><span aria-hidden="true">Aa</span> Reading settings</summary>
+                <form class="popover" id="reading-settings">
+                    <div class="settings-head"><h2>Reading settings</h2><button type="reset">Reset</button></div>
+                    <label for="typeface">Typeface</label>
+                    <select id="typeface"><option value="sans">Sans serif</option><option value="serif">Book serif</option><option value="mono">Monospace</option></select>
+                    <label for="text-size">Text size <output for="text-size" id="size-value"></output></label>
+                    <input id="text-size" type="range" min="80" max="150" step="5">
+                    <label for="line-height">Line spacing <output for="line-height" id="leading-value"></output></label>
+                    <input id="line-height" type="range" min="140" max="210" step="5">
+                    <label for="line-width">Line width</label>
+                    <select id="line-width"><option value="narrow">Narrow</option><option value="standard">Standard</option><option value="wide">Wide</option></select>
+                </form>
+            </details>
+        </div>
+        <div class="library-layout">
+            <aside id="library-panel" class="library-panel" aria-label="Article library" hidden>
+                <h2>All articles</h2>
+                <label class="visually-hidden" for="library-search">Find an article in the library</label>
+                <input type="search" id="library-search" placeholder="Find an article…" autocomplete="off">
+                <nav id="library-groups" aria-label="Articles by topic"></nav>
+            </aside>
+            <div class="reader-column">
+                <p id="loading" role="status" data-load-error>Loading article…</p>
+                <article id="reader-article" class="hide">
+                    <div class="reader-hero">
+                        <header class="article-header">
+                            <div class="meta"><span id="article-category"></span><span id="article-date"></span><span id="read-time"></span></div>
+                            <h1 id="article-title"></h1>
+                            <p id="article-subtitle" class="hide"></p>
+                            <div id="article-tags" class="tag-row"></div>
+                        </header>
+                        <img id="article-cover" class="reader-cover hide" alt="">
                     </div>
-                    <button id="wide-toggle" class="icon-button" type="button" aria-label="Toggle reader width">
-                        <i class="ph ph-arrows-out-line-horizontal" aria-hidden="true"></i>
-                    </button>
-                    <div class="settings-wrap">
-                        <button id="settings-btn" class="icon-button" type="button" aria-label="Reader settings">
-                            <i class="ph ph-gear-six" aria-hidden="true"></i>
-                        </button>
-                        <div id="settings-menu" class="settings-menu">
-                            <label class="settings-label">Font size</label>
-                            <div class="stepper">
-                                <button type="button" data-font-step="-10" aria-label="Decrease font size"><i class="ph ph-minus" aria-hidden="true"></i></button>
-                                <span id="font-size-display">100%</span>
-                                <button type="button" data-font-step="10" aria-label="Increase font size"><i class="ph ph-plus" aria-hidden="true"></i></button>
-                            </div>
-
-                            <label class="settings-label">Typeface</label>
-                            <div class="choice-row">
-                                <button type="button" data-font-mode="sans">Sans</button>
-                                <button type="button" data-font-mode="serif">Serif</button>
-                            </div>
-                        </div>
-                    </div>
-                    <a class="icon-button" href="index.html" aria-label="Home">
-                        <i class="ph ph-house" aria-hidden="true"></i>
-                    </a>
-                </div>
-            </header>
-
-            <div class="reader-content">
-                <div class="reader-scroll">
-                    <div id="article-wrap" class="article-wrap">
-                        <div id="loading" class="loading-state">
-                            <div>
-                                <i class="ph ph-spinner-gap" aria-hidden="true"></i>
-                                <p>Fetching document...</p>
-                            </div>
-                        </div>
-
-                        <article id="reader-article" class="hide">
-                            <img id="article-cover" class="reader-article-cover hide" src="" alt="">
-                            <header class="article-header">
-                                <div class="article-meta">
-                                    <span id="article-date"></span>
-                                    <span id="read-time">...</span>
-                                    <span id="article-category"></span>
-                                </div>
-                                <h1 id="article-title"></h1>
-                                <div id="article-tags" class="tag-row"></div>
-                            </header>
-                            <div id="markdown-body" class="article-content"></div>
-                        </article>
-                    </div>
-                </div>
-
-                <aside id="reader-toc" class="reader-toc" aria-label="Table of contents">
-                    <div class="toc-box">
-                        <p class="toc-title">On this page</p>
-                        <nav id="toc-nav"></nav>
-                    </div>
-                </aside>
+                    <details id="reader-toc" class="hide"><summary>On this page</summary><nav id="toc-nav" aria-label="On this page"></nav></details>
+                    <div id="markdown-body" class="article-content"></div>
+                </article>
             </div>
-        </main>
-    </div>
-
-    <script src="assets/js/site.js"></script>
+        </div>
+    </main>
+    <footer class="container site-footer"><span>Anas <span aria-hidden="true">/</span> 0xAns</span><a data-profile-github href="https://github.com/0xans">GitHub</a></footer>
 </body>
 </html>

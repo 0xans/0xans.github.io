@@ -1,77 +1,49 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="rose">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Research notes and technical articles by 0xAns on malware development, red teaming, penetration testing, and systems internals.">
-    <title>Articles | 0xAns</title>
-    <link rel="icon" href="assets/includes/favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
-    <script>
-        try {
-            document.documentElement.dataset.theme = localStorage.getItem("0xans-theme") || "rose";
-        } catch (_) {
-            document.documentElement.dataset.theme = "rose";
-        }
-    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Browse and search research notes by Anas.">
+    <title>Writing | 0xAns</title>
+    <link rel="icon" href="assets/includes/favicon.ico?v=cat" sizes="16x16 32x32 48x48" type="image/x-icon">
+    <link rel="icon" href="assets/images/logo.svg" sizes="any" type="image/svg+xml">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#251b29">
     <link rel="stylesheet" href="assets/css/site.css">
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="assets/js/site.js" defer></script>
 </head>
 <body data-page="articles">
-    <nav class="site-nav" aria-label="Primary navigation">
-        <div class="nav-inner">
-            <a class="brand" href="index.html" aria-label="0xAns home">
-                <span class="brand-mark">0x</span>
-                <span>0xAns</span>
-            </a>
-            <div class="nav-links">
-                <a href="index.html">./home</a>
-                <a href="index.html#about">./about</a>
-                <a href="index.html#skills">./skills</a>
-                <a href="index.html#projects">./projects</a>
-                <a class="is-active" href="articles.html">./articles</a>
-            </div>
-            <div class="nav-actions">
-                <div class="theme-switch" aria-label="Color theme">
-                    <button type="button" data-theme-option="rose">Rose</button>
-                    <button type="button" data-theme-option="dark">Dark</button>
-                    <button type="button" data-theme-option="light">Light</button>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="masthead">
+        <div class="container masthead-inner">
+            <a class="brand" href="index.html" aria-label="0xAns home"><img class="mark" src="assets/images/logo.svg" width="32" height="32" alt="">0xAns</a>
+            <nav aria-label="Main navigation">
+                <a href="index.html">Home</a>
+                <a href="articles.html" aria-current="page">Writing</a>
+                <a href="index.html#projects">Projects</a>
+            </nav>
+        </div>
+    </header>
+    <main id="main" class="container archive">
+        <div class="reader-tools"><button class="library-toggle" id="library-toggle" type="button" aria-controls="library-panel" aria-expanded="false"><span class="rail-icon" aria-hidden="true"></span>Article library</button></div>
+        <div class="library-layout">
+            <aside id="library-panel" class="library-panel" aria-label="Article library" hidden>
+                <h2>All articles</h2>
+                <label class="visually-hidden" for="library-search">Find an article in the library</label>
+                <input type="search" id="library-search" placeholder="Find an article…" autocomplete="off">
+                <nav id="library-groups" aria-label="Articles by topic"></nav>
+            </aside>
+            <div class="archive-content">
+                <header class="archive-heading"><h1>My notes<span>.</span></h1></header>
+                <div class="archive-tools">
+                    <div class="search-box"><label for="search-bar">Search articles</label><input id="search-bar" type="search" placeholder="Title, topic, or keyword" autocomplete="off"></div>
+                    <div id="category-filters" class="filters" role="group" aria-label="Filter by category"></div>
                 </div>
-                <a class="icon-button" data-profile-github href="https://github.com/0xans" target="_blank" rel="noreferrer" aria-label="GitHub">
-                    <i class="ph ph-github-logo" aria-hidden="true"></i>
-                </a>
+                <p id="result-count" class="meta" role="status"></p>
+                <div id="all-articles" data-load-error></div>
             </div>
         </div>
-    </nav>
-
-    <main class="article-page-main">
-        <header class="page-header">
-            <div class="container">
-                <p class="eyebrow">~/research</p>
-                <h1>Field notes for curious operators.</h1>
-                <p>Malware development, red team ideas, penetration testing notes, and systems internals written with a calm terminal open nearby.</p>
-            </div>
-        </header>
-
-        <section class="container">
-            <div class="search-panel">
-                <div class="search-row">
-                    <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
-                    <input id="search-bar" class="search-input" type="search" placeholder="Search articles, tags, categories..." autocomplete="off">
-                </div>
-                <div id="category-filters" class="filter-row" aria-label="Article categories"></div>
-            </div>
-
-            <div id="all-articles" class="all-articles" data-load-error></div>
-        </section>
     </main>
-
-    <footer class="site-footer">
-        <p><i class="ph ph-code" aria-hidden="true"></i> Built by 0xAns. Calm terminal, sharp research.</p>
-    </footer>
-
-    <script src="assets/js/site.js"></script>
+    <footer class="container site-footer"><span>Anas <span aria-hidden="true">/</span> 0xAns</span><a data-profile-github href="https://github.com/0xans">GitHub</a></footer>
 </body>
 </html>

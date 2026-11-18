@@ -2,14 +2,14 @@
   "profile": {
     "name": "Anas",
     "role": "Red Teamer | Exploit Dev | eCPPT | C|EH",
-    "bio": "Red teamer and exploit developer focused on network and web pentesting, malware development, Linux workflows, and systems internals.",
+    "bio": "I’m usually poking around Windows internals or building something in Rust. This is where I jot down what I figure out.",
     "github": "https://github.com/0xans",
     "avatar": "https://avatars.githubusercontent.com/u/151745138?v=4"
   },
   "projects": [
     {
       "title": "Aria",
-      "description": "Aria is modern command and control framework.",
+      "description": "A command and control framework written in Rust.",
       "tags": [
         "Rust",
         "Malware",
@@ -19,7 +19,7 @@
     },
     {
       "title": "SysHaze",
-      "description": "SysHaze is a Rust based indirect syscall engine.",
+      "description": "An indirect syscall engine for Windows.",
       "tags": [
         "Rust",
         "Malware",
@@ -29,7 +29,7 @@
     },
     {
       "title": "Mirror Gate",
-      "description": "A Rust malware technique that abuse the console APIs for indirect Memory Injection.",
+      "description": "A research project on Windows console APIs.",
       "tags": [
         "Rust",
         "Malware"
@@ -43,7 +43,7 @@
       "title": "MirrorGate",
       "date": "2025-11-22",
       "category": "Malware Development",
-      "summary": "Abusing Console APIs for indirect Memory Injection.",
+      "summary": "Notes on Windows console APIs and indirect memory injection.",
       "tags": [
         "Rust",
         "Malware Dev",

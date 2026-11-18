@@ -1,9 +1,7 @@
 (function () {
-    const THEME_KEY = "0xans-theme";
     const FONT_SIZE_KEY = "0xans-reader-font-size";
     const FONT_KEY = "0xans-reader-font";
     const WIDTH_KEY = "0xans-reader-wide";
-    const themes = ["rose", "dark", "light"];
 
     function qs(selector, root = document) {
         return root.querySelector(selector);
@@ -36,24 +34,6 @@
             .replace(/'/g, "&#039;");
     }
 
-    function setTheme(theme) {
-        const nextTheme = themes.includes(theme) ? theme : "rose";
-        document.documentElement.dataset.theme = nextTheme;
-        setStored(THEME_KEY, nextTheme);
-        qsa("[data-theme-option]").forEach((button) => {
-            const active = button.dataset.themeOption === nextTheme;
-            button.classList.toggle("is-active", active);
-            button.setAttribute("aria-pressed", String(active));
-        });
-    }
-
-    function initThemeControls() {
-        setTheme(getStored(THEME_KEY, document.documentElement.dataset.theme || "rose"));
-        qsa("[data-theme-option]").forEach((button) => {
-            button.addEventListener("click", () => setTheme(button.dataset.themeOption));
-        });
-    }
-
     async function loadContent() {
         const response = await fetch("data/content.json", { cache: "no-store" });
         if (!response.ok) throw new Error("Unable to load content.json");
@@ -65,72 +45,53 @@
         qsa("[data-profile-github]").forEach((link) => {
             link.href = profile.github || "#";
         });
-        qsa("[data-profile-avatar]").forEach((img) => {
-            img.src = profile.avatar || "";
-            img.alt = `${profile.name || "0xAns"} avatar`;
-        });
-        qsa("[data-profile-name]").forEach((node) => {
-            node.textContent = profile.name || "Anas";
-        });
-        qsa("[data-profile-role]").forEach((node) => {
-            node.textContent = profile.role || "Red Teamer";
-        });
         qsa("[data-profile-bio]").forEach((node) => {
             node.textContent = profile.bio || "";
         });
     }
 
-    function tagHtml(tags, accent = false) {
-        return (tags || [])
-            .map((tag) => `<span class="tag${accent ? " accent" : ""}">${escapeHtml(tag)}</span>`)
-            .join("");
+    function tagHtml(tags) {
+        return (tags || []).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join("");
+    }
+
+    function displayDate(value) {
+        const date = new Date(`${value}T00:00:00Z`);
+        return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString("en-GB", {
+            day: "numeric", month: "short", year: "numeric", timeZone: "UTC"
+        });
     }
 
     function articleCard(article) {
+        const cover = article.cover
+            ? `<div class="article-thumb"><img src="${escapeHtml(article.cover)}" alt=""></div>`
+            : "";
         return `
-            <a class="article-card" href="read.html?id=${encodeURIComponent(article.id)}">
+            <a class="article-card${cover ? "" : " no-cover"}" href="read.html?id=${encodeURIComponent(article.id)}">
+                ${cover}
                 <div>
-                    <div class="article-meta">
-                        <span>${escapeHtml(article.date)}</span>
-                        <span>${escapeHtml(article.category || "Article")}</span>
-                    </div>
+                    <div class="meta"><time datetime="${escapeHtml(article.date)}">${escapeHtml(displayDate(article.date))}</time></div>
                     <h3>${escapeHtml(article.title)}</h3>
                     <p>${escapeHtml(article.summary)}</p>
                     <div class="tag-row">${tagHtml(article.tags)}</div>
                 </div>
-                <span class="article-arrow" aria-hidden="true"><i class="ph ph-arrow-right"></i></span>
-            </a>
-        `;
+            </a>`;
     }
 
     function initHome(data) {
         setProfileLinks(data.profile);
-
-        const projects = qs("#projects-list");
-        if (projects) {
-            projects.innerHTML = (data.projects || []).map((project) => `
-                <a class="project-card" href="${escapeHtml(project.link)}" target="_blank" rel="noreferrer">
-                    <div class="project-top">
-                        <i class="ph ph-folder-notch-open" aria-hidden="true"></i>
-                        <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
-                    </div>
-                    <h3>${escapeHtml(project.title)}</h3>
-                    <p>${escapeHtml(project.description)}</p>
-                    <div class="tag-row">${tagHtml(project.tags, true)}</div>
-                </a>
-            `).join("");
-        }
-
-        const articles = qs("#home-articles");
-        if (articles) {
-            articles.innerHTML = (data.articles || []).slice(0, 3).map((article) => articleCard(article)).join("");
-        }
+        qs("#projects-list").innerHTML = (data.projects || []).map(project => `
+            <a class="project-link" href="${escapeHtml(project.link)}">
+                <div class="project-line"><strong>${escapeHtml(project.title)}</strong><span>${escapeHtml(project.tags?.[0])}</span></div>
+                <p>${escapeHtml(project.description)}</p>
+            </a>`).join("");
+        qs("#home-articles").innerHTML = (data.articles || []).slice(0, 3).map(articleCard).join("");
     }
 
     function initArticles(data) {
         setProfileLinks(data.profile);
         let currentCategory = "all";
         const articles = data.articles || [];
+        initLibrary(articles, null);
         const filters = qs("#category-filters");
         const search = qs("#search-bar");
         const list = qs("#all-articles");
@@ -138,14 +99,14 @@
         function renderFilters() {
             const categories = ["all", ...new Set(articles.map((article) => article.category || "Uncategorized"))];
             filters.innerHTML = categories.map((category) => `
-                <button class="filter-button${category === currentCategory ? " is-active" : ""}" data-category="${escapeHtml(category)}" type="button">
+                <button aria-pressed="${category === currentCategory}" data-category="${escapeHtml(category)}" type="button">
                     ${escapeHtml(category === "all" ? "All" : category)}
                 </button>
             `).join("");
             qsa("[data-category]", filters).forEach((button) => {
                 button.addEventListener("click", () => {
                     currentCategory = button.dataset.category;
-                    renderFilters();
+                    qsa("[data-category]", filters).forEach(option => option.setAttribute("aria-pressed", String(option === button)));
                     renderArticles();
                 });
             });
@@ -160,9 +121,10 @@
                 return matchesCategory && haystack.includes(term);
             });
 
+            qs("#result-count").textContent = `${filtered.length} ${filtered.length === 1 ? "article" : "articles"}`;
             list.innerHTML = filtered.length
                 ? filtered.map((article) => articleCard(article)).join("")
-                : `<div class="empty-state">No articles matched that signal.</div>`;
+                : `<div class="empty-state">No matching articles. Try another search or category.</div>`;
         }
 
         if (search) search.addEventListener("input", renderArticles);
@@ -184,90 +146,136 @@
         return Math.max(1, Math.ceil(words / 225));
     }
 
-    function renderReaderSidebar(articles, currentArticleId, term = "") {
-        const container = qs("#reader-list");
-        if (!container) return;
-        const safeTerm = term.trim().toLowerCase();
-        const visible = safeTerm
-            ? articles.filter((article) => [article.title, article.category, ...(article.tags || [])].join(" ").toLowerCase().includes(safeTerm))
-            : articles;
-        const groups = visible.reduce((acc, article) => {
-            const category = article.category || "General";
-            acc[category] = acc[category] || [];
-            acc[category].push(article);
-            return acc;
-        }, {});
+    function initLibrary(articles, currentId) {
+        const panel = qs("#library-panel");
+        const toggle = qs("#library-toggle");
+        const list = qs("#library-groups");
+        const search = qs("#library-search");
+        const desktop = window.matchMedia("(min-width: 850px)");
+        const toolbar = qs(".reader-tools");
+        const layout = panel.parentElement;
+        const visibilityKey = "0xans-library-open";
 
-        const html = Object.entries(groups).map(([category, items]) => `
-            <div class="reader-category">${escapeHtml(category)}</div>
-            ${items.map((article) => {
-                const active = article.id === currentArticleId ? " is-active" : "";
-                return `<a class="reader-link${active}" href="read.html?id=${encodeURIComponent(article.id)}">${escapeHtml(article.title)}</a>`;
-            }).join("")}
-        `).join("");
+        function show(open) {
+            panel.hidden = !open;
+            toggle.setAttribute("aria-expanded", String(open));
+        }
+        function restore() {
+            if (desktop.matches) layout.prepend(panel);
+            else toolbar.append(panel);
+            show(desktop.matches && getStored(visibilityKey, "true") === "true");
+        }
+        toggle.addEventListener("click", () => {
+            show(panel.hidden);
+            if (desktop.matches) setStored(visibilityKey, String(!panel.hidden));
+        });
+        document.addEventListener("click", event => {
+            if (!desktop.matches && !panel.contains(event.target) && !toggle.contains(event.target)) show(false);
+        });
+        document.addEventListener("keydown", event => {
+            if (event.key === "Escape" && !desktop.matches && !panel.hidden) {
+                show(false);
+                toggle.focus();
+            }
+        });
+        desktop.addEventListener("change", restore);
+        restore();
 
-        container.innerHTML = html || `<div class="empty-state">No articles found.</div>`;
+        const topics = new Map();
+        articles.forEach(article => {
+            const topic = article.category || "Uncategorized";
+            if (!topics.has(topic)) topics.set(topic, []);
+            topics.get(topic).push(article);
+        });
+        let expanded = new Set();
+        for (const [topic, entries] of topics) {
+            if (entries.some(article => article.id === currentId)) expanded.add(topic);
+        }
+        function render(term = "") {
+            const sections = [];
+            for (const [topic, entries] of topics) {
+                const matches = entries.filter(article =>
+                    [topic, article.title, article.summary, ...(article.tags || [])].join(" ").toLowerCase().includes(term)
+                );
+                if (!matches.length) continue;
+                const links = matches.map(article => {
+                    const current = article.id === currentId ? ' aria-current="page"' : "";
+                    return `<a href="read.html?id=${encodeURIComponent(article.id)}"${current}>${escapeHtml(article.title)}</a>`;
+                }).join("");
+                sections.push(`<details class="topic" data-topic="${escapeHtml(topic)}" ${term || expanded.has(topic) ? "open" : ""}>
+                    <summary>${escapeHtml(topic)} <span>${matches.length}</span></summary>
+                    <div>${links}</div></details>`);
+            }
+            list.innerHTML = sections.join("") || '<p class="empty-state">No articles found.</p>';
+        }
+        let searching = false;
+        search.addEventListener("input", () => {
+            const term = search.value.trim().toLowerCase();
+            if (!searching) expanded = new Set(qsa(".topic[open]", list).map(group => group.dataset.topic));
+            searching = Boolean(term);
+            render(term);
+        });
+        render();
     }
 
     function initReaderControls() {
-        const settingsButton = qs("#settings-btn");
-        const settingsMenu = qs("#settings-menu");
-        const wrap = qs("#article-wrap");
-        const markdownBody = qs("#markdown-body");
-        const sizeDisplay = qs("#font-size-display");
-        const wideButton = qs("#wide-toggle");
-        let fontSize = parseInt(getStored(FONT_SIZE_KEY, "100"), 10);
-        let fontMode = getStored(FONT_KEY, "sans");
-        let isWide = getStored(WIDTH_KEY, "false") === "true";
+        const form = qs("#reading-settings");
+        const menu = form.closest("details");
+        const article = qs("#reader-article");
+        const size = qs("#text-size");
+        const leading = qs("#line-height");
+        const width = qs("#line-width");
+        const font = qs("#typeface");
+        const widthKey = "0xans-reader-measure";
+        const leadingKey = "0xans-reader-leading";
+        const defaults = { size: "110", leading: "175", width: "standard", font: "sans" };
 
-        function applyFontSize() {
-            fontSize = Math.min(150, Math.max(80, fontSize));
-            if (markdownBody) markdownBody.style.fontSize = `${fontSize}%`;
-            if (sizeDisplay) sizeDisplay.textContent = `${fontSize}%`;
-            setStored(FONT_SIZE_KEY, String(fontSize));
+        function apply() {
+            const sizeValue = size.value + "%";
+            const leadingValue = String(Number(leading.value) / 100);
+            qs("#size-value").textContent = sizeValue;
+            qs("#leading-value").textContent = leadingValue + "×";
+            size.setAttribute("aria-valuetext", sizeValue);
+            leading.setAttribute("aria-valuetext", leadingValue + " times text size");
+            article.style.setProperty("--reading-size", size.value + "%");
+            article.style.setProperty("--reading-leading", leadingValue);
+            article.style.setProperty("--reading-font", "var(--" + font.value + ")");
+            article.dataset.measure = width.value;
         }
-
-        function applyFont(mode) {
-            fontMode = mode === "serif" ? "serif" : "sans";
-            document.body.classList.toggle("font-serif", fontMode === "serif");
-            qsa("[data-font-mode]").forEach((button) => {
-                button.classList.toggle("is-active", button.dataset.fontMode === fontMode);
-            });
-            setStored(FONT_KEY, fontMode);
+        function setValues(values) {
+            size.value = values.size;
+            leading.value = values.leading;
+            width.value = ["narrow", "standard", "wide"].includes(values.width) ? values.width : defaults.width;
+            font.value = ["sans", "serif", "mono"].includes(values.font) ? values.font : defaults.font;
+            apply();
         }
-
-        function applyWidth() {
-            if (wrap) wrap.classList.toggle("is-wide", isWide);
-            if (wideButton) wideButton.classList.toggle("is-active", isWide);
-            setStored(WIDTH_KEY, String(isWide));
+        function save() {
+            setStored(FONT_SIZE_KEY, size.value);
+            setStored(FONT_KEY, font.value);
+            setStored(leadingKey, leading.value);
+            setStored(widthKey, width.value);
         }
-
-        settingsButton?.addEventListener("click", (event) => {
-            event.stopPropagation();
-            settingsMenu?.classList.toggle("is-open");
+        setValues({
+            size: getStored(FONT_SIZE_KEY, defaults.size),
+            leading: getStored(leadingKey, defaults.leading),
+            width: getStored(widthKey, getStored(WIDTH_KEY, "false") === "true" ? "wide" : defaults.width),
+            font: getStored(FONT_KEY, defaults.font)
         });
-        document.addEventListener("click", (event) => {
-            if (settingsMenu && !settingsMenu.contains(event.target) && event.target !== settingsButton) {
-                settingsMenu.classList.remove("is-open");
+        form.addEventListener("input", () => { apply(); save(); });
+        form.addEventListener("reset", event => {
+            event.preventDefault();
+            setValues(defaults);
+            save();
+        });
+        document.addEventListener("click", event => {
+            if (!menu.contains(event.target)) menu.open = false;
+        });
+        document.addEventListener("keydown", event => {
+            if (event.key === "Escape" && menu.open) {
+                menu.open = false;
+                qs("summary", menu).focus();
             }
         });
-        qsa("[data-font-step]").forEach((button) => {
-            button.addEventListener("click", () => {
-                fontSize += parseInt(button.dataset.fontStep, 10);
-                applyFontSize();
-            });
-        });
-        qsa("[data-font-mode]").forEach((button) => {
-            button.addEventListener("click", () => applyFont(button.dataset.fontMode));
-        });
-        wideButton?.addEventListener("click", () => {
-            isWide = !isWide;
-            applyWidth();
-        });
-
-        applyFontSize();
-        applyFont(fontMode);
-        applyWidth();
     }
 
     function addCopyButtons() {
@@ -280,14 +288,14 @@
             const button = document.createElement("button");
             button.type = "button";
             button.className = "copy-btn";
-            button.innerHTML = `<i class="ph ph-copy" aria-hidden="true"></i> Copy`;
+            button.textContent = "Copy";
             button.addEventListener("click", async () => {
                 const code = pre.textContent || "";
                 try {
                     await navigator.clipboard.writeText(code);
-                    button.innerHTML = `<i class="ph ph-check" aria-hidden="true"></i> Copied`;
+                    button.textContent = "Copied";
                     window.setTimeout(() => {
-                        button.innerHTML = `<i class="ph ph-copy" aria-hidden="true"></i> Copy`;
+                        button.textContent = "Copy";
                     }, 1400);
                 } catch (_) {
                     button.textContent = "Copy failed";
@@ -327,10 +335,6 @@
             link.href = `#${nextId}`;
             link.textContent = heading.textContent;
             link.className = `toc-link depth-${heading.tagName.slice(1)}`;
-            link.addEventListener("click", (event) => {
-                event.preventDefault();
-                heading.scrollIntoView({ behavior: "smooth", block: "start" });
-            });
             toc.appendChild(link);
         });
     }
@@ -343,47 +347,23 @@
         const currentArticleId = params.get("id");
         const articles = data.articles || [];
         const article = articles.find((item) => item.id === currentArticleId);
-        const search = qs("#reader-search");
-        const sidebar = qs("#reader-sidebar");
-        const overlay = qs("#sidebar-overlay");
-
-        function setSidebar(open) {
-            sidebar?.classList.toggle("is-open", open);
-            overlay?.classList.toggle("is-open", open);
-        }
-
-        qs("#mobile-menu")?.addEventListener("click", () => setSidebar(true));
-        qs("#sidebar-close")?.addEventListener("click", () => setSidebar(false));
-        overlay?.addEventListener("click", () => setSidebar(false));
-        search?.addEventListener("input", () => renderReaderSidebar(articles, currentArticleId, search.value));
-        renderReaderSidebar(articles, currentArticleId);
+        initLibrary(articles, currentArticleId);
 
         if (!currentArticleId) {
-            qs("#loading").innerHTML = `
-                <div>
-                    <i class="ph ph-book-open" aria-hidden="true"></i>
-                    <p>Select an article from the library.</p>
-                </div>
-            `;
+            qs("#loading").innerHTML = 'Choose a post from the <a href="articles.html">writing archive</a>.';
             return;
         }
 
         if (!article) {
-            qs("#loading").innerHTML = `
-                <div>
-                    <i class="ph ph-warning" aria-hidden="true"></i>
-                    <p>Article not found.</p>
-                </div>
-            `;
+            qs("#loading").innerHTML = 'Article not found. <a href="articles.html">Browse all writing</a>.';
             return;
         }
 
         document.title = `${article.title} | 0xAns`;
-        qs("#crumb-title").textContent = article.title;
         qs("#article-title").textContent = article.title;
-        qs("#article-date").textContent = article.date;
+        qs("#article-date").textContent = displayDate(article.date);
         qs("#article-category").textContent = article.category || "Article";
-        qs("#article-tags").innerHTML = tagHtml(article.tags, true);
+        qs("#article-tags").innerHTML = tagHtml(article.tags);
         if (article.cover) {
             const cover = qs("#article-cover");
             cover.src = article.cover;
@@ -399,8 +379,22 @@
 
             if (window.marked) {
                 marked.use({ gfm: true, breaks: true });
-                qs("#markdown-body").innerHTML = marked.parse(markdown);
+                const body = qs("#markdown-body");
+                body.innerHTML = marked.parse(markdown);
+                const heading = body.firstElementChild;
+                if (heading?.tagName === "H1") {
+                    const title = heading.textContent.trim();
+                    if (title === article.title) {
+                        heading.remove();
+                    } else if (title.startsWith(article.title + ":")) {
+                        const subtitle = qs("#article-subtitle");
+                        subtitle.textContent = title.slice(article.title.length + 1).trim();
+                        subtitle.classList.remove("hide");
+                        heading.remove();
+                    }
+                }
             } else {
+                qs("#markdown-body").classList.add("plain-markdown");
                 qs("#markdown-body").textContent = markdown;
             }
 
@@ -409,25 +403,20 @@
             generateToc();
             qs("#loading").classList.add("hide");
             qs("#reader-article").classList.remove("hide");
+            if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
         } catch (error) {
-            qs("#loading").innerHTML = `
-                <div>
-                    <i class="ph ph-warning" aria-hidden="true"></i>
-                    <p>Could not load this article.</p>
-                </div>
-            `;
+            qs("#loading").textContent = "Could not load this article.";
             console.error(error);
         }
     }
 
     document.addEventListener("DOMContentLoaded", async () => {
-        initThemeControls();
         try {
             const data = await loadContent();
             const page = document.body.dataset.page;
             if (page === "home") initHome(data);
             if (page === "articles") initArticles(data);
-            if (page === "reader") initReader(data);
+            if (page === "reader") await initReader(data);
         } catch (error) {
             console.error(error);
             qsa("[data-load-error]").forEach((node) => {
